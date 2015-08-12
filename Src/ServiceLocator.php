@@ -1,8 +1,6 @@
 <?php
 /**
- * kabar library wrapper class
- *
- * Service locator for this library
+ * Service locator for this kabar library
  *
  * @author  Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since   1.0.0
@@ -37,8 +35,7 @@ final class ServiceLocator
     {
         $apiClass = __CLASS__;
         if (isset(self::$modules[$apiClass])) {
-            trigger_error('Library already loaded.', E_USER_ERROR);
-            return;
+            trigger_error('kabar library already loaded.', E_USER_ERROR);
         }
         require_once __DIR__.'/Autoloader.php';
         self::$modules[self::AUTOLOADER] = new Autoloader();

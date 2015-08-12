@@ -247,7 +247,7 @@ class Cache
      */
     private function hash($id, $type)
     {
-        return self::TRANSIENT_PREFIX.$type.md5(UWAZAJPL_VERSION.$id);
+        return self::TRANSIENT_PREFIX.$type.md5(ServiceLocator::VERSION.$id);
     }
 
     /**

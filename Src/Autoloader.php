@@ -24,18 +24,18 @@ final class Autoloader
     private $namespaces = array();
 
     /**
-     * Already known classes
+     * Already known class paths
      * @since 2.16.0
      * @var array
      */
-    private $classes = array();
+    private $classPaths = array();
 
     /**
-     * Additional modules locations
+     * Class names
      * @since 2.16.0
      * @var array
      */
-    private $modules  = array();
+    private $classNames  = array();
 
     /**
      * Register autoloader
@@ -49,7 +49,7 @@ final class Autoloader
     }
 
     /**
-     * Register namespace paths for modules
+     * Register namespace and it's path, as a extension for the default set of modules and components
      * @since  2.16.0
      * @param  string $namespace
      * @param  string $path
@@ -71,8 +71,8 @@ final class Autoloader
     public function load($class)
     {
         // require, as we already know path to this class
-        if (isset($this->classes[$class])) {
-            require $this->classes[$class];
+        if (isset($this->classPaths[$class])) {
+            require $this->classPaths[$class];
             return true;
         }
 
@@ -99,24 +99,25 @@ final class Autoloader
     public function getClassName($name, $type)
     {
         $id = $type.'+'.$name;
-        // check if we already found this module
-        if (isset($this->modules[$id])) {
-            return $this->modules[$id];
+        // check if we already found this class
+        if (isset($this->classNames[$id])) {
+            return $this->classNames[$id];
         }
-        // look for module in registered namespace paths in reverse order
-        // return class name, therfore load module, that was registered last
+        // look for class in registered namespace paths in reverse order
+        // return class name, from last registered namespace
+        // this allows to override default modules
         $namespaces = array_reverse($this->namespaces);
         foreach ($namespaces as $namespace => $path) {
             $dir = rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$name;
             if (is_dir($dir)) {
-                $this->modules[$id] = '\\'.$namespace.'\\'.$type.'\\'.$name.'\\'.$name;
+                $this->classNames[$id] = '\\'.$namespace.'\\'.$type.'\\'.$name.'\\'.$name;
                 break;
             }
         }
-        if (empty($this->modules[$id])) {
+        if (empty($this->classNames[$id])) {
             trigger_error('Canno\'t locate '.$type.' "'.$name.'"', E_USER_ERROR);
         }
-        return $this->modules[$id];
+        return $this->classNames[$id];
     }
 
     /**
@@ -129,8 +130,8 @@ final class Autoloader
     public function getModuleDirectory($name, $type)
     {
         $class = $this->getClassName($name, $type);
-        if (isset($this->classes[$class])) {
-            return dirname($this->classes[$class]);
+        if (isset($this->classPaths[$class])) {
+            return dirname($this->classPaths[$class]);
         } else {
             return dirname($this->getClassPath($class));
         }
@@ -147,7 +148,7 @@ final class Autoloader
         // normalize class names
         $class = ltrim($class, '\\');
 
-        // check if it is one of our classes, bail otherwise
+        // check if it is one of 'our' classes, bail otherwise
         $parts  = explode('\\', $class);
         $vendor = array_shift($parts);
         if (!isset($this->namespaces[$vendor])) {
@@ -156,8 +157,8 @@ final class Autoloader
 
         // find class path and store it for later
         array_unshift($parts, rtrim($this->namespaces[$vendor], DIRECTORY_SEPARATOR));
-        $this->classes[$class] = implode(DIRECTORY_SEPARATOR, $parts).self::CLASS_EXT;
+        $this->classPaths[$class] = implode(DIRECTORY_SEPARATOR, $parts).self::CLASS_EXT;
 
-        return $this->classes[$class];
+        return $this->classPaths[$class];
     }
 }

@@ -73,8 +73,6 @@ class Form extends \kabar\Module\Module\Module
      */
     public function __construct($id, $method = '', $action = '')
     {
-        ServiceLocator::get('Module', 'Fields');
-
         $this->id     = $id;
         $this->name   = $id;
         $this->method = in_array($method, array(self::GET_METHOD, self::POST_METHOD)) ? $method : self::POST_METHOD;

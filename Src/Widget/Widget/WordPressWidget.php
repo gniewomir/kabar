@@ -53,7 +53,7 @@ class WordPressWidget extends \WP_Widget
             )
         );
         // if we are on cached widgetized page, setup widget with WordPress,
-        // but skip setting up it's objects, as it wont be displayed anyway
+        // but skip setting up it's objects, as it won't be displayed anyway
         if (ServiceLocator::get('Module', 'Pages')->isCached()) {
             return;
         }
