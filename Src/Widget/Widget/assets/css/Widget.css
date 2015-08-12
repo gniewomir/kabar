@@ -1,0 +1,32 @@
+.kabar-Widget-Widget-Fields {
+  margin: 1em 0;
+}
+.kabar-Widget-Widget-Fields label {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+.kabar-Widget-Widget-Fields h4 {
+  font-size: 1.5em;
+}
+.kabar-Widget-Widget-Fields .field-help {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.kabar-Widget-Widget-Fields-Checkbox label {
+  line-height: 2em;
+  margin: 0;
+}
+.kabar-Widget-Widget-Fields-Checkbox input {
+  line-height: 2em;
+  margin: 0;
+  margin-right: 0.25em;
+}
+.kabar-Widget-Widget-Fields-SelectMultiple select {
+  width: 100%;
+  min-height: 300px;
+}
+.kabar-Widget-Widget-Fields-Slider .kabar-slider-container {
+  margin-top: 0.5em;
+  width: 98%;
+}

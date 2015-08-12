@@ -1,0 +1,1 @@
+<style id="uwazajpl-inline-styles-css" type="text/css" scoped ><?php echo esc_attr($styles); ?></style>
