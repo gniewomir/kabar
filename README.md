@@ -1,8 +1,8 @@
 # kabar
 
-Basic set of libraries I use to speed up WordPress development contained in plugin.
+Basic set of libraries I use to speed up WordPress development contained in a plugin.
 
-At some point I will provide documentation, but right now it is still work in progress.
+At some point I will provide documentation and usage examples, but right now it is still work in progress.
 
 # Starting modules
 
@@ -18,3 +18,7 @@ Extensions directory should mimic the structure found in Src directory.
     $absolutePathToExtensionsDirectory
 );
 ?>
+
+# Changelog
+
+2.16.0 - Moved project to GitHub and wrapped in plugin
