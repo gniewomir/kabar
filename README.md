@@ -6,18 +6,21 @@ At some point I will provide documentation and usage examples, but right now it 
 
 # Starting modules
 
-<?php \kabar\ServiceLocator::get('Module', 'Styles'); ?>
+```php
+\kabar\ServiceLocator::get('Module', 'Styles');
+```
 
 # Extending modules/components
 
 Extensions directory should mimic the structure found in Src directory.
 
-<?php
+
+```php
 \kabar\ServiceLocator::register(
     'vendornamespace',
     $absolutePathToExtensionsDirectory
 );
-?>
+```
 
 # Changelog
 
