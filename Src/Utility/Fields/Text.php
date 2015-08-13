@@ -1,6 +1,6 @@
 <?php
 /**
- * Textarea field class
+ * Text field class
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
@@ -8,14 +8,14 @@
  * @subpackage Fields
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Textarea field class
+ * Text field class
  */
-class TextArea extends Text
+class Text extends AbstractField
 {
 
     /**
@@ -49,7 +49,7 @@ class TextArea extends Text
     protected $help;
 
     /**
-     * Setup field
+     * Setup text field
      * @param string $slug
      * @param string $title
      * @param string $default
@@ -61,7 +61,33 @@ class TextArea extends Text
         $this->title    = $title;
         $this->default  = $default;
         $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'TextArea.php';
+        $this->template = $this->getTemplatesDir().'Text.php';
+    }
+
+    /**
+     * Get field value
+     * @return string
+     */
+    public function get()
+    {
+        return $this->storage->retrieve($this->getSlug());
+    }
+
+    /**
+     * Render field
+     * @return /kabar/Component/Template/Template
+     */
+    public function render()
+    {
+        $template = ServiceLocator::getNew('Component', 'Template');
+        $template($this->template);
+        $template->id       = $this->storage->getFieldId($this->getSlug());
+        $template->cssClass = $this->getCssClass();
+        $template->title    = $this->title;
+        $template->help     = $this->help;
+        $value              = $this->get();
+        $template->value    = empty($value) ? $this->default : $value;
+        return $template;
     }
 
     /**

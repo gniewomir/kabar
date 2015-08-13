@@ -1,6 +1,6 @@
 <?php
 /**
- * HTTPPost storage
+ * Post meta storage
  *
  * WRANING: As utility class it don't perform any security checks. It is responsibility of parent module,
  * to check nonce, user premissions etc.
@@ -11,19 +11,28 @@
  * @subpackage FormFieldsStorage
  */
 
-namespace kabar\Utils\Storage;
+namespace kabar\Utility\Storage;
 
 /**
  * Class for storig data in post meta
  */
-class HTTPPost implements InterfaceStorage
+class PostMeta implements InterfaceStorage
 {
+    /**
+     * @see https://codex.wordpress.org/Function_Reference/get_post_meta
+     */
+    const SINGLE = true;
+
+    /**
+     * @see https://codex.wordpress.org/Function_Reference/get_post_meta
+     */
+    const HIDE_CUSTOM_FIELD = '_';
 
     /**
      * Prefix for keys
      * @var string
      */
-    protected $prefix = '';
+    protected $prefix;
 
     /**
      * Setup storage
@@ -75,18 +84,35 @@ class HTTPPost implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        $key = $this->prefix.$key;
-        $_POST[$key] = $value;
+        if (isset($_REQUEST['post_ID'])) {
+            // this is a save request from edition screen
+            $postId = intval($_REQUEST['post_ID']);
+        }
+
+        if (empty($postId)) {
+            trigger_error('Cannot determine post ID. You cannot store post meta outside save request from edition screen.', E_USER_WARNING);
+            return;
+        }
+
+        $key = self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
+        update_post_meta($postId, $key, $value);
     }
 
     /**
      * Retrieve stored value
      * @param  string $key
      * @return mixed
+     * @see    https://codex.wordpress.org/Function_Reference/get_post_meta
     */
     public function retrieve($key)
     {
-        $key = $this->prefix.$key;
-        return isset($_POST[$key]) ? $_POST[$key] : null;
+        global $post;
+        if (empty($post) || empty($post->ID)) {
+            trigger_error('Cannot determine post ID. You cannot retrieve post meta outside WordPress loop.', E_USER_WARNING);
+            return;
+        }
+
+        $key = self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
+        return get_post_meta($post->ID, $key, self::SINGLE);
     }
 }

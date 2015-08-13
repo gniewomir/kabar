@@ -1,6 +1,6 @@
 jQuery(document).ready( function(){
 
-    jQuery('.kabar-Utils-Fields-ColorPicker').each(function() {
+    jQuery('.kabar-Utility-Fields-ColorPicker').each(function() {
         var id = '#'+jQuery(this).find('input').attr('id');
         jQuery(id).colorPicker({
             customBG: '#FFF',

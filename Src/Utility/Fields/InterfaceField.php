@@ -1,6 +1,6 @@
 <?php
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 /**
  * Interface for fields
@@ -36,7 +36,7 @@ interface InterfaceField
 
     /**
      * Binds storage object to this field
-     * @param \kabar\Utils\Storage\InterfaceStorage $storage
+     * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
-    public function setStorage(\kabar\Utils\Storage\InterfaceStorage $storage);
+    public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage);
 }

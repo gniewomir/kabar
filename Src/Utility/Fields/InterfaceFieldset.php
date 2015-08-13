@@ -1,6 +1,6 @@
 <?php
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 /**
  * Interface for fields

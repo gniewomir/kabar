@@ -1,6 +1,6 @@
 (function(){
     jQuery( document ).ready(function() {
-        var $sliders = jQuery('.kabar-Utils-Fields-Slider');
+        var $sliders = jQuery('.kabar-Utility-Fields-Slider');
         $sliders.each(function(index) {
             var id             = jQuery($sliders[index]).find('input').attr('id'),
                 dataObjectName = id.replace(/-/g,'_'),

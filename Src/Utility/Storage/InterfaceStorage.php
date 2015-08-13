@@ -8,7 +8,7 @@
  * @subpackage FormFieldsStorage
  */
 
-namespace kabar\Utils\Storage;
+namespace kabar\Utility\Storage;
 
 /**
  * Storage interface

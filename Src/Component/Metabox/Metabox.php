@@ -69,7 +69,7 @@ class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Metabox storage object
-     * @var \kabar\Utils\Storage\InterfaceStorage
+     * @var \kabar\Utility\Storage\InterfaceStorage
      */
     protected $storage;
 
@@ -92,7 +92,7 @@ class Metabox extends \kabar\Module\Module\Module
         $this->screens  = is_array($screen) ? $screen : array($screen);
         $this->context  = $context;
         $this->priority = $priority;
-        $this->nonce    = new \kabar\Utils\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
+        $this->nonce    = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
 
         add_action('add_meta_boxes', array($this, 'add'));
         add_action('save_post', array($this, 'update'));
@@ -141,11 +141,11 @@ class Metabox extends \kabar\Module\Module\Module
     /**
      * Adds field to metabox
      * @since 2.0.0
-     * @param \kabar\Utils\Fields\InterfaceField $field
+     * @param \kabar\Utility\Fields\InterfaceField $field
      */
-    public function addField(\kabar\Utils\Fields\InterfaceFormPart $field)
+    public function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {
-        if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
             $field->setStorage($this->getStorage());
         }
         $slug                = $field->getSlug();
@@ -155,9 +155,9 @@ class Metabox extends \kabar\Module\Module\Module
     /**
      * Adds fields to metabox
      * @since 2.0.0
-     * @param \kabar\Utils\Fields\InterfaceField $firstField First of multiple possibile fields instances
+     * @param \kabar\Utility\Fields\InterfaceField $firstField First of multiple possibile fields instances
      */
-    public function addFields(\kabar\Utils\Fields\InterfaceField $firstField)
+    public function addFields(\kabar\Utility\Fields\InterfaceField $firstField)
     {
         $fields = func_get_args();
         foreach ($fields as $field) {
@@ -230,7 +230,7 @@ class Metabox extends \kabar\Module\Module\Module
 
         // save all fields
         foreach ($this->fields as $field) {
-            if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+            if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
                 $field->save();
             }
         }
@@ -249,11 +249,11 @@ class Metabox extends \kabar\Module\Module\Module
     /**
      * Set storage object for fields
      * @since 2.15.0
-     * @param \kabar\Utils\Storage\InterfaceStorage $storage
+     * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
-    public function setStorage(\kabar\Utils\Storage\InterfaceStorage $storage)
+    public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage)
     {
-        if ($this->storage instanceof \kabar\Utils\Storage\InterfaceStorage) {
+        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
             trigger_error('Metabox storage already set!', E_USER_ERROR);
         }
         $this->storage = $storage;
@@ -265,12 +265,12 @@ class Metabox extends \kabar\Module\Module\Module
      * We want to create storage as late as we can, because it needs to determine current post id. So we instantiat it JIT.
      *
      * @since 2.0.0
-     * @return \kabar\Utils\Storage\PostMeta
+     * @return \kabar\Utility\Storage\PostMeta
      */
     protected function getStorage()
     {
-        if (!$this->storage instanceof \kabar\Utils\Storage\InterfaceStorage) {
-            $this->storage = new \kabar\Utils\Storage\PostMeta($this->id.'-');
+        if (!$this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
+            $this->storage = new \kabar\Utility\Storage\PostMeta($this->id.'-');
         }
 
         return $this->storage;

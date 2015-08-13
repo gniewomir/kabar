@@ -1,6 +1,6 @@
 <?php
 /**
- * Text field class
+ * Select field class
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
@@ -8,14 +8,14 @@
  * @subpackage Fields
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Text field class
+ * Handles redering select field, keeping text field save/get methods
  */
-class Text extends AbstractField
+class Select extends Text
 {
 
     /**
@@ -26,13 +26,19 @@ class Text extends AbstractField
 
     /**
      * Field title
-     * @var string
+     * @var stiring
      */
     protected $title;
 
     /**
+     * Select field options
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Field default value
-     * @var string
+     * @var mixed
      */
     protected $default;
 
@@ -43,34 +49,22 @@ class Text extends AbstractField
     protected $template;
 
     /**
-     * Additional description of field
-     * @var string
-     */
-    protected $help;
-
-    /**
-     * Setup text field
+     * Setup field
+     *
+     * Passing null as default value will add empty option to select field which will be selected by default
+     *
      * @param string $slug
      * @param string $title
-     * @param string $default
-     * @param string $help
+     * @param array  $options Options to populate select field in label => value pairs
+     * @param mixed  $default
      */
-    public function __construct($slug, $title, $default = '', $help = '')
+    public function __construct($slug, $title, $options, $default = null)
     {
         $this->slug     = $slug;
         $this->title    = $title;
+        $this->options  = $options;
         $this->default  = $default;
-        $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'Text.php';
-    }
-
-    /**
-     * Get field value
-     * @return string
-     */
-    public function get()
-    {
-        return $this->storage->retrieve($this->getSlug());
+        $this->template = $this->getTemplatesDir().'Select.php';
     }
 
     /**
@@ -84,28 +78,10 @@ class Text extends AbstractField
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
-        $template->help     = $this->help;
-        $value              = $this->get();
+        $template->options  = $this->options;
+        $template->default  = $this->default;
+        $value = $this->get();
         $template->value    = empty($value) ? $this->default : $value;
         return $template;
-    }
-
-    /**
-     * Save new field value
-     * @return string
-     */
-    public function save()
-    {
-        if (is_null($this->storage->updated($this->getSlug()))) {
-            return;
-        }
-
-        // Sanitize user input.
-        $value = sanitize_text_field($this->storage->updated($this->getSlug()));
-
-        // store value
-        $this->storage->store($this->getSlug(), $value);
-
-        return $value;
     }
 }

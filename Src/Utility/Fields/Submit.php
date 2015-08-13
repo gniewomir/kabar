@@ -1,6 +1,6 @@
 <?php
 /**
- * Header field
+ * Submit button field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
@@ -8,14 +8,14 @@
  * @subpackage Fields
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Header field class
+ * Submit button field
  */
-class Header extends AbstractFormPart
+class Submit extends AbstractFormPart
 {
 
     /**
@@ -37,7 +37,7 @@ class Header extends AbstractFormPart
     protected $template;
 
     /**
-     * Setup text field
+     * Setup submit button
      * @param string $slug
      * @param string $title
      */
@@ -45,7 +45,7 @@ class Header extends AbstractFormPart
     {
         $this->slug     = $slug;
         $this->title    = $title;
-        $this->template = $this->getTemplatesDir().'Header.php';
+        $this->template = $this->getTemplatesDir().'Submit.php';
     }
 
     /**
@@ -57,6 +57,7 @@ class Header extends AbstractFormPart
         $template = ServiceLocator::getNew('Component', 'Template');
         $template($this->template);
         $template->title    = $this->title;
+        $template->id       = $this->getSlug();
         $template->cssClass = $this->getCssClass();
         return $template;
     }

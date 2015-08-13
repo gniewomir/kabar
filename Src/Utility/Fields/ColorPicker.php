@@ -1,21 +1,20 @@
 <?php
 /**
- * Image upload field
+ * ColorPicker field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
  * @package    kabar
  * @subpackage Fields
  */
-
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Handles redering & updating image uploads field
+ * Color picker field class
  */
-class Image extends AbstractField
+class ColorPicker extends AbstractField
 {
 
     const IN_FOOTER = true;
@@ -49,17 +48,17 @@ class Image extends AbstractField
      * @param string $slug
      * @param string $title
      * @param string $default
-     * @param string $help
      */
-    public function __construct($slug, $title, $default = '', $help = '')
+    public function __construct($slug, $title, $default = '#FFFFFF')
     {
         $this->slug     = $slug;
         $this->title    = $title;
         $this->default  = $default;
-        $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'Image.php';
+        $this->template = $this->getTemplatesDir().'ColorPicker.php';
+
 
         add_action('admin_enqueue_scripts', array($this, 'addScripts'));
+
     }
 
     /**
@@ -72,40 +71,59 @@ class Image extends AbstractField
     }
 
     /**
-     * Adds media uploader scripts
+     * Adds color picker scripts
      */
     public function addScripts()
     {
-        wp_enqueue_media();
+        /**
+         * @link http://www.dematte.at/tinyColorPicker/
+         * @link https://github.com/PitPik/tinyColorPicker
+         */
         wp_enqueue_script(
-            $this->getLibrarySlug().'-metabox-media-upload-script',
-            $this->getAssetsUri().'js/Image.js',
-            array('media-upload', 'thickbox'),
+            'jquery-color-picker',
+            $this->getAssetsUri().'js/vendor/jqColorPicker.min.js',
+            array(),
+            $this->getLibraryVersion(),
+            self::IN_FOOTER
+        );
+        wp_enqueue_script(
+            $this->getLibrarySlug().'-color-picker',
+            $this->getAssetsUri().'js/ColorPicker.js',
+            array('jquery-color-picker'),
             $this->getLibraryVersion(),
             self::IN_FOOTER
         );
     }
 
     /**
-     * Render text
+     * Render field
      * @return /kabar/Component/Template/Template
      */
     public function render()
     {
         $template = ServiceLocator::getNew('Component', 'Template');
         $template($this->template);
-        $template->id             = $this->storage->getFieldId($this->getSlug());
-        $template->cssClass       = $this->getCssClass();
-
-        $fieldClass               = explode(' ', $template->cssClass);
-        $fieldClass               = end($fieldClass);
-        $template->buttonCssClass = $fieldClass.'-button';
-
-        $template->title          = $this->title;
-        $template->help           = $this->help;
-        $value                    = $this->get();
-        $template->value          = empty($value) ? $this->default : $value;
+        $template->id          = $this->storage->getFieldId($this->getSlug());
+        $template->cssClass    = $this->getCssClass();
+        $template->librarySlug = $this->getLibrarySlug();
+        $template->title       = $this->title;
+        $value                 = $this->get();
+        $template->value       = empty($value) ? $this->default : $value;
         return $template;
+    }
+
+    /**
+     * Checks if provided value is valid color
+     * @param  string $value
+     * @return boolean
+     */
+    public function isValidHexColor($value)
+    {
+        if (preg_match('/^#[a-f0-9]{6}$/i', $value)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -119,7 +137,7 @@ class Image extends AbstractField
 
     /**
      * Save new field value
-     * @return mixed
+     * @return string
      */
     public function save()
     {
@@ -127,8 +145,14 @@ class Image extends AbstractField
             return;
         }
 
+        if ($this->isValidHexColor($this->storage->updated($this->getSlug()))) {
+            $value = $this->storage->updated($this->getSlug());
+        } else {
+            $value = $this->default;
+        }
+
         // Sanitize user input.
-        $value = esc_url_raw($this->storage->updated($this->getSlug()), array('http','https'));
+        $value = sanitize_text_field($value);
 
         // store value
         $this->storage->store($this->getSlug(), $value);

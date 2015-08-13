@@ -57,13 +57,13 @@ class Form extends \kabar\Module\Module\Module
 
     /**
      * Form nonce field
-     * @var \kabar\Utils\Fields\Nonce
+     * @var \kabar\Utility\Fields\Nonce
      */
     protected $nonce;
 
     /**
      * Form storage object
-     * @var \kabar\Utils\Storage\InterfaceStorage
+     * @var \kabar\Utility\Storage\InterfaceStorage
      */
     protected $storage;
 
@@ -82,7 +82,7 @@ class Form extends \kabar\Module\Module\Module
         }
 
         $this->action = htmlspecialchars($action);
-        $this->nonce  = new \kabar\Utils\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
+        $this->nonce  = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
     }
 
     /**
@@ -97,11 +97,11 @@ class Form extends \kabar\Module\Module\Module
     /**
      * Adds field to form
      * @since 2.0.0
-     * @param \kabar\Utils\Fields\InterfaceFormPart $field
+     * @param \kabar\Utility\Fields\InterfaceFormPart $field
      */
-    public function addField(\kabar\Utils\Fields\InterfaceFormPart $field)
+    public function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {
-        if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
             $field->setStorage($this->getStorage());
         }
         $slug                = $field->getSlug();
@@ -111,9 +111,9 @@ class Form extends \kabar\Module\Module\Module
     /**
      * Adds fields to form
      * @since 2.0.0
-     * @param \kabar\Utils\Fields\InterfaceFormPart $firstField First of multiple possibile fields instances
+     * @param \kabar\Utility\Fields\InterfaceFormPart $firstField First of multiple possibile fields instances
      */
-    public function addFields(\kabar\Utils\Fields\InterfaceFormPart $firstField)
+    public function addFields(\kabar\Utility\Fields\InterfaceFormPart $firstField)
     {
         $fields = func_get_args();
         foreach ($fields as $field) {
@@ -167,12 +167,12 @@ class Form extends \kabar\Module\Module\Module
 
         $form = array();
         foreach ($this->fields as $slug => $field) {
-            if ($field instanceof \kabar\Utils\Fields\InterfaceFieldset) {
+            if ($field instanceof \kabar\Utility\Fields\InterfaceFieldset) {
                 $fieldsetFields = $field->get();
                 foreach ($fieldsetFields as $fieldsetField) {
                     $form[$fieldsetField->getSlug()] = $fieldsetField->save();
                 }
-            } else if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+            } else if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
                 $form[$field->getSlug()] = $field->save();
             }
         }
@@ -196,12 +196,12 @@ class Form extends \kabar\Module\Module\Module
      * We want to create storage as late as we can, because it needs to determine current post id. So we instantiat it JIT.
      *
      * @since 2.0.0
-     * @return \kabar\Utils\Storage\PostMeta
+     * @return \kabar\Utility\Storage\PostMeta
      */
     protected function getStorage()
     {
         if (!$this->storage instanceof InterfaceStorage) {
-            $this->storage = new \kabar\Utils\Storage\HTTPPost;
+            $this->storage = new \kabar\Utility\Storage\HTTPPost;
             $this->storage->setPrefix($this->id.'-');
         }
 

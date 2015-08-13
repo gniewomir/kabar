@@ -22,6 +22,6 @@ jQuery(document).ready( function(){
             }
         );
     }
-    bindMediaLibrary('.kabar-Utils-Fields-Image-button');
+    bindMediaLibrary('.kabar-Utility-Fields-Image-button');
 });
 

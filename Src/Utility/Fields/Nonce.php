@@ -9,7 +9,7 @@
  * @see        https://codex.wordpress.org/WordPress_Nonces
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 

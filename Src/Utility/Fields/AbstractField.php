@@ -9,7 +9,7 @@
  * @see        https://codex.wordpress.org/Function_Reference/add_meta_box
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
@@ -26,7 +26,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Field data storage
-     * @var \kabar\Utils\Storage\InterfaceStorage
+     * @var \kabar\Utility\Storage\InterfaceStorage
      */
     protected $storage;
 
@@ -42,9 +42,9 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Binds storage object to this field
-     * @param \kabar\Utils\Storage\InterfaceStorage $storage
+     * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
-    public function setStorage(\kabar\Utils\Storage\InterfaceStorage $storage)
+    public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage)
     {
         $this->storage = $storage;
     }

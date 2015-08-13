@@ -36,9 +36,12 @@ class Styles extends \kabar\Module\Module\Module
     public function __construct()
     {
         $this->cache = ServiceLocator::get('Module', 'Cache');
+
+        // if we don't have cached inline styles force other modules to skip cache
         if (!$this->cache->isCached($this->getCacheId(), $this->getModuleName())) {
             $this->cache->startPurge();
         }
+
         add_action('save_post', array($this, 'clearStylesCache'), 8, 1);
         add_action('delete_post', array($this, 'clearStylesCache'), 8, 1);
     }
@@ -109,6 +112,10 @@ class Styles extends \kabar\Module\Module\Module
      */
     public function render()
     {
-        echo $this->cache->cacheHtml($this->getCacheId(), $this->getModuleName(), array($this, 'getStyles'));
+        echo $this->cache->cacheHtml(
+            $this->getCacheId(),
+            $this->getModuleName(),
+            array($this, 'getStyles')
+        );
     }
 }

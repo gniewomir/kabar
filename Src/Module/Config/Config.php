@@ -49,7 +49,7 @@ class Config extends \kabar\Module\Module\Module
         add_action('customize_register', array($this, 'register'));
         add_action('customize_save_after', array($this, 'refreshConfig'), 9);
 
-        // get cached
+        // get cache
         $this->cache = ServiceLocator::get('Module', 'Cache');
 
         // config array

@@ -9,7 +9,7 @@
  * @see        https://codex.wordpress.org/Function_Reference/add_meta_box
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 

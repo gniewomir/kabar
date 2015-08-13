@@ -8,7 +8,7 @@
  * @subpackage Fields
  */
 
-namespace kabar\Utils\Fields;
+namespace kabar\Utility\Fields;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
@@ -50,7 +50,7 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Fieldset storage shared with fields
-     * @var \kabar\Utils\Fields\Storage
+     * @var \kabar\Utility\Fields\Storage
      */
     protected $storage;
 
@@ -59,9 +59,9 @@ class Fieldset extends AbstractField implements InterfaceFieldset
      * @param string $slug
      * @param string $title
      * @param array  $options
-     * @param \kabar\Utils\Fields\InterfaceFormPart $firstOfManyField
+     * @param \kabar\Utility\Fields\InterfaceFormPart $firstOfManyField
      */
-    public function __construct($slug, $title, $options, \kabar\Utils\Fields\InterfaceFormPart $firstOfManyField)
+    public function __construct($slug, $title, $options, \kabar\Utility\Fields\InterfaceFormPart $firstOfManyField)
     {
         $this->slug    = $slug;
         $this->title   = empty($title) ? '' : $title;
@@ -73,7 +73,7 @@ class Fieldset extends AbstractField implements InterfaceFieldset
         array_shift($fields);
 
         foreach ($fields as $field) {
-            if (!$field instanceof \kabar\Utils\Fields\InterfaceFormPart) {
+            if (!$field instanceof \kabar\Utility\Fields\InterfaceFormPart) {
                 trigger_error('Passed argument is not implementing "InterfaceFormPart" interface', E_USER_ERROR);
                 continue;
             }
@@ -84,13 +84,13 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Binds storage object to fieldset and its fields
-     * @param \kabar\Utils\Storage\InterfaceStorage $storage
+     * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
-    public function setStorage(\kabar\Utils\Storage\InterfaceStorage $storage)
+    public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage)
     {
         $this->storage = $storage;
         foreach ($this->fields as $field) {
-            if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+            if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
                 $field->setStorage($this->storage);
             }
         }
@@ -132,7 +132,7 @@ class Fieldset extends AbstractField implements InterfaceFieldset
     {
         // save all fields
         foreach ($this->fields as $field) {
-            if ($field instanceof \kabar\Utils\Fields\InterfaceField) {
+            if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
                 $field->save();
             }
         }
