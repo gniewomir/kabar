@@ -35,7 +35,7 @@ final class Autoloader
      * @since 2.16.0
      * @var array
      */
-    private $classNames  = array();
+    private $classNames = array();
 
     /**
      * Register autoloader

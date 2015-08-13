@@ -155,7 +155,7 @@ class GoogleMap extends \kabar\Module\Module\Module
         }
 
         if (is_string($coords)) {
-            $coords          = $this->parseGoogleMapsUrl($coords);
+            $coords = $this->parseGoogleMapsUrl($coords);
             if ($coords === false) {
                 $template = ServiceLocator::getNew('Component', 'Template');
                 $template->cssClass = $this->getCssClass();

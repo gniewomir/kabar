@@ -141,7 +141,7 @@ class Metabox extends \kabar\Module\Module\Module
     /**
      * Adds field to metabox
      * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceField $field
+     * @param \kabar\Utility\Fields\InterfaceFormPart $field
      */
     public function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {

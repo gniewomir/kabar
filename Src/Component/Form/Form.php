@@ -124,8 +124,6 @@ class Form extends \kabar\Module\Module\Module
     /**
      * Renders form content
      * @since 2.0.0
-     * @param \WP_Post $post
-     * @param array    $metabox
      */
     public function render()
     {
@@ -196,7 +194,7 @@ class Form extends \kabar\Module\Module\Module
      * We want to create storage as late as we can, because it needs to determine current post id. So we instantiat it JIT.
      *
      * @since 2.0.0
-     * @return \kabar\Utility\Storage\PostMeta
+     * @return \kabar\Utility\Storage\HTTPPost
      */
     protected function getStorage()
     {

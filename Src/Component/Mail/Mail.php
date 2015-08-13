@@ -27,13 +27,13 @@ class Mail extends \kabar\Module\Module\Module
      * Subject of this email
      * @var string
      */
-    public $subject   = '';
+    public $subject = '';
 
     /**
      * Message
      * @var string
      */
-    public $message   = '';
+    public $message = '';
 
     /**
      * Headers
@@ -99,7 +99,7 @@ class Mail extends \kabar\Module\Module\Module
 
     /**
      * Send email
-     * @return void
+     * @return boolean
      */
     public function send()
     {
@@ -124,7 +124,7 @@ class Mail extends \kabar\Module\Module\Module
 
     /**
      * Sanitize other
-     * @param  string $data
+     * @param string $email
      * @return string
      */
     public function filterEmail($email)
@@ -143,7 +143,7 @@ class Mail extends \kabar\Module\Module\Module
 
     /**
      * Sanitize other
-     * @param  string $data
+     * @param string $name
      * @return string
      */
     public function filterName($name)
