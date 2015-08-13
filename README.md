@@ -6,6 +6,12 @@ Documentation and examples are work in progress, so I advice against trying to u
 
 I will be happy seeing pull requests to development branch anyway. Coding standard Symfony2.
 
+Development branch:
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/?branch=develop)
+
+[![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/develop)
+
 ## What I wanted to accomplish
 
 1. Easy way to create reusable modules that I can use across multiple projects.

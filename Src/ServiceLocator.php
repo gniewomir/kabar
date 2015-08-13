@@ -28,8 +28,7 @@ final class ServiceLocator
 
     /**
      * Setups modules library
-     * @param string $customModulesPath      Path to directory where custom theme modules are stored
-     * @param string $customModulesNamespace Vendor namespace for custom modules
+     * @return void
      */
     public static function setup()
     {
@@ -46,26 +45,23 @@ final class ServiceLocator
      * Register namespace and path for module location
      * @since 2.16.0
      * @param  string $namespace
-     * @param  string $type
      * @param  string $path
      * @return void
      */
     public static function register($namespace, $path)
     {
-        if (!isset(self::$modules[self::AUTOLOADER])) {
-            trigger_error('You have to setup library first. Autoloader not found.', E_USER_ERROR);
-        }
-        self::$modules[self::AUTOLOADER]->register($namespace, $path);
+        self::getAutoloader()->register($namespace, $path);
     }
 
     /**
      * Creates and stores or returns already created module instance
-     * @param  string $name Module name
+     * @param  string $type
+     * @param  string $name
      * @return object
      */
     public static function get($type, $name)
     {
-        $class = self::$modules[self::AUTOLOADER]->getClassName(
+        $class = self::getAutoloader()->getClassName(
             $name,
             $type
         );
@@ -78,12 +74,13 @@ final class ServiceLocator
 
     /**
      * Creates and stores or returns already created module instance
-     * @param  string $name Module name
+     * @param  string $type
+     * @param  string $name
      * @return object
      */
     public static function getNew($type, $name)
     {
-        $class = self::$modules[self::AUTOLOADER]->getClassName(
+        $class = self::getAutoloader()->getClassName(
             $name,
             $type
         );
@@ -96,12 +93,13 @@ final class ServiceLocator
 
     /**
      * Creates and stores or returns already created module instance
-     * @param  string $name Module name
+     * @param  string $type
+     * @param  string $name
      * @return object
      */
     public static function isLoaded($type, $name)
     {
-        $class = self::$modules[self::AUTOLOADER]->getClassName(
+        $class = self::getAutoloader()->getClassName(
             $name,
             $type
         );
@@ -117,7 +115,7 @@ final class ServiceLocator
      */
     public static function getModuleDirectory($name, $type)
     {
-        return self::$modules[self::AUTOLOADER]->getModuleDirectory(
+        return self::getAutoloader()->getModuleDirectory(
             $name,
             $type
         );
@@ -132,6 +130,18 @@ final class ServiceLocator
     }
 
     /**
+     * Returns autoloader instance
+     * @return \kabar\Autoloader
+     */
+    private static function getAutoloader()
+    {
+        if (!isset(self::$modules[self::AUTOLOADER])) {
+            trigger_error('You have to setup library first. Autoloader not found.', E_USER_ERROR);
+        }
+        return self::$modules[self::AUTOLOADER];
+    }
+
+    /**
      * Creates and stores or returns already created object instance
      * @param  string $class
      * @param  array  $arguments
@@ -141,7 +151,7 @@ final class ServiceLocator
     {
         // Trigger error if somebody is trying to pass arguments to already instantiated class
         if (!empty($arguments) && isset(self::$modules[$class])) {
-            trigger_error('You cannot pass arguments to module "'.$class.'" constructor, it was already created.');
+            trigger_error('You cannot pass arguments to module "'.$class.'" constructor, it was already created.', E_USER_ERROR);
         }
 
         // Return module if already instantiated

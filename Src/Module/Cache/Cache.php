@@ -35,7 +35,7 @@ class Cache
      * @see http://myatus.com/p/wordpress-caching-and-nonce-lifespan/
      * @see https://codex.wordpress.org/Function_Reference/set_transient
      */
-    const EXPIRATION         = 39600; // 60 * 60 * 11 = 11h
+    const EXPIRATION = 39600; // 60 * 60 * 11 = 11h
 
     /**
      * If we should start purging cache

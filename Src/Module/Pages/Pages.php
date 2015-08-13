@@ -489,7 +489,6 @@ class Pages extends \kabar\Module\Module\Module
         );
     }
 
-
     /**
      * CACHING METHODS
      */

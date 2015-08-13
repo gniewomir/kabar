@@ -115,7 +115,7 @@ final class Autoloader
             }
         }
         if (empty($this->classNames[$id])) {
-            trigger_error('Canno\'t locate '.$type.' "'.$name.'"', E_USER_ERROR);
+            trigger_error('Can\'t locate '.$type.' "'.$name.'"', E_USER_ERROR);
         }
         return $this->classNames[$id];
     }

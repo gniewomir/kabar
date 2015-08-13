@@ -37,7 +37,17 @@ class Config extends \kabar\Module\Module\Module
      */
     protected function getConfig()
     {
-        return array();
+        return array(
+            'widgetizedpages' => array(
+                'sectionTitle'         => __('Landing pages', $this->getLibrarySlug()),
+                'sectionCapability'    => 'update_core',
+                'disableDefaultWidgets' => array(
+                    'type'    => 'checkbox',
+                    'default' => true,
+                    'label'   => __('Disable default WordPress widgets', $this->getLibrarySlug()),
+                )
+            )
+        );
     }
 
     /**
