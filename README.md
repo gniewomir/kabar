@@ -2,9 +2,9 @@
 
 Basic set of libraries I use to speed up WordPress development contained in a plugin.
 
-Documentation and examples are work in progress, so I advice against trying to use it right now. If you are more experienced than me (very probable), you probably have your own solution, and if not, spare youtself a frustration and wait for proper guide explaining how and why in that particular way.
+Documentation and examples are work in progress, so I advice against trying to use it right now. If you are more experienced than me (very probable), you probably have your own solution, and if not, spare youtself frustration and wait for proper guide explaining how and why things are done in that particular way.
 
-I will be happy seeing pull requests anyway. Coding standard Symfony2.
+I will be happy seeing pull requests to development branch anyway. Coding standard Symfony2.
 
 ## What I wanted to accomplish
 
@@ -36,7 +36,7 @@ Multiple instances per request means that you probably should use ServiceLocator
 
 ### Namespaces, file names, and paths
 
-Library provides basic set of modules, components and utility classes, that you can replace or extend. To do this you need register namespace and path for them. 'kabar' namespace and it's path is registered by default.
+Library provides basic set of modules, components and utility classes that you can replace or extend. To do this you need register namespace and path for them. 'kabar' namespace and it's path is registered by default.
 
 ```php
 <?php
@@ -73,7 +73,7 @@ class ModuleName {
 ?>
 ```
 
-Then it checks all registered pairs VendorNamespace/path in reverse order (registered last will be tested first) if in provided path exists a directory matching scheme explained above ( $extensionsDirectory.'/ModuleType/ModuleName/ ).
+Then it checks all registered pairs VendorNamespace/path in reverse order (registered last will be tested first). If in path for tested namespace exists a directory matching scheme explained above ( $extensionsDirectory.'/ModuleType/ModuleName/ ) module placed there will be loaded, and used from now on.
 
 For example, if you want to replace or extend core 'Config' module, you just register your namespace and path, and then, when you will try to get 'Config' module instance, it will retrieve your version instead default one.
 
