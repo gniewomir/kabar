@@ -22,7 +22,7 @@ I will be happy seeing pull requests to development branch anyway. Coding standa
 * Components     - provide utility object like template, form or metabox (multiple instances per request - used by modules)
 * Utility        - at the moment form fields and form storage classes.
 
-One instance per request means that you probably should use ServiceLocator::get($moduleType, $moduleName) method to access is. You probably dont wan't 'Fancybox' module loaded twice. But library doesn't enforce it in any way.
+One instance per request means that you probably should use ServiceLocator::get($moduleType, $moduleName) method to access is, as it will create instance and return it in all subsequent calls. You probably dont wan't 'Fancybox' module loaded twice. But library doesn't enforce it in any way.
 
 ```php
 <?php
@@ -30,7 +30,7 @@ One instance per request means that you probably should use ServiceLocator::get(
 ?>
 ```
 
-Multiple instances per request means that you probably should use ServiceLocator::getNew($moduleType, $componentName) method to get this library part, as there is no point of storing diffrent instances of component - for example - 'Template'. They live and die for their respectable modules.
+Multiple instances per request means that you probably should use ServiceLocator::getNew($moduleType, $componentName) method to get this library part, as there is no point of storing diffrent instances of component - for example - 'Template'. They live and die for their respectable modules. getNew will component, create and return instance of it, but not store it lige get method does.
 
 ## Conventions
 
