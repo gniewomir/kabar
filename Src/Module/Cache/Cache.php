@@ -137,16 +137,17 @@ class Cache
      * @param  string          $id
      * @param  string          $type
      * @param  string|callable $callback
+     * @param  array           $params
      * @return string
      */
-    public function cacheHtml($id, $type, callable $callback)
+    public function cacheHtml($id, $type, callable $callback, $params = array())
     {
         // return cached
         if ($this->isCacheable() && $this->isCached($id, $type)) {
             return $this->get($id, $type).'<!-- cached -->';
         }
         // fetch and cache
-        $payload = call_user_func($callback);
+        $payload = call_user_func_array($callback, $params);
         if ($payload !== false) {
             $this->set($id, $type, $payload);
             return $payload.'<!-- just cached -->';

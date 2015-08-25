@@ -52,11 +52,6 @@ class WordPressWidget extends \WP_Widget
                 'classname'   => $this->config['css_classes'],
             )
         );
-        // if we are on cached widgetized page, setup widget with WordPress,
-        // but skip setting up it's objects, as it won't be displayed anyway
-        if (ServiceLocator::get('Module', 'Pages')->isCached()) {
-            return;
-        }
         $this->fieldsCollection = $this->getParentModule()->fields(new FieldsCollection($this));
         add_action('template_redirect', array($this, 'setupTemplates'));
     }
@@ -67,7 +62,7 @@ class WordPressWidget extends \WP_Widget
      */
     public function setupTemplates()
     {
-        $sidebars = ServiceLocator::get('Module', 'Pages')->getSidebars('active');
+        $sidebars = wp_get_sidebars_widgets();
         foreach ($sidebars as $sidebar => $widgets) {
             foreach ($widgets as $index => $widgetId) {
                 if (strpos($widgetId, $this->config['id']) === 0) {
@@ -110,7 +105,7 @@ class WordPressWidget extends \WP_Widget
      */
     public function form($instance)
     {
-        $this->fieldsCollection->renderForm($instance);
+        $this->fieldsCollection->render($instance);
     }
 
     /**

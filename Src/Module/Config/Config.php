@@ -5,7 +5,7 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.10.0
  * @package    kabar
- * @subpackage kabar_modules
+ * @subpackage Modules
  */
 
 namespace kabar\Module\Config;
@@ -54,13 +54,13 @@ class Config extends \kabar\Module\Module\Module
      * Setup customization screen
      * @since 2.11.0
      */
-    public function __construct()
+    public function __construct(\kabar\Module\Cache\Cache $cache)
     {
         add_action('customize_register', array($this, 'register'));
         add_action('customize_save_after', array($this, 'refreshConfig'), 9);
 
         // get cache
-        $this->cache = ServiceLocator::get('Module', 'Cache');
+        $this->cache = $cache;
 
         // config array
         $this->config = $this->getConfig();

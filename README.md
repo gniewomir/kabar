@@ -148,6 +148,10 @@ Documentation coming soon.
 
 # Changelog
 
+### 2.17.1
+* Added dedicated module for widgetized pages sidebars to simplify pages module
+* Moved cache purging for sidebars to separate class
+
 ### 2.16.1
 * Change utility classes naming scheme
 * Updated documentation (work in progress)

@@ -5,7 +5,7 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      1.0.0
  * @package    kabar
- * @subpackage modules
+ * @subpackage Modules
  */
 
 namespace kabar\Module\Module;

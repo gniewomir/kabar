@@ -14,7 +14,7 @@ namespace kabar;
  */
 final class ServiceLocator
 {
-    const VERSION          = '2.16.1';
+    const VERSION          = '2.17.1';
     const VENDOR_NAMESPACE = 'kabar';
 
     const AUTOLOADER       = '\\kabar\\Autoloader';
@@ -89,6 +89,21 @@ final class ServiceLocator
         array_shift($arguments); // we don't need module type in here
         array_shift($arguments); // we don't need module name in here
         return self::newInstance($class, $arguments);
+    }
+
+    /**
+     * Creates and stores or returns already created module instance
+     * @since  2.17.0
+     * @param  string $type
+     * @param  string $name
+     * @return object|boolean
+     */
+    public static function getIfLoaded($type, $name)
+    {
+        if (self::isLoaded($type, $name)) {
+            return self::get($type, $name);
+        }
+        return false;
     }
 
     /**

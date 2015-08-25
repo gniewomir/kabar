@@ -281,7 +281,7 @@ class FieldsCollection
      *
      * @param array $instance Previously saved values from database.
      */
-    public function renderForm($instance)
+    public function render($instance)
     {
         foreach ($this->fields as $field) {
             echo $field->form($instance);

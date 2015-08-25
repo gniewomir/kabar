@@ -19,6 +19,10 @@ use \kabar\ServiceLocator as ServiceLocator;
  */
 abstract class AbstractWidget extends \kabar\Module\Module\Module
 {
+
+    const DEFAULT_WRAPER_BEFORE    = '<section id="%1$s" class="widget %2$s">';
+    const DEFAULT_WRAPER_AFTER     = '</section>';
+
     /**
      * Configuration array
      * @var array
@@ -52,7 +56,7 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
      * Returns our widget class name, and acctualy creates appropriate class, if it doesn't exists already.
      * @return string
      */
-    protected function getWidgetClass()
+    private function getWidgetClass()
     {
         // determine new widget class name
         $className = $this->getModuleName().'WordPressWidget';
@@ -123,12 +127,30 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
         foreach ($options as $name => $value) {
             $widget->$name = $value;
         }
-        $widget = ServiceLocator::get('Module', 'Pages')
-            ->wrapForReuse(
-                $id,
-                $config['css_classes'],
-                $this->render($widget)
-            );
+        $widget = $this->wrapForReuse(
+            $id,
+            $config['css_classes'],
+            $this->render($widget)
+        );
         echo $widget;
+    }
+
+    /**
+     * Wraps provided string in standard widget wrapper for widgetized page
+     *
+     * Function created, to allow echoing widget outside sidebar
+     *
+     * @param  string $id
+     * @param  string $class
+     * @param  string $content
+     * @return string
+     */
+    private function wrapForReuse($id, $class, $content)
+    {
+        return implode('', array(
+            sprintf(self::DEFAULT_WRAPER_BEFORE, $id, $class),
+            $content,
+            self::DEFAULT_WRAPER_AFTER
+        ));
     }
 }
