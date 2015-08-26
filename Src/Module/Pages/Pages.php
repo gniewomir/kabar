@@ -183,14 +183,16 @@ class Pages extends \kabar\Module\Module\Module
         // get widgetized pages
         $pages      = $this->getWidgetizedPagesList();
 
-        // check if current url matches one of the widgetized pages
+        // check if current url matches url of any widgetized page
         $currUrl = trim(parse_url($this->cache->currentUrl(), PHP_URL_PATH), '/');
         foreach ($pages as $page) {
             if (empty($page['path']) && empty($currUrl)) {
                 // yes, widgetized front page
                 $this->pageId = $page['id'];
                 return $this->pageId;
-            } else if (!empty($page['path']) && strpos($currUrl, $page['path']) === 0) {
+            } else if (!empty($page['path']) &&
+                       strpos($currUrl, $page['path']) === 0 &&
+                       strpos($currUrl, $page['path'].'/') !== 0) { // make sure that we dont confuse category slug with page name
                 // yes, other widgetized page
                 $this->pageId = $page['id'];
                 return $this->pageId;

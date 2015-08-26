@@ -148,6 +148,9 @@ Documentation coming soon.
 
 # Changelog
 
+### 2.17.2
+* Fixed bug causing detecting widgetized page, when category slug matches page slug
+
 ### 2.17.1
 * Added dedicated module for widgetized pages sidebars to simplify pages module
 * Moved cache purging for sidebars to separate class
