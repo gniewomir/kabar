@@ -25,6 +25,13 @@ class Config extends \kabar\Module\Module\Module
     private $config;
 
     /**
+     * Modules configuration
+     * @since 2.17.3
+     * @var array
+     */
+    private $modules;
+
+    /**
      * Parsed config
      * @since 2.11.0
      * @var array
@@ -100,13 +107,28 @@ class Config extends \kabar\Module\Module\Module
                 $object->$settingName = $this->getSetting(
                     $sectionName,
                     $settingName,
-                    $value['default']
+                    isset($value['default']) ? $value['default'] : false
                 );
             } else {
                 $object->$settingName = $value;
             }
         }
         return $object;
+    }
+
+    /**
+     * Register config section
+     * @since  2.17.3
+     * @param  string $sectionName
+     * @param  array  $sectionSettings
+     * @return void
+     */
+    public function registerConfigSection($sectionName, $sectionSettings)
+    {
+        if (isset($this->parsedConfig->$sectionName) || isset($this->modules->$sectionName)) {
+            trigger_error('Config section '.$sectionName.' already registered!', E_USER_ERROR);
+        }
+        $this->modules[$sectionName] = $sectionSettings;
     }
 
     /**
@@ -138,6 +160,12 @@ class Config extends \kabar\Module\Module\Module
         if (isset($this->parsedConfig->$name)) {
             return $this->parsedConfig->$name;
         }
+
+        if (isset($this->modules[$name])) {
+            $this->parsedConfig->$name = $this->parseConfigSection($name, $this->modules[$name]);
+            return $this->parsedConfig->$name;
+        }
+
         trigger_error('Config section '.$name.' not found.', E_USER_WARNING);
     }
 
@@ -149,7 +177,8 @@ class Config extends \kabar\Module\Module\Module
     public function register($wp_customize)
     {
         $sectionPriority = 35;
-        foreach ($this->config as $section => $fields) {
+        $config = array_merge($this->config, $this->modules);
+        foreach ($config as $section => $fields) {
             if (!isset($fields['sectionTitle'])) {
                 continue;
             }
@@ -281,7 +310,7 @@ class Config extends \kabar\Module\Module\Module
     {
         /**
          * We expect that module callback
-         * 1/ Have exactly two elements - module name, and method name
+         * 1/ Have exactly two elements - module name, and method name - both strings
          * 2/ Is not associative array
          */
         return count($array) == 2 && !(bool)count(array_filter(array_keys($array), 'is_string'));

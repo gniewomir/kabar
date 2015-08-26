@@ -14,7 +14,7 @@ namespace kabar;
  */
 final class ServiceLocator
 {
-    const VERSION          = '2.17.2';
+    const VERSION          = '2.17.3';
     const VENDOR_NAMESPACE = 'kabar';
 
     const AUTOLOADER       = '\\kabar\\Autoloader';

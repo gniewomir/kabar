@@ -142,11 +142,18 @@ Documentation coming soon.
 
 Documentation coming soon.
 
+#### Sidebars
+
+Documentation coming soon.
+
 #### Pages
 
 Documentation coming soon.
 
 # Changelog
+
+### 2.17.3
+* Allow modules to register their own customization/config sections
 
 ### 2.17.2
 * Fixed bug causing detecting widgetized page, when category slug matches page slug
