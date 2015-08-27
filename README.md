@@ -152,6 +152,9 @@ Documentation coming soon.
 
 # Changelog
 
+### 2.18.0
+* Added 'Scripts' module for passing data from php to java script
+
 ### 2.17.3
 * Allow modules to register their own customization/config sections
 

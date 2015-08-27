@@ -37,6 +37,11 @@ class Sidebars extends \kabar\Module\Module\Module
         \kabar\Module\Config\Config $config,
         \kabar\Module\Cache\Cache $cache
     ) {
+
+        if (did_action('after_setup_theme')) {
+            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
+        }
+
         $this->config = $config;
         $this->cache  = $cache;
 

@@ -54,6 +54,10 @@ class Cache
      */
     public function __construct()
     {
+        if (did_action('after_setup_theme')) {
+            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
+        }
+
         if (isset($_GET['purge'])) {
             $this->startPurge();
         }

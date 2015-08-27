@@ -35,6 +35,10 @@ class Styles extends \kabar\Module\Module\Module
      */
     public function __construct()
     {
+        if (did_action('after_setup_theme')) {
+            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
+        }
+
         $this->cache = ServiceLocator::get('Module', 'Cache');
 
         // if we don't have cached inline styles force other modules to skip cache
@@ -82,6 +86,7 @@ class Styles extends \kabar\Module\Module\Module
         if ($styles) {
             $template = ServiceLocator::getNew('Component', 'Template');
             $template($this->getTemplatesDirectory().'Styles.php');
+            $template->slug   = $this->getLibrarySlug();
             $template->styles = $styles;
             return $template;
         }
