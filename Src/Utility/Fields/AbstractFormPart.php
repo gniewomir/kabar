@@ -18,12 +18,23 @@ use \kabar\ServiceLocator as ServiceLocator;
  */
 abstract class AbstractFormPart implements InterfaceFormPart
 {
-    const TEMPLATES_DIRECTORY = 'Templates';
-    const ASSETS_DIRECTORY    = 'assets';
+    /**
+     * Field type
+     * @since 2.20.0
+     * @var string
+     */
+    private $fieldType;
+
+    /**
+     * Field template directory
+     * @since 2.20.0
+     * @var string
+     */
+    private $templateDirectory;
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     abstract public function render();
 
@@ -50,26 +61,6 @@ abstract class AbstractFormPart implements InterfaceFormPart
         return $fieldsCssClass.' '.$fieldCssClass;
     }
 
-    /**
-     * Returns path to templates directory
-     * @return string
-     */
-    public function getTemplatesDir()
-    {
-        return __DIR__.DIRECTORY_SEPARATOR.self::TEMPLATES_DIRECTORY.DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * Returns uri of fields assets directory
-     * @return string
-     */
-    protected function getAssetsUri()
-    {
-        if (empty($this->assetsUri)) {
-            $this->assetsUri = plugins_url('', __FILE__).'/'.self::ASSETS_DIRECTORY.'/';
-        }
-        return $this->assetsUri;
-    }
 
     /**
      * Returns slug of whole library
@@ -87,5 +78,56 @@ abstract class AbstractFormPart implements InterfaceFormPart
     public function getLibraryVersion()
     {
         return ServiceLocator::VERSION;
+    }
+
+    /**
+     * Returns uri of fields assets directory
+     * @return string
+     */
+    protected function getAssetsUri()
+    {
+        if (empty($this->assetsUri)) {
+            $this->assetsUri = plugins_url('', __FILE__).'/assets/';
+        }
+        return $this->assetsUri;
+    }
+
+    /**
+     * Set field template directory
+     * @since  2.20.0
+     * @param  string $templateDirectory
+     * @return void
+     */
+    public function setTemplateDirectory($templateDirectory)
+    {
+        $this->templateDirectory = $templateDirectory;
+    }
+
+    /**
+     * Get field template
+     * @since  2.20.0
+     * @return \kabar\Component\Template\Template
+     */
+    protected function getTemplate()
+    {
+        if (empty($this->templateDirectory)) {
+            $this->templateDirectory = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR;
+        }
+        $templatePath = $this->templateDirectory.$this->getFieldType().'.php';
+        $template = new \kabar\Component\Template\Template;
+        $template($templatePath);
+        return $template;
+    }
+
+    /**
+     * Returns module name
+     * @return string
+     */
+    private function getFieldType()
+    {
+        if (!$this->fieldType) {
+            $this->fieldType = substr(strrchr(get_class($this), "\\"), 1);
+        }
+        return $this->fieldType;
     }
 }

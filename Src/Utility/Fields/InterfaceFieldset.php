@@ -10,7 +10,7 @@ namespace kabar\Utility\Fields;
  * @package    kabar
  * @subpackage Fields
  */
-interface InterfaceFieldset
+interface InterfaceFieldset extends InterfaceField
 {
 
 }

@@ -37,12 +37,6 @@ class Text extends AbstractField
     protected $default;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Additional description of field
      * @var string
      */
@@ -61,7 +55,6 @@ class Text extends AbstractField
         $this->title    = $title;
         $this->default  = $default;
         $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'Text.php';
     }
 
     /**
@@ -75,12 +68,11 @@ class Text extends AbstractField
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;

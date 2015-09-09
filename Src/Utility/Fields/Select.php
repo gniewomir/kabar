@@ -43,12 +43,6 @@ class Select extends Text
     protected $default;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Setup field
      *
      * Passing null as default value will add empty option to select field which will be selected by default
@@ -64,17 +58,15 @@ class Select extends Text
         $this->title    = $title;
         $this->options  = $options;
         $this->default  = $default;
-        $this->template = $this->getTemplatesDir().'Select.php';
     }
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;

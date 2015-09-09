@@ -31,12 +31,6 @@ class Submit extends AbstractFormPart
     protected $title;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Setup submit button
      * @param string $slug
      * @param string $title
@@ -45,17 +39,15 @@ class Submit extends AbstractFormPart
     {
         $this->slug     = $slug;
         $this->title    = $title;
-        $this->template = $this->getTemplatesDir().'Submit.php';
     }
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->title    = $this->title;
         $template->id       = $this->getSlug();
         $template->cssClass = $this->getCssClass();

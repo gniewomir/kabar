@@ -61,7 +61,6 @@ class TextArea extends Text
         $this->title    = $title;
         $this->default  = $default;
         $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'TextArea.php';
     }
 
     /**

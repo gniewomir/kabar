@@ -14,7 +14,7 @@ interface InterfaceField
 {
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render();
 

@@ -54,11 +54,7 @@ class ColorPicker extends AbstractField
         $this->slug     = $slug;
         $this->title    = $title;
         $this->default  = $default;
-        $this->template = $this->getTemplatesDir().'ColorPicker.php';
-
-
         add_action('admin_enqueue_scripts', array($this, 'addScripts'));
-
     }
 
     /**
@@ -97,12 +93,11 @@ class ColorPicker extends AbstractField
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template              = $this->getTemplate();
         $template->id          = $this->storage->getFieldId($this->getSlug());
         $template->cssClass    = $this->getCssClass();
         $template->librarySlug = $this->getLibrarySlug();

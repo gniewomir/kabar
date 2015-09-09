@@ -45,17 +45,15 @@ class Header extends AbstractFormPart
     {
         $this->slug     = $slug;
         $this->title    = $title;
-        $this->template = $this->getTemplatesDir().'Header.php';
     }
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->title    = $this->title;
         $template->cssClass = $this->getCssClass();
         return $template;

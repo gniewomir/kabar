@@ -39,26 +39,19 @@ class Image extends AbstractField
     protected $default;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Setup text field
      * @param string $slug
      * @param string $title
      * @param string $default
      * @param string $help
      */
-    public function __construct($slug, $title, $default = '', $help = '')
+    public function __construct($slug, $title, $default = '', $help = '', $preview = false)
     {
         $this->slug     = $slug;
         $this->title    = $title;
         $this->default  = $default;
         $this->help     = $help;
-        $this->template = $this->getTemplatesDir().'Image.php';
-
+        $this->preview  = $preview;
         add_action('admin_enqueue_scripts', array($this, 'addScripts'));
     }
 
@@ -78,7 +71,7 @@ class Image extends AbstractField
     {
         wp_enqueue_media();
         wp_enqueue_script(
-            $this->getLibrarySlug().'-metabox-media-upload-script',
+            $this->getLibrarySlug().'-media-upload-script',
             $this->getAssetsUri().'js/Image.js',
             array('media-upload', 'thickbox'),
             $this->getLibraryVersion(),
@@ -88,12 +81,11 @@ class Image extends AbstractField
 
     /**
      * Render text
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template                 = $this->getTemplate();
         $template->id             = $this->storage->getFieldId($this->getSlug());
         $template->cssClass       = $this->getCssClass();
 
@@ -103,6 +95,7 @@ class Image extends AbstractField
 
         $template->title          = $this->title;
         $template->help           = $this->help;
+        $template->preview        = $this->preview;
         $value                    = $this->get();
         $template->value          = empty($value) ? $this->default : $value;
         return $template;

@@ -14,7 +14,7 @@ interface InterfaceFormPart
 {
     /**
      * Render form part
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render();
 
@@ -23,4 +23,12 @@ interface InterfaceFormPart
      * @return string
      */
     public function getSlug();
+
+    /**
+     * Set field template
+     * @since  2.20.0
+     * @param  string $templateDirectory
+     * @return void
+     */
+    public function setTemplateDirectory($templateDirectory);
 }

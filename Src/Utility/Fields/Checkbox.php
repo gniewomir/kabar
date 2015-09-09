@@ -40,38 +40,40 @@ class Checkbox extends AbstractField
     protected $default;
 
     /**
-     * Field template file path
+     * Help text
      * @var string
      */
-    protected $template;
+    protected $help;
 
     /**
      * Setup text field
      * @param string $slug
      * @param string $title
      * @param string $default
+     * @param string $help
      */
-    public function __construct($slug, $title, $default = false)
+    public function __construct($slug, $title, $default = false, $help = '')
     {
         $this->slug     = $slug;
         $this->title    = $title;
         $this->default  = $default;
+        $this->help     = $help;
+
         $this->value    = self::ENABLED;
-        $this->template = $this->getTemplatesDir().'Checkbox.php';
     }
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
         $template->value    = $this->value;
+        $template->help     = $this->help;
         $template->checked  = $this->get() ? 'checked="checked"' : '';
         return $template;
     }
@@ -82,12 +84,16 @@ class Checkbox extends AbstractField
      */
     public function get()
     {
-        $val = $this->storage->retrieve($this->getSlug());
-        if (!$val) {
+        $saved = $this->storage->retrieve($this->getSlug());
+        if (empty($saved)) {
             return $this->default;
         }
 
-        return $val == self::ENABLED;
+        if ($saved == self::ENABLED) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -96,17 +102,23 @@ class Checkbox extends AbstractField
      */
     public function save()
     {
-        if (is_null($this->storage->updated($this->getSlug()))) {
-            $value = self::DISABLED;
-        } elseif ($this->storage->updated($this->getSlug()) == self::ENABLED) {
-            $value = self::ENABLED;
-        } else {
+        $saved   = $this->storage->retrieve($this->getSlug());
+        $updated = $this->storage->updated($this->getSlug());
+
+        if (empty($saved)) {
             $value = $this->default ? self::ENABLED : self::DISABLED;
+        }
+
+        if (empty($value) && $updated == self::ENABLED) {
+            $value = self::ENABLED;
+        }
+
+        if (empty($value)) {
+            $value = self::DISABLED;
         }
 
         // store value
         $this->storage->store($this->getSlug(), $value);
-
         return $value == self::ENABLED;
     }
 }

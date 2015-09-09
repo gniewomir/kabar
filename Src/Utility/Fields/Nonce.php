@@ -16,7 +16,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Nonce field class
  */
-class Nonce implements InterfaceFormPart
+class Nonce extends AbstractFormPart
 {
 
     const REFFERER_FIELD = true;
@@ -48,18 +48,17 @@ class Nonce implements InterfaceFormPart
     /**
      * Output nonce field in form
      * @see    https://codex.wordpress.org/Function_Reference/wp_nonce_field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->getTemplatesDir().DIRECTORY_SEPARATOR.'Nonce.php');
+        $template        = $this->getTemplate();
         $template->nonce = wp_nonce_field($this->action, $this->getSlug(), self::REFFERER_FIELD, self::ECHO_FIELD);
         return $template;
     }
 
     /**
-     * Get nonce field value, tru if nonce validates, false otherwise
+     * Get nonce field value, true if nonce validates, false otherwise
      * @return bool
      * @see    https://codex.wordpress.org/Function_Reference/wp_verify_nonce
      */
@@ -81,14 +80,5 @@ class Nonce implements InterfaceFormPart
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Returns path to templates directory
-     * @return string
-     */
-    public function getTemplatesDir()
-    {
-        return __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR;
     }
 }

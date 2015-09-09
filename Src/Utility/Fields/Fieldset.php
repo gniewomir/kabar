@@ -37,12 +37,6 @@ class Fieldset extends AbstractField implements InterfaceFieldset
     protected $options;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Fieldset fields
      * @var array
      */
@@ -79,7 +73,6 @@ class Fieldset extends AbstractField implements InterfaceFieldset
             }
             $this->fields[$field->getSlug()] = $field;
         }
-        $this->template = $this->getTemplatesDir().'Fieldset.php';
     }
 
     /**
@@ -107,12 +100,11 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Render fields
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
@@ -126,15 +118,17 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Save fields
-     * @return string
+     * @return array
      */
     public function save()
     {
+        $values = array();
         // save all fields
         foreach ($this->fields as $field) {
             if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-                $field->save();
+                $values[$field->getSlug()] = $field->save();
             }
         }
+        return $values;
     }
 }

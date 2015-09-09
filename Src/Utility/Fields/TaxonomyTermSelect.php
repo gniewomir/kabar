@@ -70,7 +70,6 @@ class TaxonomyTermSelect extends Select
         $this->title    = $title;
         $this->taxonomy = is_array($taxonomy) ? $taxonomy : array($taxonomy);
         $this->default  = $default;
-        $this->template = $this->getTemplatesDir().'Select.php';
     }
 
     /**
@@ -117,12 +116,11 @@ class TaxonomyTermSelect extends Select
 
     /**
      * Render field
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;

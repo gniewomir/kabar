@@ -39,12 +39,6 @@ class Slider extends AbstractField
     protected $default;
 
     /**
-     * Field template file path
-     * @var string
-     */
-    protected $template;
-
-    /**
      * Setup slider field
      * @param string $slug
      * @param string $title
@@ -62,8 +56,6 @@ class Slider extends AbstractField
         $this->min      = $min;
         $this->max      = $max;
         $this->step     = $step;
-
-        $this->template = $this->getTemplatesDir().'Slider.php';
 
         add_action('admin_enqueue_scripts', array($this, 'addScripts'));
     }
@@ -95,12 +87,11 @@ class Slider extends AbstractField
 
     /**
      * Render text
-     * @return /kabar/Component/Template/Template
+     * @return \kabar\Component\Template\Template
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template($this->template);
+        $template           = $this->getTemplate();
         $template->id       = $this->storage->getFieldId($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
