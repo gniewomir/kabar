@@ -110,7 +110,7 @@ class Module
 
     /**
      * Returns field css class
-     * @since  2.20.0
+     * @since  2.24.4
      * @return string
      */
     public function getCssClass()

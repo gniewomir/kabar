@@ -130,7 +130,7 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Get form data as array or return false if not sent, or nonce is invalid
-     * @since  2.20.0
+     * @since  2.24.4
      * @return array|bool
      */
     public function save()
@@ -210,7 +210,7 @@ final class Form extends \kabar\Module\Module\Module
     /**
      * Equeue assets
      * @access private
-     * @since  2.20.0
+     * @since  2.24.4
      * @return void
      */
     public function enqueueAssets()

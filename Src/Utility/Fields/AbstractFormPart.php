@@ -20,14 +20,14 @@ abstract class AbstractFormPart implements InterfaceFormPart
 {
     /**
      * Field type
-     * @since 2.20.0
+     * @since 2.24.4
      * @var string
      */
     private $fieldType;
 
     /**
      * Field template directory
-     * @since 2.20.0
+     * @since 2.24.4
      * @var string
      */
     private $templateDirectory;
@@ -94,7 +94,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Set field template directory
-     * @since  2.20.0
+     * @since  2.24.4
      * @param  string $templateDirectory
      * @return void
      */
@@ -105,7 +105,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Get field template
-     * @since  2.20.0
+     * @since  2.24.4
      * @return \kabar\Component\Template\Template
      */
     protected function getTemplate()

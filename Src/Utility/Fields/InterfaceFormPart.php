@@ -26,7 +26,7 @@ interface InterfaceFormPart
 
     /**
      * Set field template
-     * @since  2.20.0
+     * @since  2.24.4
      * @param  string $templateDirectory
      * @return void
      */

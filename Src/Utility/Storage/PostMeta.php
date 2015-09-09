@@ -100,7 +100,7 @@ class PostMeta implements InterfaceStorage
 
     /**
      * Returns post meta name
-     * @since  2.20.0
+     * @since  2.24.4
      * @return string
      */
     private function getPostMetaId($key)

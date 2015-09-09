@@ -128,7 +128,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Returns metabox form
-     * @since  2.20.0
+     * @since  2.24.4
      * @return \kabar\Component\Form\Form
      */
     public function getForm()
@@ -138,7 +138,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Return metabox setting for particular post
-     * @since  2.20.0
+     * @since  2.24.4
      * @param  string  $setting
      * @return string
      */
