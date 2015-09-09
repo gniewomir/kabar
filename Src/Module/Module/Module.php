@@ -101,9 +101,9 @@ class Module
     protected function getModuleType()
     {
         if (empty($this->moduleType)) {
-            $this->moduleType = explode('\\', $this->getModuleClass());
-            array_shift($this->moduleType);
-            $this->moduleType = array_shift($this->moduleType);
+            $exploded = explode('\\', $this->getModuleClass());
+            array_shift($exploded);
+            $this->moduleType = (string) array_shift($exploded);
         }
         return $this->moduleType;
     }

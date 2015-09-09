@@ -26,7 +26,7 @@ class Select extends Text
 
     /**
      * Field title
-     * @var stiring
+     * @var string
      */
     protected $title;
 

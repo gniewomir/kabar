@@ -15,7 +15,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * UserProfile module main class
  */
-class UserProfile extends \kabar\Module\Module\Module
+final class UserProfile extends \kabar\Module\Module\Module
 {
     const IN_FOOTER = true;
     const SINGLE    = true;
@@ -24,7 +24,13 @@ class UserProfile extends \kabar\Module\Module\Module
      * User prifile sections and fields
      * @var array
      */
-    protected $sections;
+    private $sections;
+
+    /**
+     * Path to field templates directory
+     * @var string
+     */
+    private $fieldTemplatesDir;
 
     // INTERFACE
 
@@ -96,7 +102,7 @@ class UserProfile extends \kabar\Module\Module\Module
      * @param  string $id
      * @return string
      */
-    protected function getUserSettingsPrefix($id)
+    private function getUserSettingsPrefix($id)
     {
         return $id.'-';
     }

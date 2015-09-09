@@ -49,6 +49,8 @@ class Cache extends \kabar\Module\Module\Module
      */
     private $transients = array();
 
+    // INTERFACE
+
     /**
      * Setup
      */
@@ -161,10 +163,10 @@ class Cache extends \kabar\Module\Module\Module
 
     /**
      * Caches object returned by callback, and stores it as JSON
-     * @param  string          $id
-     * @param  string          $type
-     * @param  string|callable $callback
-     * @return string
+     * @param  string   $id
+     * @param  string   $type
+     * @param  callable $callback
+     * @return object
      */
     public function cacheObjectAsJson($id, $type, callable $callback)
     {
@@ -177,19 +179,20 @@ class Cache extends \kabar\Module\Module\Module
                 $test = (array) $payload;
                 if (!empty($test)) {
                     return $payload;
+                } else {
+                    trigger_error('Cached empty object. Running callback.', E_USER_WARNING);
                 }
             }
         }
         // fetch and cache
         $payload = call_user_func($callback);
-        if ($payload !== false) {
+        if (is_object($payload)) {
             // @see http://stackoverflow.com/questions/804045/preferred-method-to-store-php-arrays-json-encode-vs-serialize
             // @see https://codex.wordpress.org/Function_Reference/set_transient
             $this->set($id, $type, json_encode($payload, JSON_UNESCAPED_UNICODE));
             return $payload;
         }
-        // callback returned false, which indicates error
-        trigger_error('cacheObjectAsJson: callback returned false.', E_USER_WARNING);
+        trigger_error('Callback must return object.', E_USER_ERROR);
     }
 
     /**
@@ -242,6 +245,8 @@ class Cache extends \kabar\Module\Module\Module
     {
         return $this->urlOrigin($_SERVER, $useForwardedHost).$_SERVER['REQUEST_URI'];
     }
+
+    // INTERNAL
 
     /**
      * Get cache id

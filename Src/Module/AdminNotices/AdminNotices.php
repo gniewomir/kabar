@@ -36,7 +36,7 @@ class AdminNotices extends \kabar\Module\Module\Module
     /**
      * Setup module
      */
-    public function __construct($id = 'default')
+    public function __construct()
     {
         if (!is_admin()) {
             return;
@@ -60,9 +60,9 @@ class AdminNotices extends \kabar\Module\Module\Module
      * @param string $message
      * @return void
      */
-    public function error($msg)
+    public function error($message)
     {
-        $this->add(self::ERROR_CSS_CLASS, $msg);
+        $this->add(self::ERROR_CSS_CLASS, $message);
     }
 
     /**
@@ -70,9 +70,9 @@ class AdminNotices extends \kabar\Module\Module\Module
      * @param string $message
      * @return void
      */
-    public function update($msg)
+    public function update($message)
     {
-        $this->add(self::NAG_CSS_CLASS, $msg);
+        $this->add(self::NAG_CSS_CLASS, $message);
     }
 
     /**

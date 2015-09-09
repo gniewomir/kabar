@@ -75,10 +75,10 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Setup widgetized pages module
-     * @param \kabar\Module\Styles\Styles     $styles
+     * @param \kabar\Module\Styles\Styles     $styles       Required, to make sure that will be set up for widgets
      * @param \kabar\Module\Cache\Cache       $cache
      * @param \kabar\Module\Sidebars\Sidebars $sidebars
-     * @param array                           $wigets       Array of module callbacks
+     * @param array                           $widgets      Array of module callbacks
      * @param string                          $pageTemplate
      */
     public function __construct(
@@ -91,7 +91,7 @@ class Pages extends \kabar\Module\Module\Module
         $this->requireBeforeAction('after_setup_theme');
 
         // Dependencies
-        $this->config   = $styles;
+        $this->styles   = $styles;
         $this->cache    = $cache;
         $this->sidebars = $sidebars;
 
@@ -206,7 +206,7 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Returns sidebar id this particular widgetized page or provided page id
-     * @param  string $pageID
+     * @param  string $pageId
      * @return string
      */
     protected function getSidebarId($pageId = false)

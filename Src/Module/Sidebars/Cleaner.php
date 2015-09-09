@@ -15,20 +15,22 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Sidebars cache module main class
  */
-class Cleaner extends \kabar\Module\Module\Module
+final class Cleaner extends \kabar\Module\Module\Module
 {
 
     /**
      * Sidebars module
      * @var \kabar\Module\Sidebars\Sidebars
      */
-    protected $sidebars;
+    private $sidebars;
 
     /**
      * Widgets list
      * @var array
      */
-    protected $widgets;
+    private $widgets;
+
+    // INTERFACE
 
     /**
      * Hook to all actions and filters that should trigger sidebars cache purge
@@ -52,8 +54,11 @@ class Cleaner extends \kabar\Module\Module\Module
         add_action('customize_save_after', array($this, 'customizationSettingsChange'), 11);
     }
 
+    // INTERNAL
+
     /**
      * WordPress filter. Grab widgets list
+     * @access private
      * @param  array $widgets
      * @return array
      */
@@ -65,6 +70,7 @@ class Cleaner extends \kabar\Module\Module\Module
 
     /**
      * WordPress filter. Clear cache for sidebar containing this widget
+     * @access private
      * @since  2.12.0
      * @param  array  $instance
      * @param  array  $newInstance
@@ -84,6 +90,7 @@ class Cleaner extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Clear pages cache on post save/delete
+     * @access private
      * @param  int $postId
      * @return void
      */
@@ -106,12 +113,14 @@ class Cleaner extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Check if we need to clear sidebar cache after customizer update
+     * @access private
      * @since  2.12.0
      * @param  \WP_Customize_Manager $object
      * @return void
      */
     public function customizationSettingsChange($object)
     {
+        $sidebar = array();
         foreach ($object->unsanitized_post_values() as $key => $value) {
             if (strpos($key, 'widget_'.$this->getLibrarySlug()) === 0) {
                 // look for changed settings for our widgets
@@ -138,7 +147,6 @@ class Cleaner extends \kabar\Module\Module\Module
             }
         }
     }
-
 
     /**
      * Find in which sidebar this particular widget id is

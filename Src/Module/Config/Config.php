@@ -19,10 +19,16 @@ class Config extends \kabar\Module\Module\Module
 {
 
     /**
+     * Cache
+     * @var \kabar\Modules\Cache\Cache
+     */
+    private $cache;
+
+    /**
      * Default site configuration
      * @var array
      */
-    private $config;
+    private $config = array();
 
     /**
      * Modules configuration
@@ -34,27 +40,23 @@ class Config extends \kabar\Module\Module\Module
     /**
      * Parsed config
      * @since 2.11.0
-     * @var array
+     * @var \stdClass
      */
     private $parsedConfig = array();
 
+    // INTERFACE
+
     /**
      * Returns config array
+     *
+     * Function to allow using translation functions,
+     * which we cannot do when setting default value for property
+     *
      * @return array
      */
     protected function getConfig()
     {
-        return array(
-            'widgetizedpages' => array(
-                'sectionTitle'         => __('Landing pages', $this->getLibrarySlug()),
-                'sectionCapability'    => 'update_core',
-                'disableDefaultWidgets' => array(
-                    'type'    => 'checkbox',
-                    'default' => true,
-                    'label'   => __('Disable default WordPress widgets', $this->getLibrarySlug()),
-                )
-            )
-        );
+        return array();
     }
 
     /**
@@ -72,36 +74,72 @@ class Config extends \kabar\Module\Module\Module
         $this->cache = $cache;
 
         // config array
+
         $this->config = $this->getConfig();
         $this->parsedConfig = $this->cache->cacheObjectAsJson(
             'parsed',
             $this->getModuleName(),
-            array($this, 'parseConfig')
+            array($this, 'parse')
         );
     }
 
     /**
+     * Register config section
+     * @since  2.17.3
+     * @param  string $sectionName
+     * @param  array  $sectionSettings
+     * @return void
+     */
+    public function registerSection($sectionName, $sectionSettings)
+    {
+        if (isset($this->parsedConfig->$sectionName) || isset($this->modules->$sectionName)) {
+            trigger_error('Config section '.$sectionName.' already registered!', E_USER_ERROR);
+        }
+        $this->modules[$sectionName] = $sectionSettings;
+    }
+
+    /**
+     * Fetch config section
+     * @param  string $name Property name
+     * @return object
+     */
+    public function __get($name)
+    {
+        if (isset($this->parsedConfig->$name)) {
+            return $this->parsedConfig->$name;
+        }
+
+        if (isset($this->modules[$name])) {
+            $this->parsedConfig->$name = $this->parseSection($name, $this->modules[$name]);
+            return $this->parsedConfig->$name;
+        }
+
+        trigger_error('Config section '.$name.' not found.', E_USER_ERROR);
+    }
+
+    /**
      * Parse config array
-     * @param array
      * @return \stdClass
      */
-    public function parseConfig()
+    public function parse()
     {
         $parsed = new \stdClass;
         foreach ($this->config as $section => $settings) {
-            $parsed->$section = $this->parseConfigSection($section, $settings);
+            $parsed->$section = $this->parseSection($section, $settings);
         }
         return $parsed;
     }
+
+    // INTERNAL
 
     /**
      * Create configuration section object
      * @since  2.11.0
      * @param  string $sectionName
-     * @param  string $sectionSettings
+     * @param  array  $sectionSettings
      * @return \stdClass
      */
-    private function parseConfigSection($sectionName, $sectionSettings)
+    private function parseSection($sectionName, $sectionSettings)
     {
         $object = new \stdClass();
         foreach ($sectionSettings as $settingName => $value) {
@@ -119,29 +157,15 @@ class Config extends \kabar\Module\Module\Module
     }
 
     /**
-     * Register config section
-     * @since  2.17.3
-     * @param  string $sectionName
-     * @param  array  $sectionSettings
-     * @return void
-     */
-    public function registerConfigSection($sectionName, $sectionSettings)
-    {
-        if (isset($this->parsedConfig->$sectionName) || isset($this->modules->$sectionName)) {
-            trigger_error('Config section '.$sectionName.' already registered!', E_USER_ERROR);
-        }
-        $this->modules[$sectionName] = $sectionSettings;
-    }
-
-    /**
      * WordPress action. Refresh config after site settings update
+     * @access private
      * @since  2.12.20
      * @param  bool|\WP_Customize_Manager $object
      * @return void
      */
     public function refreshConfig($object)
     {
-        $this->parsedConfig = $this->parseConfig();
+        $this->parsedConfig = $this->parse();
         // if saved data contains settings managed by this module - clear all caches
         foreach ($object->unsanitized_post_values() as $key => $value) {
             if ($this->isConfigSetting($key)) {
@@ -153,26 +177,8 @@ class Config extends \kabar\Module\Module\Module
     }
 
     /**
-     * Fetch config section
-     * @param  string $name Property name
-     * @return object
-     */
-    public function __get($name)
-    {
-        if (isset($this->parsedConfig->$name)) {
-            return $this->parsedConfig->$name;
-        }
-
-        if (isset($this->modules[$name])) {
-            $this->parsedConfig->$name = $this->parseConfigSection($name, $this->modules[$name]);
-            return $this->parsedConfig->$name;
-        }
-
-        trigger_error('Config section '.$name.' not found.', E_USER_WARNING);
-    }
-
-    /**
-     *
+     * WordPress action. Register our settings in customizer
+     * @access private
      * @param  \WP_Customize_Manager $wp_customize
      * @return void
      */
@@ -255,7 +261,6 @@ class Config extends \kabar\Module\Module\Module
                     $wp_customize->add_control($control);
                 }
             }
-
         }
     }
 
@@ -267,7 +272,7 @@ class Config extends \kabar\Module\Module\Module
      * @param  mixed $default
      * @return mixed
      */
-    protected function getSetting($sectionName, $settingName, $default)
+    private function getSetting($sectionName, $settingName, $default)
     {
         return get_theme_mod($this->getSettingName($sectionName, $settingName), $default);
     }
@@ -279,7 +284,7 @@ class Config extends \kabar\Module\Module\Module
      * @param  string $settingName
      * @return string
      */
-    protected function getSettingName($sectionName, $settingName)
+    private function getSettingName($sectionName, $settingName)
     {
         return $this->getLibrarySlug().$sectionName.'_'.$settingName;
     }
@@ -289,7 +294,7 @@ class Config extends \kabar\Module\Module\Module
      * @param  string  $setting
      * @return boolean
      */
-    protected function isConfigSetting($setting)
+    private function isConfigSetting($setting)
     {
         if (strpos($setting, $this->getLibrarySlug()) === 0) {
             $setting = substr($setting, strlen($this->getLibrarySlug()));

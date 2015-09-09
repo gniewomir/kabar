@@ -175,16 +175,14 @@ final class ServiceLocator
         }
 
         // Trigger error if class doesn't exist
-        if (!$class || !class_exists($class, self::AUTOLOAD)) {
-            trigger_error('Class "'.$class.'" not found, cannot load module "'.$name.'".', E_USER_ERROR);
-
+        if (!class_exists($class, self::AUTOLOAD)) {
+            trigger_error('Class "'.$class.'" not found".', E_USER_ERROR);
             return;
         }
 
         // Instantiate and return object if we don't have to pass any arguments to it
         if (empty($arguments)) {
             self::$modules[$class] = new $class;
-
             return self::$modules[$class];
         }
 
@@ -204,9 +202,8 @@ final class ServiceLocator
     private static function newInstance($class, $arguments = array())
     {
         // Quit if module don't exist
-        if (!$class || !class_exists($class, self::AUTOLOAD)) {
-            trigger_error('Class "'.$class.'" not found, cannot load module "'.$name.'".', E_USER_ERROR);
-
+        if (!class_exists($class, self::AUTOLOAD)) {
+            trigger_error('Class "'.$class.'" not found.', E_USER_ERROR);
             return;
         }
 

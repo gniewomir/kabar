@@ -29,15 +29,21 @@ class Checkbox extends AbstractField
 
     /**
      * Field title
-     * @var stiring
+     * @var string
      */
     protected $title;
 
     /**
      * Field default value
-     * @var string
+     * @var bool
      */
     protected $default;
+
+    /**
+     * Input value
+     * @var string
+     */
+    protected $value;
 
     /**
      * Help text
@@ -85,6 +91,7 @@ class Checkbox extends AbstractField
     public function get()
     {
         $saved = $this->storage->retrieve($this->getSlug());
+
         if (empty($saved)) {
             return $this->default;
         }

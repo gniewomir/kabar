@@ -15,16 +15,23 @@ Development branch:
 [![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/develop)
 
 # Roadmap
-* Dependancy Injection Container in place of Service Locator
-* Module for template tags, that will serve as replacement for Service Locator in themes
+* Reflection objects caching for service locator (ref: https://github.com/Level-2/Dice/blob/master/Dice.php)
 * Widget fields based on \kabar\Utitlity\Fields classes
+* Full translation support
+* Panel support for Config/Customization module
 * Publish as Composer package
 * Proper automatic documentation
 * Proper examples and tutorials
+* Dependancy Injection Container in place of Service Locator
+* Module for template tags, that will serve as replacement for Service Locator in themes
+* Unit tests
 * Build process for JS and CSS contained in library
 * Botstrap/Foundation switchable support
 
 # Changelog
+
+### 2.
+* Refactored 'Config' module
 
 ### 2.24.4
 

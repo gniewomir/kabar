@@ -19,6 +19,12 @@ use \kabar\ServiceLocator as ServiceLocator;
 abstract class AbstractFormPart implements InterfaceFormPart
 {
     /**
+     * Field slug
+     * @var string
+     */
+    protected $slug;
+
+    /**
      * Field type
      * @since 2.24.4
      * @var string
@@ -31,6 +37,12 @@ abstract class AbstractFormPart implements InterfaceFormPart
      * @var string
      */
     private $templateDirectory;
+
+    /**
+     * Assets directory uir
+     * @var string
+     */
+    protected $assetsUri;
 
     /**
      * Render field
@@ -60,7 +72,6 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
         return $fieldsCssClass.' '.$fieldCssClass;
     }
-
 
     /**
      * Returns slug of whole library

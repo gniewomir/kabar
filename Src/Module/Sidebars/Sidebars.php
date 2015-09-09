@@ -15,20 +15,40 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Sidebars module main class
  */
-class Sidebars extends \kabar\Module\Module\Module
+final class Sidebars extends \kabar\Module\Module\Module
 {
+
+    /**
+     * Config
+     * @var \kabar\Module\Config\Config
+     */
+    private $config;
+
+    /**
+     * Cache
+     * @var \kabar\Module\Cache\Cache
+     */
+    private $cache;
 
     /**
      * Sidebars and widgets data
      * @var array
      */
-    protected $sidebars;
+    private $sidebars;
 
     /**
      * Active Sidebars and widgets data
      * @var array
      */
-    protected $activeSidebars;
+    private $activeSidebars;
+
+    /**
+     * Cache cleaning object
+     * @var \kabar\Module\Sidebars\Cleaner
+     */
+    private $cleaner;
+
+    // INTERFACE
 
     /**
      * Setup
@@ -42,15 +62,26 @@ class Sidebars extends \kabar\Module\Module\Module
         $this->config = $config;
         $this->cache  = $cache;
 
+        $this->config->registerSection(
+            $this->getModuleName(),
+            array(
+                'sectionTitle'          => __('Sidebars', $this->getLibrarySlug()),
+                'sectionCapability'     => 'update_core',
+                'disableDefaultWidgets' => array(
+                    'type'    => 'checkbox',
+                    'default' => true,
+                    'label'   => __('Disable default WordPress widgets', $this->getLibrarySlug()),
+                )
+            )
+        );
+
         // unregister default widgets
-        if ($this->config->widgetizedpages->disableDefaultWidgets) {
+        if ($this->config->Sidebars->disableDefaultWidgets) {
             add_action('widgets_init', array($this, 'unregisterDefaultWidgets'), 11);
         }
         // Add widgetized pages sidebars and widgets
         add_action('widgets_init', array($this, 'registerSidebars'), 9);
     }
-
-    // MODULE API
 
     /**
      * Register sidebar with module
@@ -100,26 +131,8 @@ class Sidebars extends \kabar\Module\Module\Module
     // INTERNAL
 
     /**
-     * WordPress action. Registers all added sidebars with WordPress.
-     * @return void
-     */
-    public function registerSidebars()
-    {
-        // will be empty when doing wp cron job
-        if (empty($this->sidebars)) {
-            return;
-        }
-        foreach ($this->sidebars as $id => $arguments) {
-            register_sidebar($arguments);
-        }
-        // if in admin - initialize cache cleaner
-        if (is_admin()) {
-            $this->cacheCleaner = new Cleaner($this);
-        }
-    }
-
-    /**
-     * Get widget area
+     * Callback. Get widget area
+     * @access private
      * @return void
      */
     public function getSidebar($id)
@@ -135,7 +148,28 @@ class Sidebars extends \kabar\Module\Module\Module
     }
 
     /**
+     * WordPress action. Registers all added sidebars with WordPress.
+     * @access private
+     * @return void
+     */
+    public function registerSidebars()
+    {
+        // will be empty when doing wp cron job
+        if (empty($this->sidebars)) {
+            return;
+        }
+        foreach ($this->sidebars as $id => $arguments) {
+            register_sidebar($arguments);
+        }
+        // if in admin - initialize cache cleaner
+        if (is_admin()) {
+            $this->cleaner = new Cleaner($this);
+        }
+    }
+
+    /**
      * WordPress action. Unregister default widgets
+     * @access private
      * @return void
      */
     public function unregisterDefaultWidgets()

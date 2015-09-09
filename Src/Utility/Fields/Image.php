@@ -28,7 +28,7 @@ class Image extends AbstractField
 
     /**
      * Field title
-     * @var stiring
+     * @var string
      */
     protected $title;
 

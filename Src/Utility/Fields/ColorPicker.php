@@ -27,7 +27,7 @@ class ColorPicker extends AbstractField
 
     /**
      * Field title
-     * @var stiring
+     * @var string
      */
     protected $title;
 

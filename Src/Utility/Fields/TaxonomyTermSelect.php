@@ -26,7 +26,7 @@ class TaxonomyTermSelect extends Select
 
     /**
      * Field title
-     * @var stiring
+     * @var string
      */
     protected $title;
 

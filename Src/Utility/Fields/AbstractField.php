@@ -19,12 +19,6 @@ use \kabar\ServiceLocator as ServiceLocator;
 abstract class AbstractField extends AbstractFormPart implements InterfaceField
 {
     /**
-     * Field slug
-     * @var string
-     */
-    protected $slug;
-
-    /**
      * Field data storage
      * @var \kabar\Utility\Storage\InterfaceStorage
      */

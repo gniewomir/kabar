@@ -89,7 +89,7 @@ class FieldsCollection
 
     /**
      * Remove already added field
-     * @param  stiring $fieldId
+     * @param  string $fieldId
      * @return void
      */
     public function removeField($fieldId)
