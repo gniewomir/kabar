@@ -50,9 +50,9 @@ class AdminNotices extends \kabar\Module\Module\Module
      * @param string $message
      * @return void
      */
-    public function sucess($msg)
+    public function sucess($message)
     {
-        $this->add(self::SUCCESS_CSS_CLASS, $msg);
+        $this->add(self::SUCCESS_CSS_CLASS, $message);
     }
 
     /**

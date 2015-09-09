@@ -68,7 +68,7 @@ class Cache extends \kabar\Module\Module\Module
 
     /**
      * Start purging cache
-     * @return bool
+     * @return void
      */
     public function startPurge()
     {
@@ -85,10 +85,9 @@ class Cache extends \kabar\Module\Module\Module
     {
         global $wpdb;
 
-        $option = '';
         $value  = self::WP_TRANSIENT_PREFIX.self::TRANSIENT_PREFIX.$type;
 
-        $result = $wpdb->get_results(
+        $wpdb->query(
             $wpdb->prepare(
                 "
                     DELETE FROM `{$wpdb->base_prefix}options`
@@ -119,11 +118,7 @@ class Cache extends \kabar\Module\Module\Module
             return false;
         }
 
-        if ($this->purge) {
-            return false;
-        }
-
-        return true;
+        return !$this->purge;
     }
 
     /**
@@ -163,10 +158,10 @@ class Cache extends \kabar\Module\Module\Module
 
     /**
      * Caches object returned by callback, and stores it as JSON
-     * @param  string   $id
-     * @param  string   $type
-     * @param  callable $callback
-     * @return object
+     * @param  string      $id
+     * @param  string      $type
+     * @param  callable    $callback
+     * @return object|void
      */
     public function cacheObjectAsJson($id, $type, callable $callback)
     {
@@ -260,19 +255,19 @@ class Cache extends \kabar\Module\Module\Module
 
     /**
      * Get full url from server vars
-     * @param  array   $s
+     * @param  array   $server
      * @param  boolean $useForwardedHost
      * @return string
      */
-    private function urlOrigin($s, $useForwardedHost = false)
+    private function urlOrigin($server, $useForwardedHost = false)
     {
-        $ssl      = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true : false;
-        $sp       = strtolower($s['SERVER_PROTOCOL']);
-        $protocol = substr($sp, 0, strpos($sp, '/')).(($ssl) ? 's' : '');
-        $port     = $s['SERVER_PORT'];
+        $ssl      = (!empty($server['HTTPS']) && $server['HTTPS'] == 'on') ? true : false;
+        $protocol = strtolower($server['SERVER_PROTOCOL']);
+        $protocol = substr($protocol, 0, strpos($protocol, '/')).(($ssl) ? 's' : '');
+        $port     = $server['SERVER_PORT'];
         $port     = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':'.$port;
-        $host     = ($useForwardedHost && isset($s['HTTP_X_FORWARDED_HOST'])) ? $s['HTTP_X_FORWARDED_HOST'] : (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : null);
-        $host     = isset($host) ? $host : $s['SERVER_NAME'].$port;
+        $host     = ($useForwardedHost && isset($server['HTTP_X_FORWARDED_HOST'])) ? $server['HTTP_X_FORWARDED_HOST'] : (isset($server['HTTP_HOST']) ? $server['HTTP_HOST'] : null);
+        $host     = isset($host) ? $host : $server['SERVER_NAME'].$port;
         return $protocol.'://'.$host;
     }
 }

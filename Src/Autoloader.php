@@ -13,8 +13,8 @@ namespace kabar;
  */
 final class Autoloader
 {
-    const CLASS_EXT                 = '.php';
-    const VENDOR_NAMESPACE          = 'kabar';
+    const CLASS_EXT        = '.php';
+    const VENDOR_NAMESPACE = 'kabar';
 
     /**
      * Registered namespaces
@@ -152,7 +152,7 @@ final class Autoloader
         $parts  = explode('\\', $class);
         $vendor = array_shift($parts);
         if (!isset($this->namespaces[$vendor])) {
-            return false;
+            return '';
         }
 
         // find class path and store it for later

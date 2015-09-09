@@ -15,6 +15,7 @@ Development branch:
 [![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/develop)
 
 # Roadmap
+* Replace module callbacks with normal callbacks
 * Reflection objects caching for service locator (ref: https://github.com/Level-2/Dice/blob/master/Dice.php)
 * Widget fields based on \kabar\Utitlity\Fields classes
 * Full translation support

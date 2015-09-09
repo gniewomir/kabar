@@ -21,10 +21,8 @@ final class Form extends \kabar\Module\Module\Module
 
     const NONCE_SUFFIX  = '_nonce';
     const ACTION_SUFFIX = '_save';
-
     const GET_METHOD    = 'get';
     const POST_METHOD   = 'post';
-
     const SEND_TO_SELF  = 'self';
 
     /**
@@ -108,10 +106,11 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Adds fields to form
-     * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceFormPart $firstField First of multiple possibile fields instances
+     * @since  2.0.0
+     * @param  \kabar\Utility\Fields\InterfaceFormPart ...$field
+     * @return void
      */
-    public function addFields(\kabar\Utility\Fields\InterfaceFormPart $firstField)
+    public function addFields()
     {
         $fields = func_get_args();
         foreach ($fields as $field) {
@@ -159,11 +158,13 @@ final class Form extends \kabar\Module\Module\Module
             $template = new \kabar\Component\Template\Template;
             $template($this->getTemplatesDirectory().'Form.php');
         }
+
         $template->nonce  = $this->nonce->render();
         $template->id     = $this->id;
         $template->name   = $this->id;
         $template->method = $this->method;
         $template->action = $this->action;
+
         $fields = array();
         foreach ($this->fields as $field) {
             $fields[] = $field->render();

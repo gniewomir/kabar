@@ -20,7 +20,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Cache
-     * @var \kabar\Modules\Cache\Cache
+     * @var \kabar\Module\Cache\Cache
      */
     private $cache;
 
@@ -70,12 +70,8 @@ class Config extends \kabar\Module\Module\Module
         add_action('customize_register', array($this, 'register'));
         add_action('customize_save_after', array($this, 'refreshConfig'), 9);
 
-        // get cache
-        $this->cache = $cache;
-
-        // config array
-
-        $this->config = $this->getConfig();
+        $this->cache        = $cache;
+        $this->config       = $this->getConfig();
         $this->parsedConfig = $this->cache->cacheObjectAsJson(
             'parsed',
             $this->getModuleName(),
@@ -179,22 +175,22 @@ class Config extends \kabar\Module\Module\Module
     /**
      * WordPress action. Register our settings in customizer
      * @access private
-     * @param  \WP_Customize_Manager $wp_customize
+     * @param  \WP_Customize_Manager $wpCustomize
      * @return void
      */
-    public function register($wp_customize)
+    public function register($wpCustomize)
     {
         $sectionPriority = 35;
         $config = array_merge($this->config, $this->modules);
-        foreach ($config as $section => $fields) {
+        foreach ($config as $sectionName => $fields) {
             if (!isset($fields['sectionTitle'])) {
                 continue;
             }
             if (!isset($fields['sectionCapability'])) {
                 $fields['sectionCapability'] = 'update_core';
             }
-            $wp_customize->add_section(
-                $section,
+            $wpCustomize->add_section(
+                $sectionName,
                 array(
                     'title'       => $fields['sectionTitle'],
                     'priority'    => $sectionPriority++,
@@ -209,57 +205,14 @@ class Config extends \kabar\Module\Module\Module
                 if (!is_array($fieldSettings)) {
                     continue;
                 }
-
-                $name = $this->getSettingName($section, $field);
-
-                $wp_customize->add_setting(
-                    $name,
-                    array(
-                        'default'    => isset($fieldSettings['default']) ? $fieldSettings['default'] : '',
-                        'type'       => 'theme_mod',
-                        'capability' => isset($fieldSettings['capability']) ? $fieldSettings['capability'] : $fields['sectionCapability'],
-                        'transport'  => 'refresh'
-                    )
+                $this->addControl(
+                    $wpCustomize,
+                    $sectionName,
+                    $this->getSettingName($sectionName, $field),
+                    $fieldSettings,
+                    isset($fieldSettings['capability']) ? $fieldSettings['capability'] : $fields['sectionCapability'],
+                    $fieldPriority++
                 );
-
-                if (isset($fieldSettings['type'])) {
-                    $arguments = array(
-                            'label'    => isset($fieldSettings['label']) ? $fieldSettings['label'] : '',
-                            'section'  => $section,
-                            'settings' => $name,
-                            'type'     => $fieldSettings['type']
-                    );
-                    if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
-                        if ($this->isModuleCallback($fieldSettings['choices'])) {
-                            $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
-                        }
-                        $arguments['choices'] = $fieldSettings['choices'];
-                    }
-                    $wp_customize->add_control(
-                        $name.'_control',
-                        $arguments
-                    );
-                } else if (isset($fieldSettings['control'])) {
-                    $class     = $fieldSettings['control'];
-                    $arguments = array(
-                        'label'    => isset($fieldSettings['label']) ? $fieldSettings['label'] : '',
-                        'section'  => $section,
-                        'settings' => $name,
-                        'priority' => $fieldPriority++
-                    );
-                    if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
-                        if ($this->isModuleCallback($fieldSettings['choices'])) {
-                            $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
-                        }
-                        $arguments['choices'] = $fieldSettings['choices'];
-                    }
-                    $control = new $class(
-                        $wp_customize,
-                        $name.'_control',
-                        $arguments
-                    );
-                    $wp_customize->add_control($control);
-                }
             }
         }
     }
@@ -287,6 +240,70 @@ class Config extends \kabar\Module\Module\Module
     private function getSettingName($sectionName, $settingName)
     {
         return $this->getLibrarySlug().$sectionName.'_'.$settingName;
+    }
+
+    /**
+     * Adds new controll to WordPress customization object
+     * @param  \WP_Customize_Manager $wpCustomize
+     * @param  string                $sectionName
+     * @param  string                $settingName
+     * @param  array                 $fieldSettings
+     * @param  string                $fieldCapabilty
+     * @param  integer               $fieldPriority
+     * @return void
+     */
+    private function addControl(
+        \WP_Customize_Manager $wpCustomize,
+        $sectionName,
+        $settingName,
+        $fieldSettings,
+        $fieldCapabilty,
+        $fieldPriority
+    ) {
+        $wpCustomize->add_setting(
+            $settingName,
+            array(
+                'default'    => isset($fieldSettings['default']) ? $fieldSettings['default'] : '',
+                'type'       => 'theme_mod',
+                'capability' => $fieldCapabilty,
+                'transport'  => 'refresh'
+            )
+        );
+
+        if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
+            if ($this->isModuleCallback($fieldSettings['choices'])) {
+                $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
+            }
+            $arguments['choices'] = $fieldSettings['choices'];
+        }
+
+        if (isset($fieldSettings['type'])) {
+            $arguments = array(
+                    'label'    => isset($fieldSettings['label']) ? $fieldSettings['label'] : '',
+                    'section'  => $sectionName,
+                    'settings' => $settingName,
+                    'type'     => $fieldSettings['type'],
+                    'priority' => $fieldPriority
+            );
+            $wpCustomize->add_control(
+                $settingName.'_control',
+                $arguments
+            );
+        } else if (isset($fieldSettings['control'])) {
+            $class     = $fieldSettings['control'];
+            $arguments = array(
+                'label'    => isset($fieldSettings['label']) ? $fieldSettings['label'] : '',
+                'section'  => $sectionName,
+                'settings' => $settingName,
+                'priority' => $fieldPriority
+            );
+            $control = new $class(
+                $wpCustomize,
+                $settingName.'_control',
+                $arguments
+            );
+            $wpCustomize->add_control($control);
+        }
     }
 
     /**

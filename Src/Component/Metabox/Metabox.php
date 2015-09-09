@@ -4,7 +4,6 @@
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
- * @todo       Switch module to use Form component instead duplicating it's functionality
  * @package    kabar
  * @subpackage Component
  */
@@ -87,11 +86,11 @@ final class Metabox extends \kabar\Module\Module\Module
     /**
      * Prepare to add metabox on proper WordPress action
      * @since 2.0.0
-     * @param string $id
-     * @param string $title
-     * @param array  $screen
-     * @param string $context
-     * @param string $priority
+     * @param string               $id
+     * @param string               $title
+     * @param string|array<string> $screen
+     * @param string               $context
+     * @param string               $priority
      * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
      */
     public function __construct(
@@ -139,8 +138,8 @@ final class Metabox extends \kabar\Module\Module\Module
     /**
      * Return metabox setting for particular post
      * @since  2.24.4
-     * @param  string  $setting
-     * @return string
+     * @param  string      $setting
+     * @return string|null
      */
     public function getSetting($setting)
     {
@@ -228,7 +227,7 @@ final class Metabox extends \kabar\Module\Module\Module
             return $this->storage;
         }
         $this->storage = new \kabar\Utility\Storage\PostMeta;
-        $this->storage->setPrefix($this->getSettingsPrefix($this->id));
+        $this->storage->setPrefix($this->getSettingsPrefix());
         return $this->storage;
     }
 }

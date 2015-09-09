@@ -66,7 +66,7 @@ class Module
              * Fastest way
              * @see http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
              */
-            $this->moduleName = substr(strrchr($this->getModuleClass(), "\\"), 1);
+            $this->moduleName = substr(strrchr($this->getModuleClass(), '\\'), 1);
         }
         return $this->moduleName;
     }
