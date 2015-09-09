@@ -44,7 +44,7 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Fieldset storage shared with fields
-     * @var \kabar\Utility\Fields\InterfaceStorage
+     * @var \kabar\Utility\Storage\InterfaceStorage
      */
     protected $storage;
 

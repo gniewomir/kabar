@@ -39,6 +39,18 @@ class Image extends AbstractField
     protected $default;
 
     /**
+     * Help text for a field
+     * @var string
+     */
+    protected $help;
+
+    /**
+     * Show image preview?
+     * @var bool
+     */
+    protected $preview;
+
+    /**
      * Setup text field
      * @param string $slug
      * @param string $title
@@ -80,7 +92,7 @@ class Image extends AbstractField
     }
 
     /**
-     * Render text
+     * Render field
      * @return \kabar\Component\Template\Template
      */
     public function render()

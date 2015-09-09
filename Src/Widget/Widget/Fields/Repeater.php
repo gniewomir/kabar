@@ -10,7 +10,7 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.9.42
  * @package    kabar
- * @subpackage kabar_widget_fields_api
+ * @subpackage WidgetFields
  */
 class Repeater extends AbstractField
 {
@@ -28,6 +28,12 @@ class Repeater extends AbstractField
      * @var string
      */
     protected $label;
+
+    /**
+     * Default amount of fields in repeater
+     * @var integer
+     */
+    protected $defaulCount;
 
     /**
      * Minimum number of repeats
@@ -53,17 +59,21 @@ class Repeater extends AbstractField
      */
     protected $rmLabel;
 
-
     /**
      * Fields
-     * @var string
+     * @var array<\kabar\Widget\Widget\Fields\AbstractField>
      */
     protected $fields;
 
     /**
-     * Setup repeater object
-     * @param string    $id
-     * @param string    $label
+     * Setup repeater field
+     * @param string  $id
+     * @param string  $label
+     * @param integer $defaultCount
+     * @param integer $min
+     * @param integer $max
+     * @param string  $addLabel
+     * @param string  $rmLabel
      */
     public function __construct($id, $label, $defaultCount, $min, $max, $addLabel, $rmLabel)
     {
@@ -195,6 +205,7 @@ class Repeater extends AbstractField
         for ($i = 1; $i <= $count; $i++) {
             foreach ($this->fields as $index => $field) {
                 $fieldId                    = $field->getId();
+                $fieldNewInstance           = array();
                 $fieldNewInstance[$fieldId] = isset($newInstance[$fieldId][$i]) ? $newInstance[$fieldId][$i] : null;
                 $fieldNewInstance           = $field->update($fieldNewInstance, array());
                 $newInstance[$fieldId][$i]  = $fieldNewInstance[$fieldId];

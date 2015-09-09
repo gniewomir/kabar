@@ -12,14 +12,19 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      1.0.0
  * @package    kabar
- * @subpackage kabar_widget_fields_api
+ * @subpackage WidgetFields
  */
 abstract class AbstractField
 {
     const TEMPLATES_DIRECTORY = 'Templates';
     const ASSETS_DIRECTORY    = 'assets';
-
     const TEMPLATE_EXTENSION  = '.php';
+
+    /**
+     * Field id
+     * @var string
+     */
+    protected $id;
 
     /**
      * WordPress widget instace

@@ -10,7 +10,7 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      1.0.0
  * @package    kabar
- * @subpackage kabar_widget_fields_api
+ * @subpackage WidgetFields
  */
 class ColorPicker extends AbstractField
 {

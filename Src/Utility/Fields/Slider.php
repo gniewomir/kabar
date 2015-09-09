@@ -34,18 +34,36 @@ class Slider extends AbstractField
 
     /**
      * Field default value
-     * @var string
+     * @var integer
      */
     protected $default;
 
     /**
+     * Minimum value
+     * @var integer
+     */
+    protected $min;
+
+    /**
+     * Maximum value
+     * @var integer
+     */
+    protected $max;
+
+    /**
+     * Change step
+     * @var integer
+     */
+    protected $step;
+
+    /**
      * Setup slider field
-     * @param string $slug
-     * @param string $title
-     * @param int    $min
-     * @param int    $max
-     * @param int    $step
-     * @param int    $default
+     * @param string  $slug
+     * @param string  $title
+     * @param integer $min
+     * @param integer $max
+     * @param integer $step
+     * @param integer $default
      */
     public function __construct($slug, $title, $min, $max, $step, $default)
     {

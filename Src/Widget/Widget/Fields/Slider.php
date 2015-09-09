@@ -10,7 +10,7 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      1.0.0
  * @package    kabar
- * @subpackage kabar_widget_fields_api
+ * @subpackage WidgetFields
  */
 class Slider extends AbstractField
 {
@@ -37,30 +37,30 @@ class Slider extends AbstractField
 
     /**
      * Slider start value
-     * @var int
+     * @var integer
      */
     protected $min;
 
     /**
      * Slider end value
-     * @var int
+     * @var integer
      */
     protected $max;
 
     /**
      * Slider step
-     * @var int
+     * @var integer
      */
     protected $step;
 
     /**
      * Setup text field object
-     * @param string    $id
-     * @param string    $label
-     * @param string    $default
-     * @param string    $min
-     * @param string    $max
-     * @param string    $step
+     * @param string  $id
+     * @param string  $label
+     * @param string  $default
+     * @param integer $min
+     * @param integer $max
+     * @param integer $step
      */
     public function __construct($id, $label, $default, $min, $max, $step)
     {

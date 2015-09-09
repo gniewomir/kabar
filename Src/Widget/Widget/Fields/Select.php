@@ -8,7 +8,7 @@ namespace kabar\Widget\Widget\Fields;
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      1.0.0
  * @package    kabar
- * @subpackage kabar_widget_fields_api
+ * @subpackage WidgetFields
  */
 class Select extends AbstractField
 {
@@ -36,6 +36,12 @@ class Select extends AbstractField
      * @var array
      */
     protected $options;
+
+    /**
+     * Field help
+     * @var string
+     */
+    protected $help;
 
     /**
      * Setup text field object

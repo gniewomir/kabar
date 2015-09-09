@@ -159,6 +159,7 @@ class Module
                     '',
                     $assets
                 );
+
                 $this->assetsUri = get_stylesheet_directory_uri().$assets;
             } else {
                 $this->assetsUri = plugins_url('', dirname(__DIR__)).'/'.$this->getModuleType().'/'.$this->getModuleName().'/'.self::ASSETS_DIRECTORY.'/';
