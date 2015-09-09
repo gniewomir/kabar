@@ -4,9 +4,9 @@
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
+ * @todo       Switch module to use Form component instead duplicating it's functionality
  * @package    kabar
  * @subpackage Component
- * @see        https://codex.wordpress.org/Function_Reference/add_meta_box
  */
 
 namespace kabar\Component\Metabox;
@@ -16,32 +16,23 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Registers and provides API for single metabox
  */
-class Metabox extends \kabar\Module\Module\Module
+final class Metabox extends \kabar\Module\Module\Module
 {
-
-    const NONCE_SUFFIX  = '_nonce';
-    const ACTION_SUFFIX = '_save';
-
-    /**
-     * Fileds contained in this metabox
-     * @since 2.0.0
-     * @var   array
-     */
-    protected $fields = array();
+    const SINGLE = true;
 
     /**
      * Metabox ID
      * @since 2.0.0
      * @var   string
      */
-    protected $id;
+    private $id;
 
     /**
      * Metabox title
      * @since 2.0.0
      * @var   string
      */
-    protected $title;
+    private $title;
 
     /**
      * Locations where to add this metabox
@@ -49,7 +40,7 @@ class Metabox extends \kabar\Module\Module\Module
      * @var   array
      * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
      */
-    protected $screens;
+    private $screens;
 
     /**
      * The part of the page where the edit screen section should be show
@@ -57,7 +48,7 @@ class Metabox extends \kabar\Module\Module\Module
      * @var string
      * @see https://codex.wordpress.org/Function_Reference/add_meta_box
      */
-    protected $context;
+    private $context;
 
     /**
      * The priority within the context where the boxes should show
@@ -65,13 +56,33 @@ class Metabox extends \kabar\Module\Module\Module
      * @var string
      * @see https://codex.wordpress.org/Function_Reference/add_meta_box
      */
-    protected $priority;
+    private $priority;
 
     /**
-     * Metabox storage object
+     * Template
+     * @var \kabar\Component\Template\Template
+     */
+    private $template;
+
+    /**
+     * Storage object
      * @var \kabar\Utility\Storage\InterfaceStorage
      */
-    protected $storage;
+    private $storage;
+
+    /**
+     * Path to directory with fields templates. With trailing slash.
+     * @var string
+     */
+    private $fieldsTemplateDir;
+
+    /**
+     * Form for this metabox
+     * @var \kabar\Component\Form\Form
+     */
+    private $form;
+
+    // INTERFACE
 
     /**
      * Prepare to add metabox on proper WordPress action
@@ -83,32 +94,64 @@ class Metabox extends \kabar\Module\Module\Module
      * @param string $priority
      * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
      */
-    public function __construct($id, $title, $screen = 'post', $context = 'normal', $priority = 'high')
-    {
-        ServiceLocator::get('Module', 'Fields');
+    public function __construct(
+        $id,
+        $title,
+        $screen = 'post',
+        $context = 'normal',
+        $priority = 'high',
+        \kabar\Utility\Storage\InterfaceStorage $storage = null,
+        \kabar\Component\Template\Template $template = null,
+        $fieldsTemplateDir = ''
+    ) {
+        $this->id                = $id;
+        $this->title             = $title;
+        $this->screens           = is_array($screen) ? $screen : array($screen);
+        $this->context           = $context;
+        $this->priority          = $priority;
+        $this->storage           = $storage;
+        $this->template          = $template;
+        $this->fieldsTemplateDir = $fieldsTemplateDir;
 
-        $this->id       = $id;
-        $this->title    = $title;
-        $this->screens  = is_array($screen) ? $screen : array($screen);
-        $this->context  = $context;
-        $this->priority = $priority;
-        $this->nonce    = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
+        $this->form = new \kabar\Component\Form\Form(
+            $id,
+            '',
+            '',
+            $this->getStorage(),
+            $this->template,
+            $this->fieldsTemplateDir
+        );
 
         add_action('add_meta_boxes', array($this, 'add'));
         add_action('save_post', array($this, 'update'));
     }
 
     /**
-     * Returns metabox id
-     * @return string
+     * Returns metabox form
+     * @since  2.20.0
+     * @return \kabar\Component\Form\Form
      */
-    public function getId()
+    public function getForm()
     {
-        return $this->id;
+        return $this->form;
     }
 
     /**
+     * Return metabox setting for particular post
+     * @since  2.20.0
+     * @param  string  $setting
+     * @return string
+     */
+    public function getSetting($setting)
+    {
+        return $this->getStorage()->retrieve($setting);
+    }
+
+    // INTERNAL
+
+    /**
      * WordPress action, add metabox to all specified screens/custom post types
+     * @access private
      * @since 2.0.0
      * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
      */
@@ -120,88 +163,21 @@ class Metabox extends \kabar\Module\Module\Module
     }
 
     /**
-     * Remove THIS metabox from all specified screens/custom post types
-     * @since 2.0.0
-     * @see   https://codex.wordpress.org/Function_Reference/remove_meta_box
-     */
-    public function remove()
-    {
-        remove_action('add_meta_boxes', array($this, 'add'), 999);
-        remove_action('save_post', array($this, 'update'));
-        foreach ($this->screens as $screen) {
-            remove_meta_box($this->id, $screen, $this->context);
-        }
-        foreach ($fields as $field) {
-            if (method_exists($field, 'remove')) {
-                $field->remove();
-            }
-        }
-    }
-
-    /**
-     * Adds field to metabox
-     * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceFormPart $field
-     */
-    public function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
-    {
-        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-            $field->setStorage($this->getStorage());
-        }
-        $slug                = $field->getSlug();
-        $this->fields[$slug] = $field;
-    }
-
-    /**
-     * Adds fields to metabox
-     * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceField $firstField First of multiple possibile fields instances
-     */
-    public function addFields(\kabar\Utility\Fields\InterfaceField $firstField)
-    {
-        $fields = func_get_args();
-        foreach ($fields as $field) {
-            $this->addField($field);
-        }
-    }
-
-    /**
-     * Removes field form metabox
-     * @since 2.0.0
-     * @param string $slug Field slug
-     */
-    public function removeField($slug)
-    {
-        unset($this->fields[$slug]);
-    }
-
-    /**
-     * Returns field value
-     * @param  string $slug
-     * @return mixed
-     */
-    public function getField($slug)
-    {
-        return $this->fields[$slug];
-    }
-
-    /**
-     * Renders metabox content
-     * @since 2.0.0
-     * @param \WP_Post $post
-     * @param array    $metabox
-     * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
+     * Callback for WordPress. Renders metabox content
+     * @access private
+     * @since  2.0.0
+     * @param  \WP_Post $post
+     * @param  array    $metabox
+     * @see    https://codex.wordpress.org/Function_Reference/add_meta_box
      */
     public function render($post, $metabox)
     {
-        echo $this->nonce->render();
-        foreach ($this->fields as $field) {
-            echo $field->render();
-        }
+        echo $this->form->render();
     }
 
     /**
      * WordPress action. Save all metabox fields on post save
+     * @access private
      * @since 2.0.0
      * @param int $postId The post ID.
      */
@@ -213,7 +189,7 @@ class Metabox extends \kabar\Module\Module\Module
         }
 
         // If there is no nonce or it is invalid we do nothing
-        if (!$this->checkNonce()) {
+        if (!$this->form->sent()) {
             return;
         }
 
@@ -228,51 +204,32 @@ class Metabox extends \kabar\Module\Module\Module
             }
         }
 
-        // save all fields
-        foreach ($this->fields as $field) {
-            if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-                $field->save();
-            }
-        }
+        $this->form->save();
     }
 
     /**
-     * Checks if nonce is set and valid
-     * @since 2.0.0
-     * @return bool
+     * Return user meta settins prefix
+     * @param  string $id
+     * @return string
      */
-    protected function checkNonce()
+    private function getSettingsPrefix()
     {
-        return isset($this->nonce) && $this->nonce->get() === true;
-    }
-
-    /**
-     * Set storage object for fields
-     * @since 2.15.0
-     * @param \kabar\Utility\Storage\InterfaceStorage $storage
-     */
-    public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage)
-    {
-        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
-            trigger_error('Metabox storage already set!', E_USER_ERROR);
-        }
-        $this->storage = $storage;
+        return $this->id.'-';
     }
 
     /**
      * Returns storage object, if it doesn't exists it will be created
      *
-     * We want to create storage as late as we can, because it needs to determine current post id. So we instantiat it JIT.
-     *
      * @since 2.0.0
-     * @return \kabar\Utility\Storage\PostMeta
+     * @return \kabar\Utility\Storage\InterfaceStorage
      */
-    protected function getStorage()
+    private function getStorage()
     {
-        if (!$this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
-            $this->storage = new \kabar\Utility\Storage\PostMeta($this->id.'-');
+        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
+            return $this->storage;
         }
-
+        $this->storage = new \kabar\Utility\Storage\PostMeta;
+        $this->storage->setPrefix($this->getSettingsPrefix($this->id));
         return $this->storage;
     }
 }
