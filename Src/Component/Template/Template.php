@@ -14,20 +14,22 @@ namespace kabar\Component\Template;
 /**
  * Template class
  */
-class Template
+final class Template
 {
 
     /**
      * Template vars
      * @var array
      */
-    protected $vars = array();
+    private $vars = array();
 
     /**
      * Template file
      * @var string
      */
-    protected $file = '';
+    private $file = '';
+
+    // INTERFACE
 
     /**
      * Set template

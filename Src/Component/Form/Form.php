@@ -16,7 +16,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Form class
  */
-class Form extends \kabar\Module\Module\Module
+final class Form extends \kabar\Module\Module\Module
 {
 
     const NONCE_SUFFIX  = '_nonce';
@@ -25,87 +25,85 @@ class Form extends \kabar\Module\Module\Module
     const GET_METHOD    = 'get';
     const POST_METHOD   = 'post';
 
-    /**
-     * Form id
-     * @var string
-     */
-    protected $id;
+    const SEND_TO_SELF  = 'self';
 
     /**
      * Form id
      * @var string
      */
-    protected $name;
+    private $id;
 
     /**
-     * Form id
+     * Form method
      * @var string
      */
-    protected $method;
+    private $method;
 
     /**
-     * Form id
+     * Form action
      * @var string
      */
-    protected $action;
+    private $action;
 
     /**
      * Form fields
      * @var array
      */
-    protected $fields = array();
+    private $fields = array();
 
     /**
      * Form nonce field
      * @var \kabar\Utility\Fields\Nonce
      */
-    protected $nonce;
+    private $nonce;
+
+    /**
+     * Form template
+     * @var \kabar\Component\Template\Template
+     */
+    private $template;
 
     /**
      * Form storage object
      * @var \kabar\Utility\Storage\InterfaceStorage
      */
-    protected $storage;
+    private $storage;
+
+    /**
+     * Path to directory with fields templates. With trailing slash.
+     * @var string
+     */
+    private $fieldsTemplateDir;
+
+    // INTERFACE
 
     /**
      * Setup form
-     * @param string $id
+     * @param string                                       $id
+     * @param string                                       $method
+     * @param string                                       $action
+     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage
+     * @param \kabar\Component\Template\Template|null      $template
+     * @param string                                       $fieldsTemplateDir
      */
-    public function __construct($id, $method = '', $action = '')
-    {
-        $this->id     = $id;
-        $this->name   = $id;
-        $this->method = in_array($method, array(self::GET_METHOD, self::POST_METHOD)) ? $method : self::POST_METHOD;
+    public function __construct(
+        $id,
+        $method = '',
+        $action = '',
+        \kabar\Utility\Storage\InterfaceStorage $storage = null,
+        \kabar\Component\Template\Template $template = null,
+        $fieldsTemplateDir = ''
+    ) {
+        $this->id                = $id;
+        $this->method            = in_array($method, array(self::GET_METHOD, self::POST_METHOD)) ? $method : self::POST_METHOD;
+        $this->action            = empty($action) ? get_home_url(null, htmlspecialchars($_SERVER['PHP_SELF'])) : $action;
+        $this->storage           = $storage;
+        $this->template          = $template;
+        $this->fieldsTemplateDir = $fieldsTemplateDir;
 
-        if (empty($action)) {
-            $action = get_home_url(null, $_SERVER['REQUEST_URI']);
-        }
+        $this->nonce    = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
 
-        $this->action = htmlspecialchars($action);
-        $this->nonce  = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
-    }
-
-    /**
-     * Returns form id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Adds field to form
-     * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceFormPart $field
-     */
-    public function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
-    {
-        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-            $field->setStorage($this->getStorage());
-        }
-        $slug                = $field->getSlug();
-        $this->fields[$slug] = $field;
+        add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'));
     }
 
     /**
@@ -122,16 +120,48 @@ class Form extends \kabar\Module\Module\Module
     }
 
     /**
+     * Checks if form was sent and we can process it.
+     * @return bool
+     */
+    public function sent()
+    {
+        return isset($this->nonce) && $this->nonce->get() === true;
+    }
+
+    /**
+     * Get form data as array or return false if not sent, or nonce is invalid
+     * @since  2.20.0
+     * @return array|bool
+     */
+    public function save()
+    {
+        if (!$this->sent()) {
+            return false;
+        }
+        $form = array();
+        foreach ($this->fields as $slug => $field) {
+            if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
+                $form[$field->getSlug()] = $field->save();
+            }
+        }
+        return $form;
+    }
+
+    /**
      * Renders form content
      * @since 2.0.0
      */
     public function render()
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
-        $template(__DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.'Form.php');
+        if ($this->template instanceof \kabar\Component\Template\Template) {
+            $template = $this->template;
+        } else {
+            $template = new \kabar\Component\Template\Template;
+            $template($this->getTemplatesDirectory().'Form.php');
+        }
         $template->nonce  = $this->nonce->render();
         $template->id     = $this->id;
-        $template->name   = $this->name;
+        $template->name   = $this->id;
         $template->method = $this->method;
         $template->action = $this->action;
         $fields = array();
@@ -143,66 +173,54 @@ class Form extends \kabar\Module\Module\Module
         return $template;
     }
 
-    /**
-     * Checks if form was sent and we can process it.
-     * @return bool
-     */
-    public function sent()
-    {
-        return $this->checkNonce();
-    }
+    // INTERNAL
 
     /**
-     * Get form data as array or return false if
-     * @since  2.0.0
-     * @return array|bool
-     */
-    public function getFormAsArray()
-    {
-        if (!$this->sent()) {
-            return false;
-        }
-
-        $form = array();
-        foreach ($this->fields as $slug => $field) {
-            if ($field instanceof \kabar\Utility\Fields\InterfaceFieldset) {
-                $fieldsetFields = $field->get();
-                foreach ($fieldsetFields as $fieldsetField) {
-                    $form[$fieldsetField->getSlug()] = $fieldsetField->save();
-                }
-            } else if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-                $form[$field->getSlug()] = $field->save();
-            }
-        }
-
-        return $form;
-    }
-
-    /**
-     * Checks if nonce is set and valid
+     * Adds field to form
      * @since 2.0.0
-     * @return bool
+     * @param \kabar\Utility\Fields\InterfaceFormPart $field
      */
-    protected function checkNonce()
+    private function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {
-        return isset($this->nonce) && $this->nonce->get() === true;
+        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
+            $field->setStorage($this->getStorage());
+        }
+        $field->setTemplateDirectory($this->fieldsTemplateDir);
+        $slug                = $field->getSlug();
+        $this->fields[$slug] = $field;
     }
 
     /**
      * Returns storage object, if it doesn't exists it will be created
      *
-     * We want to create storage as late as we can, because it needs to determine current post id. So we instantiat it JIT.
-     *
      * @since 2.0.0
-     * @return \kabar\Utility\Storage\HTTPPost
+     * @return \kabar\Utility\Storage\InterfaceStorage
      */
-    protected function getStorage()
+    private function getStorage()
     {
-        if (!$this->storage instanceof InterfaceStorage) {
-            $this->storage = new \kabar\Utility\Storage\HTTPPost;
-            $this->storage->setPrefix($this->id.'-');
+        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
+            return $this->storage;
         }
 
+        $this->storage = new \kabar\Utility\Storage\HTTPPost;
+        $this->storage->setPrefix($this->id.'-');
         return $this->storage;
+    }
+
+    /**
+     * Equeue assets
+     * @access private
+     * @since  2.20.0
+     * @return void
+     */
+    public function enqueueAssets()
+    {
+        wp_enqueue_style(
+            $this->getModuleSlug().'-style',
+            $this->getAssetsUri().'css/Fields.css',
+            array(),
+            $this->getLibraryVersion(),
+            'all'
+        );
     }
 }
