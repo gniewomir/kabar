@@ -1,19 +1,22 @@
-jQuery(document).ready( function(){
-    function bindMediaLibrary(buttonClass) {
+(function($){
+    $(function() {
         "use_strict";
-        var backup_send_attachment = wp.media.editor.send.attachment,
+        var buttonClass            = '.kabar-Utility-Fields-Image-button';
+            backup_send_attachment = wp.media.editor.send.attachment,
             custom                 = true;
 
-        jQuery('body').on(
+        // bind media library
+        $('body').on(
             'click',
             buttonClass,
             function(event) {
-                var inputId = jQuery(this).prev().attr('id');
+                var inputId = $(this).prev().attr('id');
                 wp.media.editor.open(inputId);
                 wp.media.editor.send.attachment = function(props, attachment){
                     if (custom) {
-                        jQuery('#'+inputId).val(attachment.url);
-                        jQuery('#'+inputId).trigger('change');
+                        $('#'+inputId).val(attachment.url);
+                        $('#'+inputId).parent().find('.image-preview > img').attr('src', attachment.url);
+                        $('#'+inputId).trigger('change');
                     } else {
                         return backup_send_attachment.apply( inputId, [props, attachment] );
                     }
@@ -21,7 +24,5 @@ jQuery(document).ready( function(){
                 return false;
             }
         );
-    }
-    bindMediaLibrary('.kabar-Utility-Fields-Image-button');
-});
-
+    });
+})(jQuery);
