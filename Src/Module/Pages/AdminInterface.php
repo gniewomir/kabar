@@ -59,7 +59,7 @@ class AdminInterface
      */
     public function addBuildLink($actions, $post)
     {
-        $customizationLink    = get_admin_url(null, '/customize.php');
+        $customizationLink = get_admin_url(null, '/customize.php');
         $query = http_build_query(array(
             'url' => get_page_link($post->ID)
         ));
@@ -79,7 +79,7 @@ class AdminInterface
     {
         global $typenow;
         if ('page' == $typenow && isset($_GET[self::VIEW_QUERY_VAR]) &&
-            self::VIEW_QUERY_VAR_VALUE == $_GET[self::VIEW_QUERY_VAR] ) {
+            self::VIEW_QUERY_VAR_VALUE == $_GET[self::VIEW_QUERY_VAR]) {
             set_query_var(
                 'meta_query',
                 array(
@@ -102,7 +102,7 @@ class AdminInterface
         global $typenow;
         $class = '';
         if ('page' == $typenow && isset($_GET[self::VIEW_QUERY_VAR]) &&
-            self::VIEW_QUERY_VAR_VALUE == $_GET[self::VIEW_QUERY_VAR] ) {
+            self::VIEW_QUERY_VAR_VALUE == $_GET[self::VIEW_QUERY_VAR]) {
             $class = 'class="current"';
         }
         $count = count($this->pages);

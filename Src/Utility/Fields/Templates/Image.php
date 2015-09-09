@@ -1,5 +1,5 @@
 <div class="<?php echo esc_attr($cssClass); ?>">
-    <?php if($preview) : ?>
+    <?php if ($preview) : ?>
         <div class="image-preview">
             <?php if (!empty($value)) : ?>
                 <img src="<?php echo esc_url($value); ?>">

@@ -101,7 +101,7 @@ final class Form extends \kabar\Module\Module\Module
         $this->template          = $template;
         $this->fieldsTemplateDir = $fieldsTemplateDir;
 
-        $this->nonce    = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
+        $this->nonce = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
 
         add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'));
     }

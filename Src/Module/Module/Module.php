@@ -115,7 +115,7 @@ class Module
      */
     public function getCssClass()
     {
-        $class          = explode('\\', get_class($this));
+        $class = explode('\\', get_class($this));
         array_pop($class);
         $cssClass = implode('-', $class);
         return $cssClass;

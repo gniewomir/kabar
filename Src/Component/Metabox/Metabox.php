@@ -209,7 +209,6 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Return user meta settins prefix
-     * @param  string $id
      * @return string
      */
     private function getSettingsPrefix()

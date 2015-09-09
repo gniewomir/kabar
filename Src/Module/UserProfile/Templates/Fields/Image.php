@@ -3,7 +3,7 @@
         <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($title); ?></label>
     </th>
     <td>
-        <?php if($preview) : ?>
+        <?php if ($preview) : ?>
             <div class="image-preview">
                 <?php if (!empty($value)) : ?>
                     <img src="<?php echo esc_url($value); ?>">

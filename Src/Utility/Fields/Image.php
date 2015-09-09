@@ -121,7 +121,7 @@ class Image extends AbstractField
         }
 
         // Sanitize user input.
-        $value = esc_url_raw($this->storage->updated($this->getSlug()), array('http','https'));
+        $value = esc_url_raw($this->storage->updated($this->getSlug()), array('http', 'https'));
 
         // store value
         $this->storage->store($this->getSlug(), $value);
