@@ -109,7 +109,7 @@ class Slider extends AbstractField
             str_replace('-', '_', $this->storage->getFieldId($this->getSlug())),
             $data
         );
-        $template->value    = empty($value) ? $this->default : $value;
+        $template->value = empty($value) ? $this->default : $value;
         return $template;
     }
 

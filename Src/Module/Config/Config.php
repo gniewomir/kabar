@@ -315,7 +315,7 @@ class Config extends \kabar\Module\Module\Module
          * 1/ Have exactly two elements - module name, and method name - both strings
          * 2/ Is not associative array
          */
-        return count($array) == 2 && !(bool)count(array_filter(array_keys($array), 'is_string'));
+        return count($array) == 2 && !(bool) count(array_filter(array_keys($array), 'is_string'));
     }
 
     /**

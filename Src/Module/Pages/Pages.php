@@ -96,7 +96,7 @@ class Pages extends \kabar\Module\Module\Module
         $this->sidebars = $sidebars;
 
         // Widget callbacks
-        $this->widgets        = $widgets;
+        $this->widgets = $widgets;
 
         // Page tamplate path, relative to theme directory
         $this->template = $pageTemplate;
@@ -182,7 +182,7 @@ class Pages extends \kabar\Module\Module\Module
         }
 
         // get widgetized pages
-        $pages      = $this->getWidgetizedPagesList();
+        $pages = $this->getWidgetizedPagesList();
 
         // check if current url matches url of any widgetized page
         $currUrl = trim(parse_url($this->cache->currentUrl(), PHP_URL_PATH), '/');
