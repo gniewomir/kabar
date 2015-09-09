@@ -1,9 +1,9 @@
 <?php
 /**
- * HTTPPost storage
+ * User meta storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      2.20.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -11,20 +11,23 @@
 namespace kabar\Utility\Storage;
 
 /**
- * Class for storig data in post meta
+ * Class for storig data in user meta
  */
-class HTTPPost implements InterfaceStorage
+class UserMeta implements InterfaceStorage
 {
+    /**
+     * @see https://codex.wordpress.org/Function_Reference/get_user_meta
+     */
+    const SINGLE = true;
 
     /**
      * Prefix for keys
      * @var string
      */
-    protected $prefix = '';
+    protected $prefix;
 
     /**
      * Setup storage
-     * @since 2.15.0
      * @param string $prefix Prefix
      */
     public function __construct($prefix = '')
@@ -68,16 +71,27 @@ class HTTPPost implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        $_POST[$this->getFieldId($key)] = $value;
+        $userId = get_current_user_id();
+        if (empty($userId)) {
+            trigger_error('Cannot determine user ID. You cannot store user meta before "init" action.', E_USER_WARNING);
+            return;
+        }
+        update_user_meta($userId, $this->getFieldId($key), $value);
     }
 
     /**
      * Retrieve stored value
      * @param  string $key
      * @return mixed
+     * @see    https://codex.wordpress.org/Function_Reference/get_post_meta
     */
     public function retrieve($key)
     {
-        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
+        $userId = get_current_user_id();
+        if (empty($userId)) {
+            trigger_error('Cannot determine user ID. You cannot retrieve user meta before "init" action.', E_USER_WARNING);
+            return;
+        }
+        return get_user_meta($userId, $this->getFieldId($key), self::SINGLE);
     }
 }

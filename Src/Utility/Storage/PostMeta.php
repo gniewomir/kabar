@@ -2,9 +2,6 @@
 /**
  * Post meta storage
  *
- * WRANING: As utility class it don't perform any security checks. It is responsibility of parent module,
- * to check nonce, user premissions etc.
- *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
  * @package    kabar
@@ -69,11 +66,7 @@ class PostMeta implements InterfaceStorage
      */
     public function updated($key)
     {
-        $key = $this->prefix.$key;
-        if (isset($_POST[$key])) {
-            return $_POST[$key];
-        }
-        return null;
+        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
     }
 
     /**
@@ -84,18 +77,10 @@ class PostMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        if (isset($_REQUEST['post_ID'])) {
-            // this is a save request from edition screen
-            $postId = intval($_REQUEST['post_ID']);
+        if (!isset($_REQUEST['post_ID'])) {
+            trigger_error('Cannot determine post ID. You cannot store post meta outside save request from edition screen.', E_USER_ERROR);
         }
-
-        if (empty($postId)) {
-            trigger_error('Cannot determine post ID. You cannot store post meta outside save request from edition screen.', E_USER_WARNING);
-            return;
-        }
-
-        $key = self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
-        update_post_meta($postId, $key, $value);
+        update_post_meta(intval($_REQUEST['post_ID']), $this->getPostMetaId($key), $value);
     }
 
     /**
@@ -107,12 +92,19 @@ class PostMeta implements InterfaceStorage
     public function retrieve($key)
     {
         global $post;
-        if (empty($post) || empty($post->ID)) {
-            trigger_error('Cannot determine post ID. You cannot retrieve post meta outside WordPress loop.', E_USER_WARNING);
-            return;
+        if (!$post instanceof \WP_Post) {
+            trigger_error('Cannot determine post ID. You cannot retrieve post meta outside WordPress loop.', E_USER_ERROR);
         }
+        return get_post_meta($post->ID, $this->getPostMetaId($key), self::SINGLE);
+    }
 
-        $key = self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
-        return get_post_meta($post->ID, $key, self::SINGLE);
+    /**
+     * Returns post meta name
+     * @since  2.20.0
+     * @return string
+     */
+    private function getPostMetaId($key)
+    {
+        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
     }
 }
