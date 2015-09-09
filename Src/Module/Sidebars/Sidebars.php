@@ -96,6 +96,7 @@ final class Sidebars extends \kabar\Module\Module\Module
 
     /**
      * Output sidebar
+     * @param string $id
      */
     public function render($id)
     {
@@ -133,7 +134,7 @@ final class Sidebars extends \kabar\Module\Module\Module
     /**
      * Callback. Get widget area
      * @access private
-     * @return void
+     * @return string
      */
     public function getSidebar($id)
     {

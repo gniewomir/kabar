@@ -37,6 +37,7 @@ interface InterfaceField
     /**
      * Binds storage object to this field
      * @param \kabar\Utility\Storage\InterfaceStorage $storage
+     * @return void
      */
     public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage);
 }

@@ -18,7 +18,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 class WordPressWidget extends \WP_Widget
 {
 
-    const BASE_CLASS_NAME        = 'WordPressWidget';
+    const BASE_CLASS_NAME = 'WordPressWidget';
 
     /**
      * Configuration pulled from parent module

@@ -52,6 +52,7 @@ class PostMeta implements InterfaceStorage
 
     /**
      * Returns prefixed key
+     * @param string $key
      * @return string
      */
     public function getFieldId($key)
@@ -101,6 +102,7 @@ class PostMeta implements InterfaceStorage
     /**
      * Returns post meta name
      * @since  2.24.4
+     * @param string $key
      * @return string
      */
     private function getPostMetaId($key)

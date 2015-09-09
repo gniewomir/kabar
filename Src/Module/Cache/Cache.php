@@ -85,7 +85,7 @@ class Cache extends \kabar\Module\Module\Module
     {
         global $wpdb;
 
-        $value  = self::WP_TRANSIENT_PREFIX.self::TRANSIENT_PREFIX.$type;
+        $value = self::WP_TRANSIENT_PREFIX.self::TRANSIENT_PREFIX.$type;
 
         $wpdb->query(
             $wpdb->prepare(

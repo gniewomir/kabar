@@ -172,7 +172,7 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Get current widgetized page id
-     * @return boolean|int
+     * @return false|string
      */
     protected function getWidgetizedPageId()
     {

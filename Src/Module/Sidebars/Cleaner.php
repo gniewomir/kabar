@@ -152,7 +152,7 @@ final class Cleaner extends \kabar\Module\Module\Module
      * Find in which sidebar this particular widget id is
      * @since  2.12.0
      * @param  string $widgetId
-     * @return string|bool
+     * @return string
      */
     private function widgetSidebar($widgetId)
     {
