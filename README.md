@@ -31,8 +31,8 @@ Development branch:
 
 # Changelog
 
-### 2.
-* Refactored 'Config' module
+### 2.25.0
+* Small refactorings, doc blocks updates resulting from Scrutinizer.ci reports
 
 ### 2.24.4
 

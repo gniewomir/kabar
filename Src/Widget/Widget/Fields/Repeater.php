@@ -33,7 +33,7 @@ class Repeater extends AbstractField
      * Default amount of fields in repeater
      * @var integer
      */
-    protected $defaulCount;
+    protected $defaultCount;
 
     /**
      * Minimum number of repeats
