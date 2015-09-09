@@ -15,7 +15,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Site cache class
  */
-class Cache
+class Cache extends \kabar\Module\Module\Module
 {
     /**
      * WordPress transient prefix
@@ -54,9 +54,7 @@ class Cache
      */
     public function __construct()
     {
-        if (did_action('after_setup_theme')) {
-            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
-        }
+        $this->requireBeforeAction('after_setup_theme');
 
         if (isset($_GET['purge'])) {
             $this->startPurge();

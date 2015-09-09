@@ -63,9 +63,7 @@ class Config extends \kabar\Module\Module\Module
      */
     public function __construct(\kabar\Module\Cache\Cache $cache)
     {
-        if (did_action('after_setup_theme')) {
-            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
-        }
+        $this->requireBeforeAction('after_setup_theme');
 
         add_action('customize_register', array($this, 'register'));
         add_action('customize_save_after', array($this, 'refreshConfig'), 9);

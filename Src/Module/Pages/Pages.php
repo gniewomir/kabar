@@ -88,10 +88,7 @@ class Pages extends \kabar\Module\Module\Module
         array $widgets = array(),
         $pageTemplate = 'templates/widgetized-page.php'
     ) {
-
-        if (did_action('after_setup_theme')) {
-            trigger_error('Module "'.$this->getModuleName().'" have to be setup before "after_setup_theme" action.', E_USER_ERROR);
-        }
+        $this->requireBeforeAction('after_setup_theme');
 
         // Dependencies
         $this->config   = $styles;
