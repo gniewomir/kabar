@@ -93,7 +93,7 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
      * IMPORTANT: Fields ID's have to be valid php variable names, as later they are extracted in template
      *
      * @param \kabar\Widget\Widget\FieldsCollection $fieldsCollection
-     * @return array
+     * @return FieldsCollection
      */
     public function fields(\kabar\Widget\Widget\FieldsCollection $fieldsCollection)
     {
@@ -114,7 +114,6 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
     /**
      * Use widget stucture outside sidebar
      * @param  string $id   CSS id of widget
-     * @param  string $term Category slug
      * @return void
      */
     public function reuse($id, $options = array())

@@ -33,9 +33,7 @@ class Header extends AbstractField
 
     /**
      * Setup text field object
-     * @param WP_Widget $widget WordPress widget instance
      * @param string    $id
-     * @param string    $type
      * @param string    $label
      */
     public function __construct($id, $label)

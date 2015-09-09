@@ -243,7 +243,7 @@ class FieldsCollection
      */
     public function populateTemplate($args, $instance, \kabar\Component\Template\Template $template)
     {
-        $this->args     = $args;     // required by get method
+        $this->args     = $args; // required by get method
         $this->instance = $instance; // required by get method
         foreach ($this->fields as $key => $field) {
             $template->$key = $this->fields[$key]->get($this->args, $this->instance);

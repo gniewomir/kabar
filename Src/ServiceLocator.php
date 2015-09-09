@@ -110,7 +110,7 @@ final class ServiceLocator
      * Creates and stores or returns already created module instance
      * @param  string $type
      * @param  string $name
-     * @return object
+     * @return boolean
      */
     public static function isLoaded($type, $name)
     {

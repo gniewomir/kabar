@@ -56,7 +56,7 @@ class Text extends AbstractField
     public function get($args, $instance)
     {
         if ($this->id == 'title' && !empty($instance[$this->id])) {
-            return $args['before_title'] . apply_filters('widget_title', $instance[$this->id]). $args['after_title'];
+            return $args['before_title'].apply_filters('widget_title', $instance[$this->id]).$args['after_title'];
         }
 
         return isset($instance[$this->id]) ? esc_html($instance[$this->id]) : $this->default;

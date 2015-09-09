@@ -81,7 +81,7 @@ abstract class AbstractField
      *
      * @param array $instance Previously saved values from database.
      * @return kabar\Component\Template\Template
-    */
+     */
     public function form($instance)
     {
         $template = ServiceLocator::getNew('Component', 'Template');
@@ -120,7 +120,7 @@ abstract class AbstractField
     protected function getWordPressFieldId()
     {
         if ($this->suffix) {
-            $suffix = str_replace(array('[',']'), '-', $this->suffix);
+            $suffix = str_replace(array('[', ']'), '-', $this->suffix);
             $suffix = rtrim($suffix, '-');
         } else {
             $suffix = $this->suffix;

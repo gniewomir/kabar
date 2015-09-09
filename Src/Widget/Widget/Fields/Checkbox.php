@@ -38,7 +38,6 @@ class Checkbox extends AbstractField
      * Setup text field object
      * @param string    $id
      * @param string    $label
-     * @param string    $default
      */
     public function __construct($id, $label)
     {
@@ -50,7 +49,7 @@ class Checkbox extends AbstractField
      * Returns widget field value
      * @param  array $args     Widget arguments.
      * @param  array $instance Saved values from database.
-     * @return string
+     * @return boolean
      */
     public function get($args, $instance)
     {
