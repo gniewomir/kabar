@@ -25,35 +25,35 @@ class Module
      * @since 2.14.0
      * @var string
      */
-    protected $moduleName;
+    private $moduleName;
 
     /**
      * Current module type
      * @since 2.14.0
      * @var string
      */
-    protected $moduleType;
+    private $moduleType;
 
     /**
      * Current module slug used as ID
      * @since 2.14.0
      * @var string
      */
-    protected $moduleSlug;
+    private $moduleSlug;
 
     /**
      * Templates directory
      * @since 2.14.0
      * @var string
      */
-    protected $templatesDirectory;
+    private $templatesDirectory;
 
     /**
      * Assets uri
      * @since 2.14.0
      * @var string
      */
-    protected $assetsUri;
+    private $assetsUri;
 
     /**
      * Returns module name
@@ -62,8 +62,11 @@ class Module
     protected function getModuleName()
     {
         if (empty($this->moduleName)) {
-            $class            = explode('\\', $this->getModuleClass());
-            $this->moduleName = end($class);
+            /**
+             * Fastest way
+             * @see http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
+             */
+            $this->moduleName = substr(strrchr($this->getModuleClass(), "\\"), 1);
         }
         return $this->moduleName;
     }
@@ -103,6 +106,19 @@ class Module
             $this->moduleType = array_shift($this->moduleType);
         }
         return $this->moduleType;
+    }
+
+    /**
+     * Returns field css class
+     * @since  2.20.0
+     * @return string
+     */
+    public function getCssClass()
+    {
+        $class          = explode('\\', get_class($this));
+        array_pop($class);
+        $cssClass = implode('-', $class);
+        return $cssClass;
     }
 
     /**
@@ -164,5 +180,41 @@ class Module
             ).DIRECTORY_SEPARATOR.self::TEMPLATES_DIRECTORY.DIRECTORY_SEPARATOR;
         }
         return $this->templatesDirectory;
+    }
+
+    /**
+     * Check if required value is already set and not empty
+     * @since  2.19.0
+     * @return void
+     */
+    protected function requireNotEmpty($what, $value)
+    {
+        if (empty($value)) {
+            trigger_error('Module "'.$this->getModuleName().'" requires to '.$what.' to not be empty at this point.', E_USER_ERROR);
+        }
+    }
+
+    /**
+     * Check if we are before action required by module
+     * @since  2.19.0
+     * @return void
+     */
+    protected function requireBeforeAction($action)
+    {
+        if (did_action($action)) {
+            trigger_error('Module "'.$this->getModuleName().'" requires to be called before "'.$action.'" action.', E_USER_ERROR);
+        }
+    }
+
+    /**
+     * Check if we are after action, that needs to be executed before module
+     * @since  2.19.0
+     * @return void
+     */
+    protected function requireAfterAction($action)
+    {
+        if (!did_action($action)) {
+            trigger_error('Module "'.$this->getModuleName().'" requires to be called after "'.$action.'" action.', E_USER_ERROR);
+        }
     }
 }
