@@ -80,7 +80,7 @@ class Checkbox extends AbstractField
         $template->title    = $this->title;
         $template->value    = $this->value;
         $template->help     = $this->help;
-        $template->checked  = $this->get() ? 'checked="checked"' : '';
+        $template->checked  = $this->get() ? 'checked' : '';
         return $template;
     }
 
