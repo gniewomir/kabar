@@ -60,7 +60,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function getStorageId($key)
     {
-        return $this->getFieldId();
+        return $this->getFieldId($key);
     }
 
     /**

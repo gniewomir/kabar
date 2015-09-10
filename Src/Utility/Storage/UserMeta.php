@@ -63,7 +63,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function getStorageId($key)
     {
-        return $this->getFieldId();
+        return $this->getFieldId($key);
     }
 
     /**
@@ -107,12 +107,10 @@ final class UserMeta implements InterfaceStorage
     private function getUserId() {
         if (!defined('IS_PROFILE_PAGE')) {
             trigger_error('Not a profile page.', E_USER_ERROR);
-            return;
         }
         global $user_id;
         if (empty($user_id)) {
             trigger_error('Cannot determine user ID.', E_USER_ERROR);
-            return;
         }
         return (integer) $user_id;
     }
