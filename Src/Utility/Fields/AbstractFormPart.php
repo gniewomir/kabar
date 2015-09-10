@@ -39,10 +39,17 @@ abstract class AbstractFormPart implements InterfaceFormPart
     private $templateDirectory;
 
     /**
-     * Assets directory uir
+     * Assets directory uri
      * @var string
      */
     protected $assetsUri;
+
+    /**
+     * Library assets uri
+     * @since 2.26.4
+     * @var   string
+     */
+    protected $libraryAssetsUri;
 
     /**
      * Render field
@@ -101,6 +108,19 @@ abstract class AbstractFormPart implements InterfaceFormPart
             $this->assetsUri = plugins_url('', __FILE__).'/assets/';
         }
         return $this->assetsUri;
+    }
+
+    /**
+     * Get library assets uri
+     * @since  2.26.4
+     * @return string
+     */
+    protected function getLibraryAssetsUri()
+    {
+        if (empty($this->libraryAssetsUri)) {
+            $this->libraryAssetsUri = plugins_url('', dirname(dirname(dirname(__FILE__)))).'/assets/';
+        }
+        return $this->libraryAssetsUri;
     }
 
     /**

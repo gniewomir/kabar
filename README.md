@@ -17,7 +17,6 @@ Development branch:
 # Roadmap
 
 ### Features
-* TinyMCE form field
 * Full translation support
 * Panel support for Config/Customization module
 
@@ -38,7 +37,10 @@ Development branch:
 
 # Changelog
 
-### 2.25.4
+### 2.26.4
+
+#### Features
+* HTML form field with WYSIWYG editor
 
 #### Bugfix
 * Removed bug, that was causing UserProfile module to save user meta values to current user

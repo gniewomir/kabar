@@ -69,10 +69,6 @@ class TextArea extends Text
      */
     public function save()
     {
-        if (is_null($this->storage->updated($this->getSlug()))) {
-            return;
-        }
-
         // Sanitize user input.
         $value = sanitize_text_field($this->storage->updated($this->getSlug()));
 

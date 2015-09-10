@@ -1,9 +1,9 @@
 <?php
 /**
- * Text field class
+ * HTML Textarea field class
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      2.26.4
  * @package    kabar
  * @subpackage Fields
  */
@@ -13,10 +13,12 @@ namespace kabar\Utility\Fields;
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Text field class
+ * Textarea field class
  */
-class Text extends AbstractField
+class HTML extends TextArea
 {
+
+    const IN_FOOTER = true;
 
     /**
      * Field slug
@@ -37,33 +39,38 @@ class Text extends AbstractField
     protected $default;
 
     /**
+     * Field template file path
+     * @var string
+     */
+    protected $template;
+
+    /**
      * Additional description of field
      * @var string
      */
     protected $help;
 
     /**
-     * Setup text field
+     * Enable WYSIWYG editor?
+     * @var bool
+     */
+    protected $wysiwyg;
+
+    /**
+     * Setup field
      * @param string $slug
      * @param string $title
      * @param string $default
      * @param string $help
+     * @param bool   $wysiwyg
      */
-    public function __construct($slug, $title, $default = '', $help = '')
+    public function __construct($slug, $title, $default = '', $help = '', $wysiwyg = true)
     {
-        $this->slug     = $slug;
-        $this->title    = $title;
-        $this->default  = $default;
-        $this->help     = $help;
-    }
-
-    /**
-     * Get field value
-     * @return string
-     */
-    public function get()
-    {
-        return $this->storage->retrieve($this->getSlug());
+        $this->slug    = $slug;
+        $this->title   = $title;
+        $this->default = $default;
+        $this->help    = $help;
+        $this->wysiwyg = $wysiwyg;
     }
 
     /**
@@ -77,6 +84,7 @@ class Text extends AbstractField
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
         $template->help     = $this->help;
+        $template->wysiwyg   = $this->wysiwyg;
         $value              = $this->get();
         $template->value    = empty($value) ? $this->default : $value;
         return $template;
@@ -89,7 +97,7 @@ class Text extends AbstractField
     public function save()
     {
         // Sanitize user input.
-        $value = sanitize_text_field($this->storage->updated($this->getSlug()));
+        $value = wp_kses_post($this->storage->updated($this->getSlug()));
 
         // store value
         $this->storage->store($this->getSlug(), $value);
