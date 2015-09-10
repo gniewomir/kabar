@@ -32,6 +32,12 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     private $fieldTemplatesDir;
 
+    /**
+     * Reusable storage object, for retrieving settings
+     * @var \kabar\Utility\Storage\UserMeta
+     */
+    private $reusableStorage;
+
     // INTERFACE
 
     /**
@@ -91,8 +97,14 @@ final class UserProfile extends \kabar\Module\Module\Module
      * @param  string $setting
      * @return string
      */
-    public function getSetting($userId, $sectionId, $setting) {
-        return get_user_meta($userId, $this->getUserSettingsPrefix($sectionId).$setting, self::SINGLE);
+    public function getSetting($userId, $sectionId, $setting)
+    {
+        if (!$this->reusableStorage instanceof \kabar\Utility\Storage\UserMeta) {
+            $this->reusableStorage = new \kabar\Utility\Storage\UserMeta;
+        }
+        $this->reusableStorage->setPrefix($this->getUserSettingsPrefix($sectionId));
+        $this->reusableStorage->setId($userId);
+        return $this->reusableStorage->retrieve($setting);
     }
 
     // INTERNAL

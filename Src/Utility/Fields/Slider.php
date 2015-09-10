@@ -110,13 +110,13 @@ class Slider extends AbstractField
     public function render()
     {
         $template           = $this->getTemplate();
-        $template->id       = $this->storage->getFieldId($this->getSlug());
+        $template->id       = $this->storage->getPrefixedKey($this->getSlug());
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
 
         $value = $this->get();
         $data = array(
-            'id'      => $this->storage->getFieldId($this->getSlug()),
+            'id'      => $this->storage->getPrefixedKey($this->getSlug()),
             'min'     => $this->min,
             'max'     => $this->max,
             'step'    => $this->step,
@@ -124,7 +124,7 @@ class Slider extends AbstractField
         );
         wp_localize_script(
             $this->getLibrarySlug().'-metabox-slider-script',
-            str_replace('-', '_', $this->storage->getFieldId($this->getSlug())),
+            str_replace('-', '_', $this->storage->getPrefixedKey($this->getSlug())),
             $data
         );
         $template->value = empty($value) ? $this->default : $value;

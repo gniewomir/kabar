@@ -21,6 +21,13 @@ final class UserMeta implements InterfaceStorage
     const SINGLE = true;
 
     /**
+     * Id
+     * @since 2.25.7
+     * @var integer
+     */
+    private $id;
+
+    /**
      * Prefix for keys
      * @var string
      */
@@ -29,12 +36,13 @@ final class UserMeta implements InterfaceStorage
     // INTERFACE
 
     /**
-     * Setup storage
-     * @param string $prefix Prefix
+     * Set ID just in case storage object cannot determine it automaticaly
+     * @since 2.25.7
+     * @param integer $id
      */
-    public function __construct($prefix = '')
+    public function setId($id)
     {
-        $this->prefix = $prefix;
+        $this->id = (integer) $id;
     }
 
     /**
@@ -47,23 +55,12 @@ final class UserMeta implements InterfaceStorage
     }
 
     /**
-     * Returns prefixed key
+     * Returns prefixed field key
      * @return string
      */
-    public function getFieldId($key)
+    public function getPrefixedKey($key)
     {
         return $this->prefix.$key;
-    }
-
-    /**
-     * Returns storage id
-     * @since  2.25.1
-     * @param  string $key
-     * @return string
-     */
-    public function getStorageId($key)
-    {
-        return $this->getFieldId($key);
     }
 
     /**
@@ -73,7 +70,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function updated($key)
     {
-        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
+        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
     }
 
     /**
@@ -84,7 +81,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_user_meta($this->getUserId(), $this->getFieldId($key), $value);
+        update_user_meta($this->getUserId(), $this->getPrefixedKey($key), $value);
     }
 
     /**
@@ -94,7 +91,7 @@ final class UserMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_user_meta($this->getUserId(), $this->getFieldId($key), self::SINGLE);
+        return get_user_meta($this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
     }
 
     // INTERNAL
@@ -104,12 +101,13 @@ final class UserMeta implements InterfaceStorage
      * @since  2.25.1
      * @return integer
      */
-    private function getUserId() {
-        if (!defined('IS_PROFILE_PAGE')) {
-            trigger_error('Not a profile page.', E_USER_ERROR);
+    private function getUserId()
+    {
+        if ($this->id) {
+            return $this->id;
         }
         global $user_id;
-        if (empty($user_id)) {
+        if (empty($user_id) || !defined('IS_PROFILE_PAGE')) {
             trigger_error('Cannot determine user ID.', E_USER_ERROR);
         }
         return (integer) $user_id;

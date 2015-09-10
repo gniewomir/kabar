@@ -17,21 +17,30 @@ final class HTTPPost implements InterfaceStorage
 {
 
     /**
+     * Id
+     * @var integer
+     */
+    private $id;
+
+    /**
      * Prefix for keys
      * @var string
      */
-    private $prefix = '';
+    private $prefix;
 
     // INTERFACE
 
     /**
-     * Setup storage
-     * @since 2.15.0
-     * @param string $prefix Prefix
+     * Set ID just in case storage object cannot determine it automaticaly
+     *
+     * Does nothing in HTTPPost storage
+     *
+     * @since 2.25.7
+     * @param integer $id
      */
-    public function __construct($prefix = '')
+    public function setId($id)
     {
-        $this->prefix = $prefix;
+        $this->id = (integer) $id;
     }
 
     /**
@@ -47,20 +56,9 @@ final class HTTPPost implements InterfaceStorage
      * Returns prefixed key
      * @return string
      */
-    public function getFieldId($key)
+    public function getPrefixedKey($key)
     {
         return $this->prefix.$key;
-    }
-
-    /**
-     * Returns storage id
-     * @since  2.25.1
-     * @param  string $key
-     * @return string
-     */
-    public function getStorageId($key)
-    {
-        return $this->getFieldId($key);
     }
 
     /**
@@ -70,7 +68,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function updated($key)
     {
-        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
+        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
     }
 
     /**
@@ -81,7 +79,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        $_POST[$this->getFieldId($key)] = $value;
+        $_POST[$this->getPrefixedKey($key)] = $value;
     }
 
     /**

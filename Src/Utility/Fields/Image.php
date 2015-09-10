@@ -98,7 +98,7 @@ class Image extends AbstractField
     public function render()
     {
         $template                 = $this->getTemplate();
-        $template->id             = $this->storage->getFieldId($this->getSlug());
+        $template->id             = $this->storage->getPrefixedKey($this->getSlug());
         $template->cssClass       = $this->getCssClass();
 
         $fieldClass               = explode(' ', $template->cssClass);

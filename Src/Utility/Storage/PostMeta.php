@@ -26,6 +26,13 @@ final class PostMeta implements InterfaceStorage
     const HIDE_CUSTOM_FIELD = '_';
 
     /**
+     * Id
+     * @since 2.25.7
+     * @var integer
+     */
+    private $id;
+
+    /**
      * Prefix for keys
      * @var string
      */
@@ -34,13 +41,13 @@ final class PostMeta implements InterfaceStorage
     // INTERFACE
 
     /**
-     * Setup storage
-     * @since 2.15.0
-     * @param string $prefix Prefix
+     * Set ID just in case storage object cannot determine it automaticaly
+     * @since 2.25.7
+     * @param integer $id
      */
-    public function __construct($prefix = '')
+    public function setId($id)
     {
-        $this->prefix = $prefix;
+        $this->id = (integer) $id;
     }
 
     /**
@@ -57,20 +64,9 @@ final class PostMeta implements InterfaceStorage
      * @param string $key
      * @return string
      */
-    public function getFieldId($key)
+    public function getPrefixedKey($key)
     {
         return $this->prefix.$key;
-    }
-
-    /**
-     * Returns storage id
-     * @since  2.25.1
-     * @param  string $key
-     * @return string
-     */
-    public function getStorageId($key)
-    {
-        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
     }
 
     /**
@@ -80,7 +76,7 @@ final class PostMeta implements InterfaceStorage
      */
     public function updated($key)
     {
-        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
+        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
     }
 
     /**
@@ -108,11 +104,26 @@ final class PostMeta implements InterfaceStorage
     // INTERNAL
 
     /**
+     * Returns storage id
+     * @since  2.25.1
+     * @param  string $key
+     * @return string
+     */
+    private function getStorageId($key)
+    {
+        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
+    }
+
+    /**
      * Get post id
      * @since  2.25.1
      * @return integer
      */
-    private function getPostId() {
+    private function getPostId()
+    {
+        if ($this->id) {
+            return $this->id;
+        }
         global $post;
         if (!$post instanceof \WP_Post) {
             trigger_error('Cannot determine post ID.', E_USER_ERROR);

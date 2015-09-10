@@ -98,7 +98,7 @@ class ColorPicker extends AbstractField
     public function render()
     {
         $template              = $this->getTemplate();
-        $template->id          = $this->storage->getFieldId($this->getSlug());
+        $template->id          = $this->storage->getPrefixedKey($this->getSlug());
         $template->cssClass    = $this->getCssClass();
         $template->librarySlug = $this->getLibrarySlug();
         $template->title       = $this->title;

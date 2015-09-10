@@ -23,18 +23,18 @@ interface InterfaceStorage
     public function setPrefix($prefix);
 
     /**
-     * Returns field Id for provided key
-     * @param  string $key
-     * @return string
+     * Set ID just in case storage object cannot determine it automaticaly
+     * @since 2.25.7
+     * @param integer $id
      */
-    public function getFieldId($key);
+    public function setId($id);
 
     /**
-     * Returns storage id
+     * Returns prefixed field key
      * @param  string $key
      * @return string
      */
-    public function getStorageId($key);
+    public function getPrefixedKey($key);
 
     /**
      * Returns updated value
@@ -47,14 +47,14 @@ interface InterfaceStorage
      * Saves value in storage
      * @param  string $key
      * @param  mixed  $value
-     * @return void
+     * @return mixed
      */
     public function store($key, $value);
 
     /**
      * Retrieve value from storage
      * @param  string $key
-     * @return void
+     * @return mixed
      */
     public function retrieve($key);
 }
