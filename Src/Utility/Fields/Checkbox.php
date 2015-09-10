@@ -106,18 +106,11 @@ class Checkbox extends AbstractField
      */
     public function save()
     {
-        $saved   = $this->storage->retrieve($this->getSlug());
         $updated = $this->storage->updated($this->getSlug());
 
-        if (empty($saved)) {
-            $value = $this->default ? self::ENABLED : self::DISABLED;
-        }
-
-        if (empty($value) && $updated == self::ENABLED) {
+        if ($updated == self::ENABLED) {
             $value = self::ENABLED;
-        }
-
-        if (empty($value)) {
+        } else {
             $value = self::DISABLED;
         }
 

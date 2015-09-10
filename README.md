@@ -31,12 +31,13 @@ Development branch:
 
 # Changelog
 
-### 2.25.3
+### 2.25.4
 
 #### Bugfix
 * Removed bug, that was causing UserProfile module to save user meta values to current user
 * Removed bug, that was causing that checkboxes wasn't showing as checked, even when they was
 * Removed bug, that was causing that checkboxes to not returning correct default value
+* Refactored checkbox class critical methods
 
 ### 2.25.0
 * Small refactorings, doc blocks updates resulting from Scrutinizer.ci reports
