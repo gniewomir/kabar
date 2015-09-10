@@ -17,21 +17,28 @@ interface InterfaceStorage
 {
     /**
      * Sets prefix
-     * @param string $prefix
+     * @param  string $prefix
      * @return void
      */
     public function setPrefix($prefix);
 
     /**
      * Returns field Id for provided key
-     * @param string $key
+     * @param  string $key
      * @return string
      */
     public function getFieldId($key);
 
     /**
+     * Returns storage id
+     * @param  string $key
+     * @return string
+     */
+    public function getStorageId($key);
+
+    /**
      * Returns updated value
-     * @param string $key
+     * @param  string $key
      * @return mixed
      */
     public function updated($key);

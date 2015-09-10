@@ -13,7 +13,7 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storig data in user meta
  */
-class UserMeta implements InterfaceStorage
+final class UserMeta implements InterfaceStorage
 {
     /**
      * @see https://codex.wordpress.org/Function_Reference/get_user_meta
@@ -24,7 +24,9 @@ class UserMeta implements InterfaceStorage
      * Prefix for keys
      * @var string
      */
-    protected $prefix;
+    private $prefix;
+
+    // INTERFACE
 
     /**
      * Setup storage
@@ -54,6 +56,17 @@ class UserMeta implements InterfaceStorage
     }
 
     /**
+     * Returns storage id
+     * @since  2.25.1
+     * @param  string $key
+     * @return string
+     */
+    public function getStorageId($key)
+    {
+        return $this->getFieldId();
+    }
+
+    /**
      * Returns updated value
      * @param  string $key
      * @return mixed
@@ -71,27 +84,36 @@ class UserMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        $userId = get_current_user_id();
-        if (empty($userId)) {
-            trigger_error('Cannot determine user ID. You cannot store user meta before "init" action.', E_USER_WARNING);
-            return;
-        }
-        update_user_meta($userId, $this->getFieldId($key), $value);
+        update_user_meta($this->getUserId(), $this->getFieldId($key), $value);
     }
 
     /**
      * Retrieve stored value
      * @param  string $key
      * @return mixed
-     * @see    https://codex.wordpress.org/Function_Reference/get_post_meta
     */
     public function retrieve($key)
     {
-        $userId = get_current_user_id();
-        if (empty($userId)) {
-            trigger_error('Cannot determine user ID. You cannot retrieve user meta before "init" action.', E_USER_WARNING);
+        return get_user_meta($this->getUserId(), $this->getFieldId($key), self::SINGLE);
+    }
+
+    // INTERNAL
+
+    /**
+     * Get user id
+     * @since  2.25.1
+     * @return integer
+     */
+    private function getUserId() {
+        if (!defined('IS_PROFILE_PAGE')) {
+            trigger_error('Not a profile page.', E_USER_ERROR);
             return;
         }
-        return get_user_meta($userId, $this->getFieldId($key), self::SINGLE);
+        global $user_id;
+        if (empty($user_id)) {
+            trigger_error('Cannot determine user ID.', E_USER_ERROR);
+            return;
+        }
+        return (integer) $user_id;
     }
 }

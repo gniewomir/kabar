@@ -13,7 +13,7 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storig data in post meta
  */
-class PostMeta implements InterfaceStorage
+final class PostMeta implements InterfaceStorage
 {
     /**
      * @see https://codex.wordpress.org/Function_Reference/get_post_meta
@@ -29,7 +29,9 @@ class PostMeta implements InterfaceStorage
      * Prefix for keys
      * @var string
      */
-    protected $prefix;
+    private $prefix;
+
+    // INTERFACE
 
     /**
      * Setup storage
@@ -61,6 +63,17 @@ class PostMeta implements InterfaceStorage
     }
 
     /**
+     * Returns storage id
+     * @since  2.25.1
+     * @param  string $key
+     * @return string
+     */
+    public function getStorageId($key)
+    {
+        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
+    }
+
+    /**
      * Returns updated value
      * @param  string $key
      * @return mixed
@@ -78,10 +91,7 @@ class PostMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        if (!isset($_REQUEST['post_ID'])) {
-            trigger_error('Cannot determine post ID. You cannot store post meta outside save request from edition screen.', E_USER_ERROR);
-        }
-        update_post_meta(intval($_REQUEST['post_ID']), $this->getPostMetaId($key), $value);
+        update_post_meta($this->getPostId(), $this->getStorageId($key), $value);
     }
 
     /**
@@ -92,21 +102,21 @@ class PostMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        global $post;
-        if (!$post instanceof \WP_Post) {
-            trigger_error('Cannot determine post ID. You cannot retrieve post meta outside WordPress loop.', E_USER_ERROR);
-        }
-        return get_post_meta($post->ID, $this->getPostMetaId($key), self::SINGLE);
+        return get_post_meta($this->getPostId(), $this->getStorageId($key), self::SINGLE);
     }
 
+    // INTERNAL
+
     /**
-     * Returns post meta name
-     * @since  2.24.4
-     * @param string $key
-     * @return string
+     * Get post id
+     * @since  2.25.1
+     * @return integer
      */
-    private function getPostMetaId($key)
-    {
-        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
+    private function getPostId() {
+        global $post;
+        if (!$post instanceof \WP_Post) {
+            trigger_error('Cannot determine post ID.', E_USER_ERROR);
+        }
+        return (integer) $post->ID;
     }
 }

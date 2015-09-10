@@ -13,14 +13,16 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storig data in post meta
  */
-class HTTPPost implements InterfaceStorage
+final class HTTPPost implements InterfaceStorage
 {
 
     /**
      * Prefix for keys
      * @var string
      */
-    protected $prefix = '';
+    private $prefix = '';
+
+    // INTERFACE
 
     /**
      * Setup storage
@@ -51,6 +53,17 @@ class HTTPPost implements InterfaceStorage
     }
 
     /**
+     * Returns storage id
+     * @since  2.25.1
+     * @param  string $key
+     * @return string
+     */
+    public function getStorageId($key)
+    {
+        return $this->getFieldId();
+    }
+
+    /**
      * Returns updated value
      * @param  string $key
      * @return mixed
@@ -78,6 +91,6 @@ class HTTPPost implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return isset($_POST[$this->getFieldId($key)]) ? $_POST[$this->getFieldId($key)] : null;
+        return $this->updated($key);
     }
 }
