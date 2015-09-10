@@ -97,11 +97,7 @@ class Checkbox extends AbstractField
             $this->storage->store($this->getSlug(), $value);
         }
 
-        if ($value == self::ENABLED) {
-            return true;
-        }
-
-        return false;
+        return $value == self::ENABLED;
     }
 
     /**
