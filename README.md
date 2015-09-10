@@ -37,7 +37,7 @@ Development branch:
 
 # Changelog
 
-### 2.26.4
+### 2.26.6
 
 #### Features
 * HTML form field with WYSIWYG editor
@@ -47,6 +47,7 @@ Development branch:
 * Removed bug, that was causing that checkboxes wasn't showing as checked, even when they was
 * Removed bug, that was causing that checkboxes to not returning correct default value
 * Refactored checkbox class critical methods
+* Fixed textarea width on WYSIWYG form field in profile pages
 
 ### 2.25.0
 * Small refactorings, doc blocks updates resulting from Scrutinizer.ci reports

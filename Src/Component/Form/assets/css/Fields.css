@@ -3,6 +3,9 @@
   margin-bottom: 2em;
   margin-top: 1em;
 }
+#profile-page .kabar-Utility-Fields .editor-container textarea {
+  width: 100%;
+}
 .kabar-Utility-Fields-Text input {
   min-width: 500px;
 }
