@@ -62,19 +62,4 @@ class TextArea extends Text
         $this->default  = $default;
         $this->help     = $help;
     }
-
-    /**
-     * Save new field value
-     * @return string
-     */
-    public function save()
-    {
-        // Sanitize user input.
-        $value = sanitize_text_field($this->storage->updated($this->getSlug()));
-
-        // store value
-        $this->storage->store($this->getSlug(), $value);
-
-        return $value;
-    }
 }
