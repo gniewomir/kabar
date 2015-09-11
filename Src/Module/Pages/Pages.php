@@ -112,7 +112,7 @@ class Pages extends \kabar\Module\Module\Module
 
         // admin interface
         if (is_admin()) {
-            $adminInterface = new AdminInterface($this->template, $this->pages);
+            new AdminInterface($this->template, $this->pages);
         }
     }
 

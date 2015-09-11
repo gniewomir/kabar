@@ -37,12 +37,6 @@ final class Sidebars extends \kabar\Module\Module\Module
     private $sidebars;
 
     /**
-     * Active Sidebars and widgets data
-     * @var array
-     */
-    private $activeSidebars;
-
-    /**
      * Cache cleaning object
      * @var \kabar\Module\Sidebars\Cleaner
      */

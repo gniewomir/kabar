@@ -48,12 +48,6 @@ class FieldsCollection
     private $widget;
 
     /**
-     * This widget instance template
-     * @var \kabar\Component\Template\Template
-     */
-    private $template;
-
-    /**
      * Create individual fields instaces
      * @param WP_Widget $widget WordPress widget instance
      */
@@ -77,9 +71,9 @@ class FieldsCollection
     /**
      * Add fields to collection
      * @since 2.0.0
-     * @param \kabar\Widget\Widget\Fields\AbstractField $firstField First of multiple possibile fields instances
+     * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      */
-    public function addFields(\kabar\Widget\Widget\Fields\AbstractField $firstField)
+    public function addFields()
     {
         $fields = func_get_args();
         foreach ($fields as $field) {
@@ -129,10 +123,10 @@ class FieldsCollection
      * Add fields after field with specified id
      * @since 2.0.0
      * @param string                                    $fieldId    Existing field ID
-     * @param \kabar\Widget\Widget\Fields\AbstractField $firstField This, and every other argument will be treated as field object
+     * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      * @return void
      */
-    public function insertFieldsAfter($fieldId, \kabar\Widget\Widget\Fields\AbstractField $firstField)
+    public function insertFieldsAfter($fieldId, \kabar\Widget\Widget\Fields\AbstractField $field)
     {
         if (!array_key_exists($fieldId, $this->fields)) {
             trigger_error(sprintf('Cannot add fields after "%s". Field doesn\'t exists', $fieldId), E_USER_WARNING);
@@ -196,9 +190,9 @@ class FieldsCollection
      * Add fields before field with specified id
      * @since 2.0.0
      * @param string                                    $fieldId    Existing field ID
-     * @param \kabar\Widget\Widget\Fields\AbstractField $firstField This, and every other argument will be treated as field object
+     * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      */
-    public function insertFieldsBefore($fieldId, \kabar\Widget\Widget\Fields\AbstractField $firstField)
+    public function insertFieldsBefore($fieldId, \kabar\Widget\Widget\Fields\AbstractField $field)
     {
 
         if (!array_key_exists($fieldId, $this->fields)) {

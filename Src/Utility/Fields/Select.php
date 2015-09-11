@@ -72,8 +72,9 @@ class Select extends Text
         $template->title    = $this->title;
         $template->options  = $this->options;
         $template->default  = $this->default;
-        $value = $this->get();
-        $template->value    = empty($value) ? $this->default : $value;
+        $value              = $this->get();
+        $value              = empty($value) ? $this->default : $this->get();
+        $template->value    = $value;
         return $template;
     }
 }

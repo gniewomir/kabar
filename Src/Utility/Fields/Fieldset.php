@@ -53,9 +53,9 @@ class Fieldset extends AbstractField implements InterfaceFieldset
      * @param string $slug
      * @param string $title
      * @param array  $options
-     * @param \kabar\Utility\Fields\InterfaceFormPart $firstOfManyField
+     * @param \kabar\Utility\Fields\InterfaceFormPart ...$field
      */
-    public function __construct($slug, $title, $options, \kabar\Utility\Fields\InterfaceFormPart $firstOfManyField)
+    public function __construct($slug, $title, $options)
     {
         $this->slug    = $slug;
         $this->title   = empty($title) ? '' : $title;

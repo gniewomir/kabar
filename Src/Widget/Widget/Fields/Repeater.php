@@ -197,7 +197,6 @@ class Repeater extends AbstractField
      */
     public function update($newInstance, $oldInstance)
     {
-        $fields = array();
         $count = $this->count($newInstance);
         if ($count === false) {
             trigger_error('Repeater fields should provide array.', E_USER_WARNING);

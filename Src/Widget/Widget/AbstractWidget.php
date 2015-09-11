@@ -78,12 +78,13 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
      * Inject dependancies to template created for WordPress widget instance ( which is not an object, just array of data )
      *
      * @since  2.0.0
-     * @param  string                              $widgetId Uniqie id fo this wiget
+     * @param  string                              $widgetId Uniqe id for this wiget
      * @param  \kabar\Component\Template\Template $template
      * @return \kabar\Component\Template\Template
      */
     public function objects($widgetId, \kabar\Component\Template\Template $template)
     {
+        $template->widgetId;
         return $template;
     }
 
