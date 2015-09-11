@@ -84,7 +84,7 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
      */
     public function objects($widgetId, \kabar\Component\Template\Template $template)
     {
-        $template->widgetId;
+        $template->widgetId = $widgetId;
         return $template;
     }
 
