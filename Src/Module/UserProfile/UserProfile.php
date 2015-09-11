@@ -63,9 +63,9 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     public function addSection($id, $title, $position = 'bottom')
     {
-        $storage                     = new \kabar\Utility\Storage\UserMeta;
+        $storage                     = new \kabar\Utility\Storage\UserMeta();
         $storage->setPrefix($this->getUserSettingsPrefix($id));
-        $template                    = new \kabar\Component\Template\Template;
+        $template                    = new \kabar\Component\Template\Template();
         $template($this->getTemplatesDirectory().'Section.php');
         $template->title             = $title;
         $template->containerCssClass = $position == 'bottom' ? 'section-postion-bottom' : 'section-position-top';
@@ -100,7 +100,7 @@ final class UserProfile extends \kabar\Module\Module\Module
     public function getSetting($userId, $sectionId, $setting)
     {
         if (!$this->reusableStorage instanceof \kabar\Utility\Storage\UserMeta) {
-            $this->reusableStorage = new \kabar\Utility\Storage\UserMeta;
+            $this->reusableStorage = new \kabar\Utility\Storage\UserMeta();
         }
         $this->reusableStorage->setPrefix($this->getUserSettingsPrefix($sectionId));
         $this->reusableStorage->setId($userId);

@@ -37,10 +37,13 @@ Development branch:
 
 # Changelog
 
-### 2.25.7
+### 2.28.8
 
 #### Features
 * HTML form field with WYSIWYG editor
+* Storge objects now allow for searching id by key/value pair
+* Library image form field - retricting selected images to uploaded ones
+* Image form/Library image field clearing
 
 #### Bugfix
 * Removed bug, that was causing UserProfile module to save user meta values to current user

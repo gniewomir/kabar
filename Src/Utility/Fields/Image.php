@@ -83,7 +83,7 @@ class Image extends AbstractField
     {
         wp_enqueue_media();
         wp_enqueue_script(
-            $this->getLibrarySlug().'-media-upload-script',
+            $this->getLibrarySlug().'-image-field-script',
             $this->getAssetsUri().'js/Image.js',
             array('media-upload', 'thickbox'),
             $this->getLibraryVersion(),
@@ -124,14 +124,10 @@ class Image extends AbstractField
 
     /**
      * Save new field value
-     * @return mixed
+     * @return string
      */
     public function save()
     {
-        if (is_null($this->storage->updated($this->getSlug()))) {
-            return;
-        }
-
         // Sanitize user input.
         $value = esc_url_raw($this->storage->updated($this->getSlug()), array('http', 'https'));
 

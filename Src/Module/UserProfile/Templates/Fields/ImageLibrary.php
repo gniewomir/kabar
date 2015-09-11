@@ -10,7 +10,7 @@
                 <?php endif; ?>
             </div>
         <?php endif; ?>
-        <input type="text" id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($value); ?>" class="widefat"/>
+        <input type="text" id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($value); ?>" class="widefat hidden"/>
         <input class="<?php echo esc_attr($buttonCssClass); ?> button" type="button" value="Upload Image" />
         <input class="<?php echo esc_attr($buttonCssClass); ?>-remove button" type="button" value="Clear" />
         <?php if (!empty($help)) : ?>

@@ -1,7 +1,7 @@
 (function($){
     $(function() {
         "use_strict";
-        var buttonClass            = '.kabar-Utility-Fields-Image-button',
+        var buttonClass            = '.kabar-Utility-Fields-ImageLibrary-button',
             removeButtonClass      = '.kabar-Utility-Fields-ImageLibrary-button-remove',
             backup_send_attachment = wp.media.editor.send.attachment,
             custom                 = true;
@@ -26,7 +26,7 @@
                 wp.media.editor.open(inputId);
                 wp.media.editor.send.attachment = function(props, attachment){
                     if (custom) {
-                        $('#'+inputId).val(attachment.url);
+                        $('#'+inputId).val(attachment.id);
                         $('#'+inputId).parent().find('.image-preview > img').attr('src', attachment.url);
                         $('#'+inputId).trigger('change');
                     } else {
