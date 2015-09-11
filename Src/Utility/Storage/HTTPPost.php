@@ -35,7 +35,7 @@ final class HTTPPost implements InterfaceStorage
      *
      * Does nothing in HTTPPost storage
      *
-     * @since 2.25.7
+     * @since 2.27.7
      * @param integer $id
      */
     public function setId($id)
@@ -90,5 +90,21 @@ final class HTTPPost implements InterfaceStorage
     public function retrieve($key)
     {
         return $this->updated($key);
+    }
+
+    /**
+     * Search for key/value pair and return array of id's
+     *
+     * Stub. POST data are not associated with any id's,
+     * so we are returning empty array every time
+     *
+     * @since  2.27.7
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return integer
+     */
+    public function search($key, $value)
+    {
+        return array();
     }
 }

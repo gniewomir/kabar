@@ -174,6 +174,23 @@ final class Form extends \kabar\Module\Module\Module
         return $template;
     }
 
+    /**
+     * Returns storage object, if it doesn't exists it will be created
+     *
+     * @since 2.0.0
+     * @return \kabar\Utility\Storage\InterfaceStorage
+     */
+    public function getStorage()
+    {
+        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
+            return $this->storage;
+        }
+
+        $this->storage = new \kabar\Utility\Storage\HTTPPost();
+        $this->storage->setPrefix($this->id.'-');
+        return $this->storage;
+    }
+
     // INTERNAL
 
     /**
@@ -189,23 +206,6 @@ final class Form extends \kabar\Module\Module\Module
         $field->setTemplateDirectory($this->fieldsTemplateDir);
         $slug                = $field->getSlug();
         $this->fields[$slug] = $field;
-    }
-
-    /**
-     * Returns storage object, if it doesn't exists it will be created
-     *
-     * @since 2.0.0
-     * @return \kabar\Utility\Storage\InterfaceStorage
-     */
-    private function getStorage()
-    {
-        if ($this->storage instanceof \kabar\Utility\Storage\InterfaceStorage) {
-            return $this->storage;
-        }
-
-        $this->storage = new \kabar\Utility\Storage\HTTPPost;
-        $this->storage->setPrefix($this->id.'-');
-        return $this->storage;
     }
 
     /**

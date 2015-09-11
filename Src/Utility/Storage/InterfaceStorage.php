@@ -24,7 +24,7 @@ interface InterfaceStorage
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.25.7
+     * @since 2.27.7
      * @param integer $id
      */
     public function setId($id);
@@ -57,4 +57,12 @@ interface InterfaceStorage
      * @return mixed
      */
     public function retrieve($key);
+
+    /**
+     * Search for key/value pair and return array of ids
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return array
+     */
+    public function search($key, $value);
 }

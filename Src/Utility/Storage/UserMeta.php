@@ -22,7 +22,7 @@ final class UserMeta implements InterfaceStorage
 
     /**
      * Id
-     * @since 2.25.7
+     * @since 2.27.7
      * @var integer
      */
     private $id;
@@ -37,7 +37,7 @@ final class UserMeta implements InterfaceStorage
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.25.7
+     * @since 2.27.7
      * @param integer $id
      */
     public function setId($id)
@@ -92,6 +92,26 @@ final class UserMeta implements InterfaceStorage
     public function retrieve($key)
     {
         return get_user_meta($this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
+    }
+
+    /**
+     * Search for key/value pair and return array of id's
+     * @since  2.27.7
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return integer
+     */
+    public function search($key, $value)
+    {
+        $args = array(
+            'meta_key'   => $this->getPrefixedKey($key),
+            'meta_value' => $value,
+            'fields'     => 'ID'
+        );
+
+        $userQuery = new \WP_User_Query($args);
+
+        return $userQuery->get_results();
     }
 
     // INTERNAL
