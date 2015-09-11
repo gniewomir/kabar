@@ -37,6 +37,9 @@ Development branch:
 
 # Changelog
 
+### 2.28.9
+* Removed bug preventing diplaying default image in image/library image form fields image preview
+
 ### 2.28.8
 
 #### Features

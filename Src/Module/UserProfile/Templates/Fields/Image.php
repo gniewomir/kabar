@@ -5,9 +5,7 @@
     <td>
         <?php if ($preview) : ?>
             <div class="image-preview">
-                <?php if (!empty($value)) : ?>
-                    <img src="<?php echo esc_url($value); ?>">
-                <?php endif; ?>
+                <img src="<?php echo esc_url($value); ?>">
             </div>
         <?php endif; ?>
         <input type="text" id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($value); ?>" class="widefat"/>
