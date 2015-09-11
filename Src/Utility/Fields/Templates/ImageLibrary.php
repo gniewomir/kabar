@@ -1,7 +1,7 @@
 <div class="<?php echo esc_attr($cssClass); ?>">
     <?php if ($preview) : ?>
         <div class="image-preview">
-            <img src="<?php echo esc_url($value); ?>">
+            <img src="<?php echo esc_url($image); ?>">
         </div>
     <?php endif; ?>
     <?php if ($title) : ?>

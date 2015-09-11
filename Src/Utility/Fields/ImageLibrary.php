@@ -72,7 +72,7 @@ class ImageLibrary extends Image
     public function render()
     {
         $template = parent::render();
-        $template->value = wp_get_attachment_image_src($template->value, 'medium')[0];
+        $template->image = wp_get_attachment_image_src($template->value, 'medium')[0];
         return $template;
     }
 
