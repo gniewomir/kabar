@@ -1,6 +1,14 @@
+# Shell scripts
+*.sh
+!/update-docs.sh
+
+# No exceptions
 *.log
 *.sql
-*.sh
+
+#dependancies
 composer.phar
 /vendor/
+
+#documentation
 /Doc/
