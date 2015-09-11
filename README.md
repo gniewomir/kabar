@@ -17,23 +17,23 @@ Development branch:
 # Roadmap
 
 ### Features
+* Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
+* Multisite support
 
 ### Code quality
-* Unit tests
+* Clear Scrutinizer backlog
+* Replace 'module callbacks' with callbacks, force registering settings sections instead extending 'Config' module
 * Dependancy Injection Container in place of Service Locator
-* Replace "module callbacks" with callbacks
+* Unit tests
 * Widget fields based on \kabar\Utitlity\Fields classes
-
-### Performance
-* Reflection objects caching for service locator (ref: https://github.com/Level-2/Dice/blob/master/Dice.php)
 
 ### Deployment & documentation
 * Publish as Composer package
 * Proper automatic documentation
 * Proper examples and tutorials
-* Build process for JS and CSS contained in library
+* Proper build process for JS and CSS contained in library
 
 # Changelog
 

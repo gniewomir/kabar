@@ -15,7 +15,7 @@
  * Plugin Name:       Kabar library
  * Plugin URI:        https://github.com/gniewomir/kabar
  * Description:       Library of component and modules used to speed up WordPress sites development
- * Version:           2.16.0
+ * Version:           2.28.8
  * Author:            Gniewomir Świechowski
  * Author URI:        http://cv.enraged.pl
  * License:           GNU GENERAL PUBLIC LICENSE Version 3
