@@ -126,7 +126,7 @@ class FieldsCollection
      * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      * @return void
      */
-    public function insertFieldsAfter($fieldId, \kabar\Widget\Widget\Fields\AbstractField $field)
+    public function insertFieldsAfter($fieldId)
     {
         if (!array_key_exists($fieldId, $this->fields)) {
             trigger_error(sprintf('Cannot add fields after "%s". Field doesn\'t exists', $fieldId), E_USER_WARNING);
@@ -192,7 +192,7 @@ class FieldsCollection
      * @param string                                    $fieldId    Existing field ID
      * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      */
-    public function insertFieldsBefore($fieldId, \kabar\Widget\Widget\Fields\AbstractField $field)
+    public function insertFieldsBefore($fieldId)
     {
 
         if (!array_key_exists($fieldId, $this->fields)) {
