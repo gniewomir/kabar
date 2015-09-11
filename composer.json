@@ -1,0 +1,18 @@
+{
+    "name": "gniewomir/kabar",
+    "description": "Library of modules used to speed up WordPress sites development.",
+    "type": "wordpress-plugin",
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "^2.8"
+    },
+    "license": "GNU GENERAL PUBLIC LICENSE Version 3",
+    "authors": [
+        {
+            "name": "Gniewomir Świechowski",
+            "email": "gniewomir.swiechowski@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+    }
+}

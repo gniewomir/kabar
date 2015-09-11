@@ -1,1 +1,6 @@
 *.log
+*.sql
+*.sh
+composer.phar
+/vendor/
+/Doc/
