@@ -1,0 +1,7 @@
+filter:
+    paths:
+        - Src/*
+filter:
+    excluded_paths:
+        - Doc/*
+        - vendor/*
