@@ -11,11 +11,10 @@
 namespace kabar\Utility\Storage;
 
 /**
- * Class for storig data in post meta
+ * Class for storing data in $_POST array
  */
 final class HTTPPost implements InterfaceStorage
 {
-
     /**
      * Id
      * @var integer
@@ -31,6 +30,16 @@ final class HTTPPost implements InterfaceStorage
     // INTERFACE
 
     /**
+     * Setup storage object
+     * @since 2.31.0
+     * @param string       $prefix
+     */
+    public function __construct($prefix = '')
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
      * Set ID just in case storage object cannot determine it automaticaly
      *
      * Does nothing in HTTPPost storage
@@ -40,6 +49,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function setId($id)
     {
+        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
         $this->id = (integer) $id;
     }
 
@@ -105,6 +115,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function search($key, $value)
     {
-        return array();
+        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
+        return 0;
     }
 }

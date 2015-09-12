@@ -11,7 +11,7 @@
 namespace kabar\Utility\Storage;
 
 /**
- * Class for storig data in post meta
+ * Class for storing data in post meta
  */
 final class PostMeta implements InterfaceStorage
 {
@@ -39,6 +39,18 @@ final class PostMeta implements InterfaceStorage
     private $prefix;
 
     // INTERFACE
+
+    /**
+     * Setup storage object
+     * @since 2.31.0
+     * @param string       $prefix
+     * @param integer|null $id
+     */
+    public function __construct($prefix = '', $id = null)
+    {
+        $this->prefix = $prefix;
+        $this->id     = $id;
+    }
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly

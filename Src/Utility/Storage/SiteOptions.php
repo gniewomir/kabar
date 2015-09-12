@@ -1,9 +1,9 @@
 <?php
 /**
- * User meta storage
+ * Site options storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.24.4
+ * @since      2.30.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -11,18 +11,14 @@
 namespace kabar\Utility\Storage;
 
 /**
- * Class for storing data in user meta
+ * Class for storing data in site options
  */
-final class UserMeta implements InterfaceStorage
+final class SiteOptions implements InterfaceStorage
 {
-    /**
-     * @see https://codex.wordpress.org/Function_Reference/get_user_meta
-     */
-    const SINGLE = true;
+    const AUTOLOAD = true;
 
     /**
      * Id
-     * @since 2.27.7
      * @var integer
      */
     private $id;
@@ -39,21 +35,22 @@ final class UserMeta implements InterfaceStorage
      * Setup storage object
      * @since 2.31.0
      * @param string       $prefix
-     * @param integer|null $id
      */
-    public function __construct($prefix = '', $id = null)
+    public function __construct($prefix = '')
     {
         $this->prefix = $prefix;
-        $this->id     = $id;
     }
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.27.7
+     *
+     * In case of site options does nothing.
+     *
      * @param integer $id
      */
     public function setId($id)
     {
+        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
         $this->id = (integer) $id;
     }
 
@@ -93,7 +90,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_user_meta($this->getUserId(), $this->getPrefixedKey($key), $value);
+        update_option($this->getPrefixedKey($key), $value);
     }
 
     /**
@@ -103,45 +100,18 @@ final class UserMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_user_meta($this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
+        return get_option($this->getPrefixedKey($key), null);
     }
 
     /**
      * Search for key/value pair and return array of id's
-     * @since  2.27.7
      * @param  string  $key
      * @param  mixed   $value
      * @return integer
      */
     public function search($key, $value)
     {
-        $args = array(
-            'meta_key'   => $this->getPrefixedKey($key),
-            'meta_value' => $value,
-            'fields'     => 'ID'
-        );
-
-        $userQuery = new \WP_User_Query($args);
-
-        return $userQuery->get_results();
-    }
-
-    // INTERNAL
-
-    /**
-     * Get user id
-     * @since  2.25.1
-     * @return integer
-     */
-    private function getUserId()
-    {
-        if ($this->id) {
-            return $this->id;
-        }
-        global $user_id;
-        if (empty($user_id) || !defined('IS_PROFILE_PAGE')) {
-            trigger_error('Cannot determine user ID.', E_USER_ERROR);
-        }
-        return (integer) $user_id;
+        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
+        return 0;
     }
 }

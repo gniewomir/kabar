@@ -37,7 +37,19 @@ Development branch:
 
 # Changelog
 
-### 2.28.9
+### 2.32.0
+
+#### Features
+* Site options storage object
+* Checking if field has storage object assigned
+* Form component now can return populated template
+
+### 2.29.1
+
+#### Features
+* Internal 'form' field. It't won't be rendered when displaying or saved when submiting form, but allows to keep data in the same context
+
+#### Bugfix
 * Removed bug preventing diplaying default image in image/library image form fields image preview
 
 ### 2.28.8

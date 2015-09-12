@@ -73,6 +73,13 @@ final class Form extends \kabar\Module\Module\Module
      */
     private $fieldsTemplateDir;
 
+    /**
+     * Reserved field names used by form
+     * @since 2.32.0
+     * @var array
+     */
+    private $reservedFieldNames = array('formNonce', 'formId', 'formMethod', 'formAction', 'formFields');
+
     // INTERFACE
 
     /**
@@ -159,18 +166,17 @@ final class Form extends \kabar\Module\Module\Module
             $template($this->getTemplatesDirectory().'Form.php');
         }
 
-        $template->nonce  = $this->nonce->render();
-        $template->id     = $this->id;
-        $template->name   = $this->id;
-        $template->method = $this->method;
-        $template->action = $this->action;
+        $template->formNonce  = $this->nonce->render();
+        $template->formId     = $this->id;
+        $template->formMethod = $this->method;
+        $template->formAction = $this->action;
 
         $fields = array();
         foreach ($this->fields as $field) {
             $fields[] = $field->render();
         }
-        $template->fields   = $fields;
-        $template->cssClass = $this->getCssClass();
+        $template->formFields   = $fields;
+        $template->formCssClass = $this->getCssClass();
         return $template;
     }
 
@@ -191,6 +197,28 @@ final class Form extends \kabar\Module\Module\Module
         return $this->storage;
     }
 
+    /**
+     * Returns template with saved form data
+     * @since  2.32.0
+     * @param  integer                            $id Id passed to storage object
+     * @return \kabar\Component\Template\Template
+     */
+    public function getPopulatedTemplate($id = 0)
+    {
+        if ($id) {
+            $storage = clone $this->getStorage();
+            $storage->setId($id);
+        }
+        $template = new \kabar\Component\Template\Template;
+        foreach ($this->fields as $field) {
+            $field->setStorage($storage);
+            $name            = $field->getSlug();
+            $template->$name = $field->get();
+            $field->setStorage($this->getStorage());
+        }
+        return $template;
+    }
+
     // INTERNAL
 
     /**
@@ -200,11 +228,15 @@ final class Form extends \kabar\Module\Module\Module
      */
     private function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {
-        if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
+        if ($field instanceof \kabar\Utility\Fields\InterfaceField && !$field->hasStorage()) {
             $field->setStorage($this->getStorage());
         }
+        $slug = $field->getSlug();
+        if (in_array($slug, $this->reservedFieldNames)) {
+            trigger_error('Field name '.$slug.' is reserved by Form component!', E_USER_ERROR);
+        }
         $field->setTemplateDirectory($this->fieldsTemplateDir);
-        $slug                = $field->getSlug();
+
         $this->fields[$slug] = $field;
     }
 

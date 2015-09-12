@@ -35,6 +35,13 @@ interface InterfaceField
     public function getSlug();
 
     /**
+     * Checks if field has storage object assigned
+     * @since  2.31.0
+     * @return bool
+     */
+    public function hasStorage();
+
+    /**
      * Binds storage object to this field
      * @param \kabar\Utility\Storage\InterfaceStorage $storage
      * @return void

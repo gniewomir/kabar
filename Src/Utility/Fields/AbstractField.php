@@ -35,6 +35,16 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
     abstract public function save();
 
     /**
+     * Checks if field has storage object assigned
+     * @since  2.31.0
+     * @return bool
+     */
+    public function hasStorage()
+    {
+        return isset($this->storage);
+    }
+
+    /**
      * Binds storage object to this field
      * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
