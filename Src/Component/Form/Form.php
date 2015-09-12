@@ -205,11 +205,16 @@ final class Form extends \kabar\Module\Module\Module
      */
     public function getPopulatedTemplate($id = 0)
     {
-        if ($id) {
-            $storage = clone $this->getStorage();
-            $storage->setId($id);
-        }
         $template = new \kabar\Component\Template\Template;
+        if (!$id) {
+            foreach ($this->fields as $field) {
+                $name            = $field->getSlug();
+                $template->$name = $field->get();
+            }
+            return $template;
+        }
+        $storage = clone $this->getStorage();
+        $storage->setId($id);
         foreach ($this->fields as $field) {
             $field->setStorage($storage);
             $name            = $field->getSlug();
