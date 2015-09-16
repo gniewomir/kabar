@@ -270,13 +270,6 @@ class Config extends \kabar\Module\Module\Module
             )
         );
 
-        if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
-            if ($this->isModuleCallback($fieldSettings['choices'])) {
-                $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
-            }
-            $arguments['choices'] = $fieldSettings['choices'];
-        }
-
         if (isset($fieldSettings['type'])) {
             $arguments = array(
                     'label'    => isset($fieldSettings['label']) ? $fieldSettings['label'] : '',
@@ -285,6 +278,7 @@ class Config extends \kabar\Module\Module\Module
                     'type'     => $fieldSettings['type'],
                     'priority' => $fieldPriority
             );
+            $arguments = $this->getChoices($fieldSettings, $arguments);
             $wpCustomize->add_control(
                 $settingName.'_control',
                 $arguments
@@ -297,6 +291,7 @@ class Config extends \kabar\Module\Module\Module
                 'settings' => $settingName,
                 'priority' => $fieldPriority
             );
+            $arguments = $this->getChoices($fieldSettings, $arguments);
             $control = new $class(
                 $wpCustomize,
                 $settingName.'_control',
@@ -322,6 +317,24 @@ class Config extends \kabar\Module\Module\Module
             }
         }
         return false;
+    }
+
+    /**
+     * Check arguments for choices for select fields or fetch them if applicable
+     * @since 2.32.1
+     * @param  array $fieldSettings
+     * @param  array $arguments
+     * @return array
+     */
+    private function getChoices($fieldSettings, $arguments)
+    {
+        if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
+            if ($this->isModuleCallback($fieldSettings['choices'])) {
+                $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
+            }
+            $arguments['choices'] = $fieldSettings['choices'];
+        }
+        return $arguments;
     }
 
     /**

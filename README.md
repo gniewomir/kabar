@@ -17,6 +17,7 @@ Development branch:
 # Roadmap
 
 ### Features
+* Form vields validator objects
 * Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
@@ -25,7 +26,8 @@ Development branch:
 ### Code quality
 * Clear Scrutinizer backlog
 * Replace 'module callbacks' with callbacks, force registering settings sections instead extending 'Config' module
-* Dependancy Injection Container in place of Service Locator
+* Find a way around eval in widgets module, to allow using library if it is disabled for security reasons
+* Dependancy Injection Container (Dice?) in place of Service Locator
 * Unit tests
 * Widget fields based on \kabar\Utitlity\Fields classes
 
@@ -37,12 +39,15 @@ Development branch:
 
 # Changelog
 
-### 2.32.0
+### 2.32.1
 
 #### Features
 * Site options storage object
 * Checking if field has storage object assigned
 * Form component now can return populated template
+
+#### Bugfix
+* Fixed bug preventing select control from displaying in customizer
 
 ### 2.29.1
 
