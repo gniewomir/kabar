@@ -42,7 +42,7 @@ class Config extends \kabar\Module\Module\Module
      * @since 2.11.0
      * @var \stdClass
      */
-    private $parsedConfig = array();
+    private $parsedConfig;
 
     // INTERFACE
 
@@ -72,11 +72,17 @@ class Config extends \kabar\Module\Module\Module
 
         $this->cache        = $cache;
         $this->config       = $this->getConfig();
-        $this->parsedConfig = $this->cache->cacheObjectAsJson(
-            'parsed',
-            $this->getModuleName(),
-            array($this, 'parse')
-        );
+
+        // don't try to cache empty configuration
+        if (!empty($this->config)) {
+            $this->parsedConfig = $this->cache->cacheObjectAsJson(
+                'parsed',
+                $this->getModuleName(),
+                array($this, 'parse')
+            );
+        } else {
+            $this->config = new \stdClass();
+        }
     }
 
     /**

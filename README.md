@@ -39,7 +39,7 @@ Development branch:
 
 # Changelog
 
-### 2.32.1
+### 2.32.2
 
 #### Features
 * Site options storage object
@@ -47,6 +47,7 @@ Development branch:
 * Form component now can return populated template
 
 #### Bugfix
+* Don't try to cache empty global configuration
 * Fixed bug preventing select control from displaying in customizer
 
 ### 2.29.1
