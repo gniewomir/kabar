@@ -80,8 +80,6 @@ class Config extends \kabar\Module\Module\Module
                 $this->getModuleName(),
                 array($this, 'parse')
             );
-        } else {
-            $this->config = new \stdClass();
         }
     }
 
