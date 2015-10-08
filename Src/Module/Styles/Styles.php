@@ -33,17 +33,22 @@ class Styles extends \kabar\Module\Module\Module
     /**
      * Setup
      */
-    public function __construct()
+    public function __construct(\kabar\Module\Cache\Cache $cache)
     {
         $this->requireBeforeAction('after_setup_theme');
 
-        $this->cache = ServiceLocator::get('Module', 'Cache');
+        $this->cache = $cache;
 
         // if we don't have cached inline styles force other modules to skip cache
         if (!$this->cache->isCached($this->getCacheId(), $this->getModuleName())) {
             $this->cache->startPurge();
         }
 
+        /**
+         * @deprecated deprecated since version 2.35.1
+         *
+         * Form component allows for adding form update callbacks. Which should be used instead.
+         */
         add_action('save_post', array($this, 'clearStylesCache'), 8, 1);
         add_action('delete_post', array($this, 'clearStylesCache'), 8, 1);
     }

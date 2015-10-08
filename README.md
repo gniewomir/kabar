@@ -4,7 +4,7 @@ Set of modules and components for speeding up WordPress development contained in
 
 Documentation and examples are work in progress, so I advice against trying to use it right now. If you are more experienced than me (very probable), you probably have your own solution, and if not, spare youtself frustration and wait for proper guide explaining how and why things are done in that particular way.
 
-There will be changes breaking compatibility without major version change until version 3.0 is out.
+There will be changes breaking backward compatibility - without major version change - until version 3.0 is out.
 
 I will be happy seeing pull requests to development branch anyway. Coding standard Symfony2.
 
@@ -38,10 +38,15 @@ Development branch:
 
 # Changelog
 
-### 2.34.0
+### 2.35.1
+
 #### Features
 * Taxonomy Term module for extending term add/edit screen and handling term meta
 * Term meta storage object
+* Added update callback for forms to allow cache clearing
+
+#### Bugfix
+* (breaking) Cache module injected to Styles module
 
 ### 2.32.2
 

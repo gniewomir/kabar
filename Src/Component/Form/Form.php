@@ -74,6 +74,13 @@ final class Form extends \kabar\Module\Module\Module
     private $fieldsTemplateDir;
 
     /**
+     * Callback run on update
+     * @since 2.35.0
+     * @var array<callable>
+     */
+    private $updateCallbacks = array();
+
+    /**
      * Reserved field names used by form
      * @since 2.32.0
      * @var array
@@ -90,6 +97,7 @@ final class Form extends \kabar\Module\Module\Module
      * @param \kabar\Utility\Storage\InterfaceStorage|null $storage
      * @param \kabar\Component\Template\Template|null      $template
      * @param string                                       $fieldsTemplateDir
+     * @param callable                                     $updateCallback
      */
     public function __construct(
         $id,
@@ -97,7 +105,8 @@ final class Form extends \kabar\Module\Module\Module
         $action = '',
         \kabar\Utility\Storage\InterfaceStorage $storage = null,
         \kabar\Component\Template\Template $template = null,
-        $fieldsTemplateDir = ''
+        $fieldsTemplateDir = '',
+        callable $updateCallback = null
     ) {
         $this->id                = $id;
         $this->method            = in_array($method, array(self::GET_METHOD, self::POST_METHOD)) ? $method : self::POST_METHOD;
@@ -105,6 +114,10 @@ final class Form extends \kabar\Module\Module\Module
         $this->storage           = $storage;
         $this->template          = $template;
         $this->fieldsTemplateDir = $fieldsTemplateDir;
+
+        if ($updateCallback) {
+            $this->updateCallbacks[] = $updateCallback;
+        }
 
         $this->nonce = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
 
@@ -123,6 +136,16 @@ final class Form extends \kabar\Module\Module\Module
         foreach ($fields as $field) {
             $this->addField($field);
         }
+    }
+
+    /**
+     * Add update callback
+     * @since 2.35.0
+     * @param callable $updateCallback
+     */
+    public function addUpdateCallback(callable $updateCallback)
+    {
+        $this->updateCallbacks[] = $updateCallback;
     }
 
     /**
@@ -149,6 +172,9 @@ final class Form extends \kabar\Module\Module\Module
             if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
                 $form[$field->getSlug()] = $field->save();
             }
+        }
+        foreach ($this->updateCallbacks as $callback) {
+            call_user_func_array($callback, array($this));
         }
         return $form;
     }

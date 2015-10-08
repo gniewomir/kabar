@@ -143,17 +143,17 @@ class Cache extends \kabar\Module\Module\Module
     {
         // return cached
         if ($this->isCacheable() && $this->isCached($id, $type)) {
-            return $this->get($id, $type).'<!-- cached -->';
+            return $this->get($id, $type).'<!-- kabar - cached -->';
         }
         // fetch and cache
         $payload = call_user_func_array($callback, $params);
         if ($payload !== false) {
             $this->set($id, $type, $payload);
-            return $payload.'<!-- just cached -->';
+            return $payload.'<!-- kabar - just cached -->';
         }
         // callback returned false, which indicates error
         trigger_error('cacheHtml: callback returned false.', E_USER_WARNING);
-        return '<!-- error -->';
+        return '<!-- kabar - cache error -->';
     }
 
     /**
