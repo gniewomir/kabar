@@ -54,8 +54,9 @@ final class TaxTerm extends \kabar\Module\Module\Module
         $this->taxonomy = $taxonomy;
         $this->id       = $id;
 
+        // form
         $storage = new \kabar\Utility\Storage\TermMeta();
-        $storage->setPrefix($this->getUserSettingsPrefix($id));
+        $storage->setPrefix($this->getTermSettingsPrefix($id));
         $template = new \kabar\Component\Template\Template();
         $template($this->getTemplatesDirectory().'Form.php');
         $this->form = new \kabar\Component\Form\Form(
@@ -67,6 +68,7 @@ final class TaxTerm extends \kabar\Module\Module\Module
             isset($_GET['tag_ID']) ? 'Table' : 'Default'  // we are adding new, or editing existing?
         );
 
+        // term edition
         add_action(
             $this->taxonomy.'_edit_form_fields',
             array($this, 'form'),
@@ -79,6 +81,8 @@ final class TaxTerm extends \kabar\Module\Module\Module
             10,
             2
         );
+
+        // term add
         add_action(
             $this->taxonomy.'_add_form_fields',
             array($this, 'addForm'),
@@ -114,7 +118,7 @@ final class TaxTerm extends \kabar\Module\Module\Module
         if (!$this->reusableStorage instanceof \kabar\Utility\Storage\TermMeta) {
             $this->reusableStorage = new \kabar\Utility\Storage\TermMeta();
         }
-        $this->reusableStorage->setPrefix($this->getUserSettingsPrefix($this->id));
+        $this->reusableStorage->setPrefix($this->getTermSettingsPrefix($this->id));
         $this->reusableStorage->setId($termId);
         return $this->reusableStorage->retrieve($setting);
     }
@@ -126,7 +130,7 @@ final class TaxTerm extends \kabar\Module\Module\Module
      * @param  string $id
      * @return string
      */
-    private function getUserSettingsPrefix($id)
+    private function getTermSettingsPrefix($id)
     {
         return $id.'-';
     }
