@@ -44,12 +44,20 @@ class ColorPicker extends AbstractField
     protected $template;
 
     /**
+     * Help text
+     * @since 2.34.0
+     * @var   string
+     */
+    protected $help;
+
+    /**
      * Setup text field
      * @param string $slug
      * @param string $title
      * @param string $default
+     * @param string $help
      */
-    public function __construct($slug, $title, $default = '#FFFFFF')
+    public function __construct($slug, $title, $default = '#FFFFFF', $help = '')
     {
         $this->slug     = $slug;
         $this->title    = $title;
@@ -102,6 +110,7 @@ class ColorPicker extends AbstractField
         $template->cssClass    = $this->getCssClass();
         $template->librarySlug = $this->getLibrarySlug();
         $template->title       = $this->title;
+        $template->help        = $this->help;
         $value                 = $this->get();
         $template->value       = empty($value) ? $this->default : $value;
         return $template;

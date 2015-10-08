@@ -1,5 +1,5 @@
 .kabar-Utility-Fields {
-  padding-left: 1em;
+  width: 95%;
   margin-bottom: 2em;
   margin-top: 1em;
 }
@@ -7,7 +7,7 @@
   width: 100%;
 }
 .kabar-Utility-Fields-Text input {
-  min-width: 500px;
+  min-width: 460px;
 }
 .kabar-Utility-Fields label {
   display: block;

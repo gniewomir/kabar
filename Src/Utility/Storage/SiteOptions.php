@@ -51,7 +51,7 @@ final class SiteOptions implements InterfaceStorage
     public function setId($id)
     {
         trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
-        $this->id = (integer) $id;
+        $this->id = $id;
     }
 
     /**

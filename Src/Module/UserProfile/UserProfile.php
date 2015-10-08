@@ -27,12 +27,6 @@ final class UserProfile extends \kabar\Module\Module\Module
     private $sections;
 
     /**
-     * Path to field templates directory
-     * @var string
-     */
-    private $fieldTemplatesDir;
-
-    /**
      * Reusable storage object, for retrieving settings
      * @var \kabar\Utility\Storage\UserMeta
      */
@@ -45,8 +39,6 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     public function __construct()
     {
-        $this->fieldTemplatesDir = $this->getTemplatesDirectory().'Fields'.DIRECTORY_SEPARATOR;
-
         add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'));
 
         add_action('show_user_profile', array($this, 'profile'));
@@ -75,7 +67,7 @@ final class UserProfile extends \kabar\Module\Module\Module
             '',
             $storage,
             $template,
-            $this->fieldTemplatesDir
+            'Table'
         );
     }
 

@@ -59,7 +59,7 @@ final class PostMeta implements InterfaceStorage
      */
     public function setId($id)
     {
-        $this->id = (integer) $id;
+        $this->id = $id;
     }
 
     /**
@@ -99,7 +99,7 @@ final class PostMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_post_meta($this->getPostId(), $this->getStorageId($key), $value);
+        update_metadata('post', $this->getPostId(), $this->getStorageId($key), $value);
     }
 
     /**
@@ -110,7 +110,7 @@ final class PostMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_post_meta($this->getPostId(), $this->getStorageId($key), self::SINGLE);
+        return get_metadata('post', $this->getPostId(), $this->getStorageId($key), self::SINGLE);
     }
 
     /**
@@ -157,9 +157,12 @@ final class PostMeta implements InterfaceStorage
             return $this->id;
         }
         global $post;
-        if (!$post instanceof \WP_Post) {
-            trigger_error('Cannot determine post ID.', E_USER_ERROR);
+        if ($post instanceof \WP_Post) {
+            return $post->ID;
         }
-        return (integer) $post->ID;
+        if (defined(WP_DEBUG) && WP_DEBUG) {
+            trigger_error('Cannot determine post ID.', E_USER_WARNING);
+        }
+        return false;
     }
 }

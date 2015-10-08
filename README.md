@@ -26,8 +26,7 @@ Development branch:
 ### Code quality
 * Clear Scrutinizer backlog
 * Replace 'module callbacks' with callbacks, force registering settings sections instead extending 'Config' module
-* Find a way around eval in widgets module, to allow using library if it is disabled for security reasons
-* Dependancy Injection Container (Dice?) in place of Service Locator
+* Find a way around eval in widgets module
 * Unit tests
 * Widget fields based on \kabar\Utitlity\Fields classes
 
@@ -38,6 +37,11 @@ Development branch:
 * Proper build process for JS and CSS contained in library
 
 # Changelog
+
+### 2.34.0
+#### Features
+* Taxonomy Term module for extending term add/edit screen and handling term meta
+* Term meta storage object
 
 ### 2.32.2
 

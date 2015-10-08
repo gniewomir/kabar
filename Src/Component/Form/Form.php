@@ -228,8 +228,9 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Adds field to form
-     * @since 2.0.0
-     * @param \kabar\Utility\Fields\InterfaceFormPart $field
+     * @since  2.0.0
+     * @param  \kabar\Utility\Fields\InterfaceFormPart $field
+     * @return void
      */
     private function addField(\kabar\Utility\Fields\InterfaceFormPart $field)
     {
@@ -240,8 +241,9 @@ final class Form extends \kabar\Module\Module\Module
         if (in_array($slug, $this->reservedFieldNames)) {
             trigger_error('Field name '.$slug.' is reserved by Form component!', E_USER_ERROR);
         }
-        $field->setTemplateDirectory($this->fieldsTemplateDir);
-
+        if ($this->fieldsTemplateDir) {
+            $field->setTemplateDirectory($this->fieldsTemplateDir);
+        }
         $this->fields[$slug] = $field;
     }
 

@@ -16,7 +16,7 @@ namespace kabar\Utility\Storage;
 final class UserMeta implements InterfaceStorage
 {
     /**
-     * @see https://codex.wordpress.org/Function_Reference/get_user_meta
+     * @see https://codex.wordpress.org/Function_Reference/get_metadata
      */
     const SINGLE = true;
 
@@ -54,7 +54,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function setId($id)
     {
-        $this->id = (integer) $id;
+        $this->id = $id;
     }
 
     /**
@@ -93,7 +93,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_user_meta($this->getUserId(), $this->getPrefixedKey($key), $value);
+        update_metadata('user', $this->getUserId(), $this->getPrefixedKey($key), $value);
     }
 
     /**
@@ -103,7 +103,7 @@ final class UserMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_user_meta($this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
+        return get_metadata('user', $this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
     }
 
     /**
@@ -111,7 +111,7 @@ final class UserMeta implements InterfaceStorage
      * @since  2.27.7
      * @param  string  $key
      * @param  mixed   $value
-     * @return integer
+     * @return array
      */
     public function search($key, $value)
     {
@@ -139,9 +139,12 @@ final class UserMeta implements InterfaceStorage
             return $this->id;
         }
         global $user_id;
-        if (empty($user_id) || !defined('IS_PROFILE_PAGE')) {
-            trigger_error('Cannot determine user ID.', E_USER_ERROR);
+        if ($user_id && defined('IS_PROFILE_PAGE')) {
+            return (integer) $user_id;
         }
-        return (integer) $user_id;
+        if (defined(WP_DEBUG) && WP_DEBUG) {
+            trigger_error('Cannot determine user ID.', E_USER_WARNING);
+        }
+        return false;
     }
 }

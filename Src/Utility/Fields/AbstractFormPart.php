@@ -105,7 +105,17 @@ abstract class AbstractFormPart implements InterfaceFormPart
     protected function getAssetsUri()
     {
         if (empty($this->assetsUri)) {
-            $this->assetsUri = plugins_url('', __FILE__).'/assets/';
+            if (strpos(__DIR__, get_stylesheet_directory()) !== false) {
+                $assets = str_replace(
+                    get_stylesheet_directory(),
+                    get_stylesheet_directory_uri(),
+                    __DIR__
+                );
+                $this->assetsUri = $assets.'/assets/';
+                $this->assetsUri = strpos($this->assetsUri, 'http') !== 0 ? get_home_url().$this->assetsUri : $this->assetsUri;
+            } else {
+                $this->assetsUri = plugins_url('', __FILE__).'/assets/';
+            }
         }
         return $this->assetsUri;
     }
@@ -120,6 +130,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
         if (empty($this->libraryAssetsUri)) {
             $this->libraryAssetsUri = plugins_url('', dirname(dirname(dirname(__FILE__)))).'/assets/';
         }
+
         return $this->libraryAssetsUri;
     }
 
@@ -142,10 +153,12 @@ abstract class AbstractFormPart implements InterfaceFormPart
     protected function getTemplate()
     {
         if (empty($this->templateDirectory)) {
-            $this->templateDirectory = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR;
+            $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.'Default'.DIRECTORY_SEPARATOR;
+        } else {
+            $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$this->templateDirectory.DIRECTORY_SEPARATOR;
         }
-        $templatePath = $this->templateDirectory.$this->getFieldType().'.php';
-        $template = new \kabar\Component\Template\Template;
+        $templatePath = $templateDirectoryPath.$this->getFieldType().'.php';
+        $template     = new \kabar\Component\Template\Template;
         $template($templatePath);
         return $template;
     }
