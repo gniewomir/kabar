@@ -1,6 +1,6 @@
 # Shell scripts
 *.sh
-!/update-docs.sh
+!/bin/*.sh
 
 # No exceptions
 *.log

@@ -42,6 +42,10 @@ final class Autoloader
      */
     public function __construct()
     {
+        // load dependancies loader
+        require dirname(__DIR__) . '/vendor/autoload.php';
+
+        // register kabar autoloader
         if (!spl_autoload_register(array($this, 'load'), true)) {
             trigger_error('kabar library autoloader failed to register.', E_USER_ERROR);
         }

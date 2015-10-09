@@ -14,5 +14,6 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "enshrined/svg-sanitize": "^0.2.1"
     }
 }

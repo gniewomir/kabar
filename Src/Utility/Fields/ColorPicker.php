@@ -136,7 +136,13 @@ class ColorPicker extends AbstractField
      */
     public function get()
     {
-        return $this->storage->retrieve($this->getSlug());
+        $value = $this->storage->retrieve($this->getSlug());
+
+        if (!empty($value)) {
+            return $value;
+        }
+
+        return $this->default;
     }
 
     /**

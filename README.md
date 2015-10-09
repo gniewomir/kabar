@@ -38,9 +38,10 @@ Development branch:
 
 # Changelog
 
-### 2.35.1
+### 2.36.1
 
 #### Features
+* Svg module, allow Svg upload and sanitize it
 * Taxonomy Term module for extending term add/edit screen and handling term meta
 * Term meta storage object
 * Added update callback for forms to allow cache clearing
