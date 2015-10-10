@@ -38,16 +38,19 @@ Development branch:
 
 # Changelog
 
-### 2.36.1
+### 2.37.3
 
 #### Features
-* Svg module, allow Svg upload and sanitize it
+* getField method for form component
+* Svg module, allow sanitized Svg uploads
 * Taxonomy Term module for extending term add/edit screen and handling term meta
 * Term meta storage object
 * Added update callback for forms to allow cache clearing
 
 #### Bugfix
 * (breaking) Cache module injected to Styles module
+* TaxTerm component and UserProfile module no longer retreive settings straight from storage object bypasing field object
+* Form field when cloned makes copy of storage object
 
 ### 2.32.2
 

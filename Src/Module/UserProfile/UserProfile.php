@@ -91,12 +91,9 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     public function getSetting($userId, $sectionId, $setting)
     {
-        if (!$this->reusableStorage instanceof \kabar\Utility\Storage\UserMeta) {
-            $this->reusableStorage = new \kabar\Utility\Storage\UserMeta();
-        }
-        $this->reusableStorage->setPrefix($this->getUserSettingsPrefix($sectionId));
-        $this->reusableStorage->setId($userId);
-        return $this->reusableStorage->retrieve($setting);
+        $field = clone $this->form->getField($setting);
+        $field->getStorage()->setId($termId);
+        return $field->get();
     }
 
     // INTERNAL

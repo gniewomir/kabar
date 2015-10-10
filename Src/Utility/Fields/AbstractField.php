@@ -52,4 +52,24 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
     {
         $this->storage = $storage;
     }
+
+    /**
+     * Returns field storage object
+     * @since 2.37.2
+     * @return \kabar\Utility\Storage\InterfaceStorage $storage
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * Make sure that copy won't interfere with source object
+     * @since  2.37.3
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->storage = clone $this->storage;
+    }
 }

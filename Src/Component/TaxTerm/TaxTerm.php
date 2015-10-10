@@ -115,12 +115,9 @@ final class TaxTerm extends \kabar\Module\Module\Module
      */
     public function getSetting($termId, $setting)
     {
-        if (!$this->reusableStorage instanceof \kabar\Utility\Storage\TermMeta) {
-            $this->reusableStorage = new \kabar\Utility\Storage\TermMeta();
-        }
-        $this->reusableStorage->setPrefix($this->getTermSettingsPrefix($this->id));
-        $this->reusableStorage->setId($termId);
-        return $this->reusableStorage->retrieve($setting);
+        $field = clone $this->form->getField($setting);
+        $field->getStorage()->setId($termId);
+        return $field->get();
     }
 
     // INTERNAL

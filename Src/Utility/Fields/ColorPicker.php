@@ -147,12 +147,12 @@ class ColorPicker extends AbstractField
 
     /**
      * Save new field value
-     * @return string
+     * @return null|string
      */
     public function save()
     {
         if (is_null($this->storage->updated($this->getSlug()))) {
-            return;
+            return null;
         }
 
         if ($this->isValidHexColor($this->storage->updated($this->getSlug()))) {

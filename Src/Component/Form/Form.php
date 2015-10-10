@@ -139,6 +139,17 @@ final class Form extends \kabar\Module\Module\Module
     }
 
     /**
+     * Return field
+     * @since  2.37.2
+     * @param  string $slug
+     * @return \kabar\Utility\Fields\InterfaceField
+     */
+    public function getField($slug)
+    {
+        return $this->fields[$slug];
+    }
+
+    /**
      * Add update callback
      * @since 2.35.0
      * @param callable $updateCallback
@@ -231,7 +242,7 @@ final class Form extends \kabar\Module\Module\Module
      */
     public function getPopulatedTemplate($id = 0)
     {
-        $template = new \kabar\Component\Template\Template;
+        $template = new \kabar\Component\Template\Template();
         if (!$id) {
             foreach ($this->fields as $field) {
                 $name            = $field->getSlug();
