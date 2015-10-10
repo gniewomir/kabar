@@ -169,9 +169,9 @@ final class Form extends \kabar\Module\Module\Module
     }
 
     /**
-     * Get form data as array or return false if not sent, or nonce is invalid
+     * Save form fields, run registered update callbacks and return data as array, if nonce is absent or invalid return false
      * @since  2.24.4
-     * @return array|bool
+     * @return array|false
      */
     public function save()
     {
@@ -230,7 +230,7 @@ final class Form extends \kabar\Module\Module\Module
         }
 
         $this->storage = new \kabar\Utility\Storage\HTTPPost();
-        $this->storage->setPrefix($this->id.'-');
+        $this->storage->setPrefix($this->id);
         return $this->storage;
     }
 

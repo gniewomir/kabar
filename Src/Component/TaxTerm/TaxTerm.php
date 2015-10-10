@@ -36,12 +36,6 @@ final class TaxTerm extends \kabar\Module\Module\Module
      */
     private $form;
 
-    /**
-     * Reusable storage object, for retrieving settings
-     * @var \kabar\Utility\Storage\TermMeta
-     */
-    private $reusableStorage;
-
     // INTERFACE
 
     /**
@@ -56,9 +50,11 @@ final class TaxTerm extends \kabar\Module\Module\Module
 
         // form
         $storage = new \kabar\Utility\Storage\TermMeta();
-        $storage->setPrefix($this->getTermSettingsPrefix($id));
+        $storage->setPrefix($id.'-');
+
         $template = new \kabar\Component\Template\Template();
         $template($this->getTemplatesDirectory().'Form.php');
+
         $this->form = new \kabar\Component\Form\Form(
             $id,
             '',
@@ -123,16 +119,6 @@ final class TaxTerm extends \kabar\Module\Module\Module
     // INTERNAL
 
     /**
-     * Return user meta settins prefix
-     * @param  string $id
-     * @return string
-     */
-    private function getTermSettingsPrefix($id)
-    {
-        return $id.'-';
-    }
-
-    /**
      * WordPress action. Show additional user profile fields
      * @access private
      * @param  \stdClass $term
@@ -152,7 +138,6 @@ final class TaxTerm extends \kabar\Module\Module\Module
      */
     public function addForm()
     {
-        $this->form->getStorage()->setId('invalid');
         echo $this->form->render();
     }
 

@@ -26,12 +26,6 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     private $sections;
 
-    /**
-     * Reusable storage object, for retrieving settings
-     * @var \kabar\Utility\Storage\UserMeta
-     */
-    private $reusableStorage;
-
     // INTERFACE
 
     /**
@@ -56,7 +50,7 @@ final class UserProfile extends \kabar\Module\Module\Module
     public function addSection($id, $title, $position = 'bottom')
     {
         $storage                     = new \kabar\Utility\Storage\UserMeta();
-        $storage->setPrefix($this->getUserSettingsPrefix($id));
+        $storage->setPrefix($id.'-');
         $template                    = new \kabar\Component\Template\Template();
         $template($this->getTemplatesDirectory().'Section.php');
         $template->title             = $title;
@@ -97,16 +91,6 @@ final class UserProfile extends \kabar\Module\Module\Module
     }
 
     // INTERNAL
-
-    /**
-     * Return user meta settins prefix
-     * @param  string $id
-     * @return string
-     */
-    private function getUserSettingsPrefix($id)
-    {
-        return $id.'-';
-    }
 
     /**
      * Enqueue assets
