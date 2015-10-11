@@ -17,11 +17,13 @@ Development branch:
 # Roadmap
 
 ### Features
-* Form vields validator objects
+* Form fields validator objects
 * Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
 * Multisite support
+* WPML support
+* Twig in place of bare-bones templating?
 
 ### Code quality
 * Clear Scrutinizer backlog

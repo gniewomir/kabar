@@ -1,23 +1,23 @@
 <?php
 /**
- * Taxonomy term module
+ * Taxonomy component
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.34.0
  * @package    kabar
- * @subpackage Modules
+ * @subpackage component
+ * @since      2.34.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Component\TaxTerm;
+namespace kabar\Component\Taxonomy;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Taxonomy term module main class
+ * Registers additional fields for taxonomy term forms
  */
-final class TaxTerm extends \kabar\Module\Module\Module
+final class Taxonomy extends \kabar\Module\Module\Module
 {
-
     /**
      * Taxonomy name
      * @var string
@@ -31,7 +31,7 @@ final class TaxTerm extends \kabar\Module\Module\Module
     private $id;
 
     /**
-     * Frm object
+     * Form object
      * @var kabar\Component\Form\Form
      */
     private $form;
@@ -41,7 +41,7 @@ final class TaxTerm extends \kabar\Module\Module\Module
     /**
      * Setup taxonomy term component
      * @param string $id       ID used for form
-     * @param string $taxonomy WP Taxonomy name
+     * @param string $taxonomy WordPress Taxonomy slug
      */
     public function __construct($id, $taxonomy)
     {
@@ -64,38 +64,18 @@ final class TaxTerm extends \kabar\Module\Module\Module
             isset($_GET['tag_ID']) ? 'Table' : 'Default'  // we are adding new, or editing existing?
         );
 
-        // term edition
-        add_action(
-            $this->taxonomy.'_edit_form_fields',
-            array($this, 'form'),
-            10,
-            2
-        );
-        add_action(
-            'edited_'.$this->taxonomy,
-            array($this, 'update'),
-            10,
-            2
-        );
+        // existing term edition
+        add_action($this->taxonomy.'_edit_form_fields', array($this, 'form'), 10, 2);
+        add_action('edited_'.$this->taxonomy, array($this, 'update'), 10, 2);
 
-        // term add
-        add_action(
-            $this->taxonomy.'_add_form_fields',
-            array($this, 'addForm'),
-            10,
-            2
-        );
-        add_action(
-            'create_'.$this->taxonomy,
-            array($this, 'update'),
-            10,
-            2
-        );
+        // creating new term
+        add_action($this->taxonomy.'_add_form_fields', array($this, 'addForm'), 10, 2);
+        add_action('create_'.$this->taxonomy, array($this, 'update'), 10, 2);
     }
 
     /**
-     * Add settings section to user profile
-     *
+     * Return taxonomy form
+     * @return \kabar\Component\Form\Form
      */
     public function getForm()
     {
@@ -103,11 +83,10 @@ final class TaxTerm extends \kabar\Module\Module\Module
     }
 
     /**
-     * Get term setting
-     * @see https://codex.wordpress.org/Function_Reference/get_user_meta
-     * @param  string $userId
-     * @param  string $setting
-     * @return string
+     * Return taxonomy form field value
+     * @param  string $termId  ID of term
+     * @param  string $setting Field slug
+     * @return mixed
      */
     public function getSetting($termId, $setting)
     {
@@ -119,10 +98,10 @@ final class TaxTerm extends \kabar\Module\Module\Module
     // INTERNAL
 
     /**
-     * WordPress action. Show additional user profile fields
-     * @access private
-     * @param  \stdClass $term
-     * @param  string    $taxonomy
+     * WordPress action "{$this->taxonomy}_edit_form_fields". Show additional fields, when editing existing term
+     * @internal
+     * @param  \stdClass $term     Term object
+     * @param  string    $taxonomy Taxonomy slug
      * @return void
      */
     public function form($term, $taxonomy = '')
@@ -132,8 +111,8 @@ final class TaxTerm extends \kabar\Module\Module\Module
     }
 
     /**
-     * WordPress action. Show additional user profile fields
-     * @access private
+     * WordPress action "{$this->taxonomy}_add_form_fields". Show additional fields when adding new term
+     * @internal
      * @return void
      */
     public function addForm()
@@ -142,10 +121,10 @@ final class TaxTerm extends \kabar\Module\Module\Module
     }
 
     /**
-     * WordPress action. Update term
-     * @access private
-     * @param  int    $termId
-     * @param  string $taxonomy
+     * WordPress action "create_{$this->taxonomy}" and "edited_{$this->taxonomy}". Update additional fields when creating or editing term
+     * @internal
+     * @param  integer $termId   Term ID
+     * @param  string  $taxonomy Taxonomy slug
      * @return void
      */
     public function update($termId, $taxonomy)

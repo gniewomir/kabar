@@ -1,14 +1,16 @@
 <?php
 /**
- * Simple templating engine
+ * Template component
  *
  * Provides very basic templating using encapsulation and php.
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
  * @package    kabar
- * @subpackage Component
+ * @subpackage component
+ * @since      2.0.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
+
 namespace kabar\Component\Template;
 
 /**

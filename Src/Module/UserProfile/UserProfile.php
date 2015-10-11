@@ -85,8 +85,8 @@ final class UserProfile extends \kabar\Module\Module\Module
      */
     public function getSetting($userId, $sectionId, $setting)
     {
-        $field = clone $this->form->getField($setting);
-        $field->getStorage()->setId($termId);
+        $field = clone $this->sections[$sectionId]->getField($setting);
+        $field->getStorage()->setId($userId);
         return $field->get();
     }
 

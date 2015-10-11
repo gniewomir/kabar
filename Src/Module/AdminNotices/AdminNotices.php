@@ -115,7 +115,7 @@ class AdminNotices extends \kabar\Module\Module\Module
      */
     public function adminNotices()
     {
-        // notices not set, which probebly means that we where redirected
+        // notices not set, which probably means that we where redirected
         // get them from transient
         if (empty($this->notices)) {
             $this->notices = unserialize(get_transient($this->getTransientId()));

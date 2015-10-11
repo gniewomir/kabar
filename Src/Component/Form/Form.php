@@ -2,19 +2,18 @@
 /**
  * Form component
  *
- * Provides easy way of assembling forms
- *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
  * @package    kabar
- * @subpackage Component
+ * @subpackage component
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 namespace kabar\Component\Form;
 
 use \kabar\ServiceLocator as ServiceLocator;
 
 /**
- * Form class
+ * Provides easy way of assembling forms from field objects
  */
 final class Form extends \kabar\Module\Module\Module
 {
@@ -56,7 +55,7 @@ final class Form extends \kabar\Module\Module\Module
     private $nonce;
 
     /**
-     * Form template
+     * Form template object
      * @var \kabar\Component\Template\Template
      */
     private $template;
@@ -68,13 +67,13 @@ final class Form extends \kabar\Module\Module\Module
     private $storage;
 
     /**
-     * Path to directory with fields templates. With trailing slash.
+     * Fields templates subdirectory name
      * @var string
      */
     private $fieldsTemplateDir;
 
     /**
-     * Callback run on update
+     * Callbacks to run when form is saved
      * @since 2.35.0
      * @var array<callable>
      */
@@ -91,13 +90,13 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Setup form
-     * @param string                                       $id
-     * @param string                                       $method
-     * @param string                                       $action
-     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage
-     * @param \kabar\Component\Template\Template|null      $template
-     * @param string                                       $fieldsTemplateDir
-     * @param callable                                     $updateCallback
+     * @param string                                       $id                ID
+     * @param string                                       $method            Method
+     * @param string                                       $action            Action
+     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object
+     * @param \kabar\Component\Template\Template|null      $template          Template object
+     * @param string                                       $fieldsTemplateDir Fields templates subdirectory
+     * @param callable|null                                $updateCallback    Callback to run when form is saved
      */
     public function __construct(
         $id,
@@ -161,6 +160,9 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Checks if form was sent and we can process it.
+     *
+     * Method assumes, that form was sent if form nonce is present and valid
+     *
      * @return bool
      */
     public function sent()
@@ -169,7 +171,7 @@ final class Form extends \kabar\Module\Module\Module
     }
 
     /**
-     * Save form fields, run registered update callbacks and return data as array, if nonce is absent or invalid return false
+     * Save form fields, run registered update callbacks and return data as array
      * @since  2.24.4
      * @return array|false
      */
@@ -235,7 +237,7 @@ final class Form extends \kabar\Module\Module\Module
     }
 
     /**
-     * Returns template with saved form data
+     * Returns form template with saved form data
      * @since  2.32.0
      * @param  integer                            $id Id passed to storage object
      * @return \kabar\Component\Template\Template
@@ -243,20 +245,27 @@ final class Form extends \kabar\Module\Module\Module
     public function getPopulatedTemplate($id = 0)
     {
         $template = new \kabar\Component\Template\Template();
+
+        // no id provided
         if (!$id) {
             foreach ($this->fields as $field) {
-                $name            = $field->getSlug();
-                $template->$name = $field->get();
+                if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
+                    $name            = $field->getSlug();
+                    $template->$name = $field->get();
+                }
             }
             return $template;
         }
-        $storage = clone $this->getStorage();
-        $storage->setId($id);
+
+        // id provided
         foreach ($this->fields as $field) {
-            $field->setStorage($storage);
-            $name            = $field->getSlug();
-            $template->$name = $field->get();
-            $field->setStorage($this->getStorage());
+            if (!$field instanceof \kabar\Utility\Fields\InterfaceField) {
+                continue;
+            }
+            $copy = clone $field;
+            $copy->getStorage()->setId($id);
+            $name            = $copy->getSlug();
+            $template->$name = $copy->get();
         }
         return $template;
     }
@@ -286,7 +295,7 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Equeue assets
-     * @access private
+     * @internal
      * @since  2.24.4
      * @return void
      */
