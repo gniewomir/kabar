@@ -11,8 +11,6 @@
 
 namespace kabar\Component\Metabox;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Registers metabox with WordPress and allows interacting with metabox form object
  */

@@ -26,18 +26,29 @@ class Scripts extends \kabar\Module\Module\Module
 
     /**
      * Cache object
-     * @var object
+     * @var \kabar\Module\Cache\Cache
      */
-    protected $cache;
+    private $cache;
 
     /**
-     * Setup
+     * Template factory
+     * @var \kabar\Factory\Template\Template
      */
-    public function __construct()
+    private $templateFactory;
+
+    // INTERFACE
+
+    /**
+     * Setup scripts module
+     * @param \kabar\Factory\Template\Template $templateFactory
+     * @param \kabar\Module\Cache\Cache        $cache
+     */
+    public function __construct(\kabar\Factory\Template\Template $templateFactory, \kabar\Module\Cache\Cache $cache)
     {
         $this->requireBeforeAction('after_setup_theme');
 
-        $this->cache = ServiceLocator::get('Module', 'Cache');
+        $this->templateFactory = $templateFactory;
+        $this->cache           = $cache;
 
         // if we don't have cached inline styles force other modules to skip cache
         if (!$this->cache->isCached($this->getCacheId(), $this->getModuleName())) {
@@ -51,7 +62,7 @@ class Scripts extends \kabar\Module\Module\Module
      * @param  array  $value
      * @return void
      */
-    public function addScriptData($name, $value)
+    public function addData($name, $value)
     {
         if (isset($this->data[$name])) {
             $this->data[$name] = (object) array_merge((array) $this->data[$name], (array) $value);
@@ -83,7 +94,7 @@ class Scripts extends \kabar\Module\Module\Module
             $scriptsData[] = $this->getLibrarySlug().'.'.$this->getModuleName().'.'.$name.' = '.wp_json_encode($data).';';
         }
 
-        $template = ServiceLocator::getNew('Component', 'Template');
+        $template = $this->templateFactory->create();
         $template($this->getTemplatesDirectory().'Scripts.php');
         $template->data = $scriptsData;
         $template->slug = $this->getLibrarySlug();
@@ -91,12 +102,13 @@ class Scripts extends \kabar\Module\Module\Module
     }
 
     /**
-     * Get id for cache entry
-     * @return string
+     * Clear styles cache
+     * @since  2.38.0
+     * @return void
      */
-    public function getCacheId()
+    public function clearCache()
     {
-        return $this->getLibraryVersion();
+        $this->cache->forcePurge($this->getModuleName());
     }
 
     /**
@@ -110,5 +122,16 @@ class Scripts extends \kabar\Module\Module\Module
             $this->getModuleName(),
             array($this, 'getScripts')
         );
+    }
+
+    // INTERNAL
+
+    /**
+     * Get id for cache entry
+     * @return string
+     */
+    private function getCacheId()
+    {
+        return $this->cache->getCurrentUrl();
     }
 }

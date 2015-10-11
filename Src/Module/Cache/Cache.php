@@ -2,15 +2,14 @@
 /**
  * Site cache module
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.12.0
  * @package    kabar
- * @subpackage modules
+ * @subpackage module
+ * @since      2.12.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
 namespace kabar\Module\Cache;
-
-use \kabar\ServiceLocator as ServiceLocator;
 
 /**
  * Site cache class
@@ -48,6 +47,18 @@ class Cache extends \kabar\Module\Module\Module
      * @var array
      */
     private $transients = array();
+
+    /**
+     * Current page url
+     * @var string
+     */
+    private $currentUrl;
+
+    /**
+     * Use forwarded host?
+     * @var bool
+     */
+    private $useForwardedHost;
 
     // INTERFACE
 
@@ -101,7 +112,10 @@ class Cache extends \kabar\Module\Module\Module
     }
 
     /**
-     * If we are allowed to cache this page
+     * Check if we are allowed to cache this page
+     *
+     * By default we don't use cache in admin area, in customization preview, and during ajax requests.
+     *
      * @return boolean
      */
     public function isCacheable()
@@ -191,21 +205,6 @@ class Cache extends \kabar\Module\Module\Module
     }
 
     /**
-     * Cache
-     * @param  string $payload
-     * @return void
-     */
-    public function set($id, $type, $payload)
-    {
-        $hash = $this->hash($id, $type);
-        if (strlen($hash) > 45) {
-            trigger_error('To long type "'.$type.'"for cache entry', E_USER_ERROR);
-        }
-        $this->transients[$hash] = $payload;
-        set_transient($hash, $payload, self::EXPIRATION);
-    }
-
-    /**
      * Get cached data
      * @param  string $id
      * @return string|bool
@@ -217,6 +216,21 @@ class Cache extends \kabar\Module\Module\Module
             $this->transients[$hash] = get_transient($hash);
         }
         return $this->transients[$hash];
+    }
+
+    /**
+     * Cache
+     * @param  string $payload
+     * @return void
+     */
+    public function set($id, $type, $payload)
+    {
+        $hash = $this->hash($id, $type);
+        if (strlen($hash) > 45) {
+            trigger_error('To long type "'.$type.'" for cache entry', E_USER_ERROR);
+        }
+        $this->transients[$hash] = $payload;
+        set_transient($hash, $payload, self::EXPIRATION);
     }
 
     /**
@@ -236,9 +250,14 @@ class Cache extends \kabar\Module\Module\Module
      * @param  boolean $useForwardedHost
      * @return string
      */
-    public function currentUrl($useForwardedHost = false)
+    public function getCurrentUrl($useForwardedHost = false)
     {
-        return $this->urlOrigin($_SERVER, $useForwardedHost).$_SERVER['REQUEST_URI'];
+        if ($this->currentUrl && $this->useForwardedHost === $useForwardedHost) {
+            return $this->currentUrl;
+        }
+        $this->currentUrl       = $this->getUrlOrigin($_SERVER, $useForwardedHost).$_SERVER['REQUEST_URI'];
+        $this->useForwardedHost = $useForwardedHost;
+        return $this->currentUrl;
     }
 
     // INTERNAL
@@ -250,7 +269,7 @@ class Cache extends \kabar\Module\Module\Module
      */
     private function hash($id, $type)
     {
-        return self::TRANSIENT_PREFIX.$type.md5(ServiceLocator::VERSION.$id);
+        return self::TRANSIENT_PREFIX.$type.md5(\kabar\ServiceLocator::VERSION.$id);
     }
 
     /**
@@ -259,7 +278,7 @@ class Cache extends \kabar\Module\Module\Module
      * @param  boolean $useForwardedHost
      * @return string
      */
-    private function urlOrigin($server, $useForwardedHost = false)
+    private function getUrlOrigin($server, $useForwardedHost = false)
     {
         $ssl      = (!empty($server['HTTPS']) && $server['HTTPS'] == 'on') ? true : false;
         $protocol = strtolower($server['SERVER_PROTOCOL']);

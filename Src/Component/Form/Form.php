@@ -8,9 +8,8 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
-namespace kabar\Component\Form;
 
-use \kabar\ServiceLocator as ServiceLocator;
+namespace kabar\Component\Form;
 
 /**
  * Provides easy way of assembling forms from field objects

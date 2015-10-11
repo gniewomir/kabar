@@ -185,7 +185,7 @@ class Pages extends \kabar\Module\Module\Module
         $pages = $this->getWidgetizedPagesList();
 
         // check if current url matches url of any widgetized page
-        $currUrl = trim(parse_url($this->cache->currentUrl(), PHP_URL_PATH), '/');
+        $currUrl = trim(parse_url($this->cache->getCurrentUrl(), PHP_URL_PATH), '/');
         foreach ($pages as $page) {
             if (empty($page['path']) && empty($currUrl)) {
                 // yes, widgetized front page

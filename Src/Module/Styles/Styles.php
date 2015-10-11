@@ -2,55 +2,58 @@
 /**
  * Inline Styles module
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
  * @package    kabar
  * @subpackage Modules
+ * @since      2.0.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
 namespace kabar\Module\Styles;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
- * Styles module main class
+ * Allows collecting inline style from other modules, and outputing them where needed
  */
-class Styles extends \kabar\Module\Module\Module
+final class Styles extends \kabar\Module\Module\Module
 {
 
     /**
      * Inline styles
      * @var array
      */
-    protected $styles;
+    private $styles;
 
     /**
      * Cache object
      * @var object
      */
-    protected $cache;
+    private $cache;
 
     /**
-     * Setup
+     * Template factory
+     * @var \kabar\Factory\Template\Template
      */
-    public function __construct(\kabar\Module\Cache\Cache $cache)
+    private $templateFactory;
+
+    // INTERFACE
+
+    /**
+     * Setup styles module
+     * @param \kabar\Factory\Template\Template $templateFactory
+     * @param \kabar\Module\Cache\Cache        $cache
+     */
+    public function __construct(\kabar\Factory\Template\Template $templateFactory, \kabar\Module\Cache\Cache $cache)
     {
         $this->requireBeforeAction('after_setup_theme');
 
-        $this->cache = $cache;
-
-        // if we don't have cached inline styles force other modules to skip cache
-        if (!$this->cache->isCached($this->getCacheId(), $this->getModuleName())) {
-            $this->cache->startPurge();
-        }
+        $this->templateFactory = $templateFactory;
+        $this->cache           = $cache;
 
         /**
-         * @deprecated deprecated since version 2.35.1
-         *
-         * Form component allows for adding form update callbacks. Which should be used instead.
+         * Deprecated functionality
+         * @deprecated deprecated since version 2.38.0
          */
-        add_action('save_post', array($this, 'clearStylesCache'), 8, 1);
-        add_action('delete_post', array($this, 'clearStylesCache'), 8, 1);
+        $this->deprecated();
     }
 
     /**
@@ -87,7 +90,7 @@ class Styles extends \kabar\Module\Module\Module
             }
         }
         if ($styles) {
-            $template = ServiceLocator::getNew('Component', 'Template');
+            $template = $this->templateFactory->create();
             $template($this->getTemplatesDirectory().'Styles.php');
             $template->slug   = $this->getLibrarySlug();
             $template->styles = $styles;
@@ -96,22 +99,13 @@ class Styles extends \kabar\Module\Module\Module
     }
 
     /**
-     * Clear cache for all sidebars
+     * Clear styles cache
      * @since  2.12.9
      * @return void
      */
-    public function clearStylesCache()
+    public function clearCache()
     {
         $this->cache->forcePurge($this->getModuleName());
-    }
-
-    /**
-     * Get id for cache entry
-     * @return string
-     */
-    public function getCacheId()
-    {
-        return rtrim($this->cache->currentUrl(), '/');
     }
 
     /**
@@ -125,5 +119,38 @@ class Styles extends \kabar\Module\Module\Module
             $this->getModuleName(),
             array($this, 'getStyles')
         );
+    }
+
+    // INTERNAL
+
+    /**
+     * Get id for cache entry
+     * @return string
+     */
+    private function getCacheId()
+    {
+        return rtrim($this->cache->getCurrentUrl(), '/');
+    }
+
+    /**
+     * Deprecated functionality
+     * @deprecated deprecated since version 2.38.0
+     * @since      2.38.0
+     * @return     void
+     */
+    private function deprecated()
+    {
+        // if we don't have cached inline styles force other modules to skip cache
+        if (!$this->cache->isCached($this->getCacheId(), $this->getModuleName())) {
+            $this->cache->startPurge();
+        }
+
+        /**
+         * @deprecated deprecated since version 2.35.1
+         *
+         * Form component allows for adding form update callbacks. Which should be used instead.
+         */
+        add_action('save_post', array($this, 'clearCache'), 8, 1);
+        add_action('delete_post', array($this, 'clearCache'), 8, 1);
     }
 }

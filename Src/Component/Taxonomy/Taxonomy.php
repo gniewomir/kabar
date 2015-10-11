@@ -11,8 +11,6 @@
 
 namespace kabar\Component\Taxonomy;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Registers additional fields for taxonomy term forms
  */
