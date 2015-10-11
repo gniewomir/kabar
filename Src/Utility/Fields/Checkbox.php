@@ -55,7 +55,7 @@ class Checkbox extends AbstractField
      * Setup text field
      * @param string $slug
      * @param string $title
-     * @param string $default
+     * @param bool   $default
      * @param string $help
      */
     public function __construct($slug, $title, $default = false, $help = '')

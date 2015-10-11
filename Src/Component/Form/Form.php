@@ -91,11 +91,11 @@ final class Form extends \kabar\Module\Module\Module
     /**
      * Setup form
      * @param string                                       $id                ID
-     * @param string                                       $method            Method
-     * @param string                                       $action            Action
-     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object
-     * @param \kabar\Component\Template\Template|null      $template          Template object
-     * @param string                                       $fieldsTemplateDir Fields templates subdirectory
+     * @param string                                       $method            Method. POST if not specified
+     * @param string                                       $action            Action. SELF if not specified
+     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object. \kabar\Utility\Storage\HTTPPost if not specified
+     * @param \kabar\Component\Template\Template|null      $template          Template object. Default template if not specified
+     * @param string                                       $fieldsTemplateDir Fields templates subdirectory. "Default" if not specifed
      * @param callable|null                                $updateCallback    Callback to run when form is saved
      */
     public function __construct(
@@ -104,7 +104,7 @@ final class Form extends \kabar\Module\Module\Module
         $action = '',
         \kabar\Utility\Storage\InterfaceStorage $storage = null,
         \kabar\Component\Template\Template $template = null,
-        $fieldsTemplateDir = '',
+        $fieldsTemplateDir = 'Default',
         callable $updateCallback = null
     ) {
         $this->id                = $id;

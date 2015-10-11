@@ -32,7 +32,7 @@ final class Taxonomy extends \kabar\Module\Module\Module
 
     /**
      * Form object
-     * @var kabar\Component\Form\Form
+     * @var \kabar\Component\Form\Form
      */
     private $form;
 

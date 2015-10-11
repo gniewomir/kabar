@@ -141,7 +141,7 @@ final class Metabox extends \kabar\Module\Module\Module
      * @param  integer     $postId
      * @return string|null
      */
-    public function getSetting($setting, $postId = null)
+    public function getSetting($setting, $postId = 0)
     {
         $field = clone $this->form->getField($setting);
         if ($postId) {
