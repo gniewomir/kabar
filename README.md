@@ -40,6 +40,14 @@ Development branch:
 
 # Changelog
 
+### 2.50.0
+
+* AdminUI components (Taxonomy, User, Metabox etc.)
+* Form, Fields and Storage object moved to utility
+* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions
+* Dice Dependancy Injection container - at least for modules
+* Package definition for composer
+
 ### 2.38.0
 
 #### Features
