@@ -47,7 +47,7 @@ class Internal extends AbstractField
 
     /**
      * Render field
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {

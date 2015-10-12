@@ -74,7 +74,7 @@ class Scripts extends \kabar\Module\Module\Module
 
     /**
      * Return scripts data
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function getScripts()
     {

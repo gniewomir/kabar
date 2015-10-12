@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Component\Taxonomy;
+namespace kabar\AdminUI\Taxonomy;
 
 /**
  * Registers additional fields for taxonomy term forms
@@ -30,7 +30,7 @@ final class Taxonomy extends \kabar\Module\Module\Module
 
     /**
      * Form object
-     * @var \kabar\Component\Form\Form
+     * @var \kabar\Utility\Form\Form
      */
     private $form;
 
@@ -50,10 +50,10 @@ final class Taxonomy extends \kabar\Module\Module\Module
         $storage = new \kabar\Utility\Storage\TermMeta();
         $storage->setPrefix($id.'-');
 
-        $template = new \kabar\Component\Template\Template();
+        $template = new \kabar\Utility\Template\Template();
         $template($this->getTemplatesDirectory().'Form.php');
 
-        $this->form = new \kabar\Component\Form\Form(
+        $this->form = new \kabar\Utility\Form\Form(
             $id,
             '',
             '',
@@ -72,8 +72,18 @@ final class Taxonomy extends \kabar\Module\Module\Module
     }
 
     /**
+     * Get component/form id
+     * @since  2.39.0
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Return taxonomy form
-     * @return \kabar\Component\Form\Form
+     * @return \kabar\Utility\Form\Form
      */
     public function getForm()
     {

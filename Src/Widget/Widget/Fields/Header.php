@@ -59,7 +59,7 @@ class Header extends AbstractField
      * @see WP_Widget::form()
      *
      * @param array $instance Previously saved values from database.
-     * @return kabar\Component\Template\Template
+     * @return kabar\Utility\Template\Template
      */
     public function form($instance)
     {

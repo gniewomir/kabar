@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Component\Form;
+namespace kabar\Utility\Form;
 
 /**
  * Provides easy way of assembling forms from field objects
@@ -55,7 +55,7 @@ final class Form extends \kabar\Module\Module\Module
 
     /**
      * Form template object
-     * @var \kabar\Component\Template\Template
+     * @var \kabar\Utility\Template\Template
      */
     private $template;
 
@@ -93,7 +93,7 @@ final class Form extends \kabar\Module\Module\Module
      * @param string                                       $method            Method. POST if not specified
      * @param string                                       $action            Action. SELF if not specified
      * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object. \kabar\Utility\Storage\HTTPPost if not specified
-     * @param \kabar\Component\Template\Template|null      $template          Template object. Default template if not specified
+     * @param \kabar\Utility\Template\Template|null      $template          Template object. Default template if not specified
      * @param string                                       $fieldsTemplateDir Fields templates subdirectory. "Default" if not specifed
      * @param callable|null                                $updateCallback    Callback to run when form is saved
      */
@@ -102,7 +102,7 @@ final class Form extends \kabar\Module\Module\Module
         $method = '',
         $action = '',
         \kabar\Utility\Storage\InterfaceStorage $storage = null,
-        \kabar\Component\Template\Template $template = null,
+        \kabar\Utility\Template\Template $template = null,
         $fieldsTemplateDir = 'Default',
         callable $updateCallback = null
     ) {
@@ -197,10 +197,10 @@ final class Form extends \kabar\Module\Module\Module
      */
     public function render()
     {
-        if ($this->template instanceof \kabar\Component\Template\Template) {
+        if ($this->template instanceof \kabar\Utility\Template\Template) {
             $template = $this->template;
         } else {
-            $template = new \kabar\Component\Template\Template;
+            $template = new \kabar\Utility\Template\Template;
             $template($this->getTemplatesDirectory().'Form.php');
         }
 
@@ -239,11 +239,11 @@ final class Form extends \kabar\Module\Module\Module
      * Returns form template with saved form data
      * @since  2.32.0
      * @param  integer                            $id Id passed to storage object
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function getPopulatedTemplate($id = 0)
     {
-        $template = new \kabar\Component\Template\Template();
+        $template = new \kabar\Utility\Template\Template();
 
         // no id provided
         if (!$id) {

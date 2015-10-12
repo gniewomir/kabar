@@ -79,10 +79,10 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
      *
      * @since  2.0.0
      * @param  string                              $widgetId Uniqe id for this wiget
-     * @param  \kabar\Component\Template\Template $template
-     * @return \kabar\Component\Template\Template
+     * @param  \kabar\Utility\Template\Template $template
+     * @return \kabar\Utility\Template\Template
      */
-    public function objects($widgetId, \kabar\Component\Template\Template $template)
+    public function objects($widgetId, \kabar\Utility\Template\Template $template)
     {
         $template->widgetId = $widgetId;
         return $template;
@@ -104,10 +104,10 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
     /**
      * Render widget using prepopulated (with widget fields and objects) template for current WordPress widget instance
      *
-     * @param  \kabar\Component\Template\Template $template Prepopulated template object
-     * @return \kabar\Component\Template\Template
+     * @param  \kabar\Utility\Template\Template $template Prepopulated template object
+     * @return \kabar\Utility\Template\Template
      */
-    public function render(\kabar\Component\Template\Template $template)
+    public function render(\kabar\Utility\Template\Template $template)
     {
         return $template;
     }

@@ -73,7 +73,7 @@ final class Styles extends \kabar\Module\Module\Module
 
     /**
      * Return styles html tag
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function getStyles()
     {

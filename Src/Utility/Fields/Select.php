@@ -62,7 +62,7 @@ class Select extends Text
 
     /**
      * Render field
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {

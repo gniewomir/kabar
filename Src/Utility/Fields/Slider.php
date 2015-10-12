@@ -105,7 +105,7 @@ class Slider extends AbstractField
 
     /**
      * Render text
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {

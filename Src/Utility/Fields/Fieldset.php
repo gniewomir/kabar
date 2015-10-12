@@ -100,7 +100,7 @@ class Fieldset extends AbstractField implements InterfaceFieldset
 
     /**
      * Render fields
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {

@@ -9,7 +9,7 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Component\Metabox;
+namespace kabar\AdminUI\Metabox;
 
 /**
  * Registers metabox with WordPress and allows interacting with metabox form object
@@ -51,7 +51,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Template object for metabox form
-     * @var \kabar\Component\Template\Template
+     * @var \kabar\Utility\Template\Template
      */
     private $template;
 
@@ -69,7 +69,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Form for this metabox
-     * @var \kabar\Component\Form\Form
+     * @var \kabar\Utility\Form\Form
      */
     private $form;
 
@@ -87,7 +87,7 @@ final class Metabox extends \kabar\Module\Module\Module
      * @param string                                       $context
      * @param string                                       $priority
      * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object for metabox form fields
-     * @param \kabar\Component\Template\Template|null      $template          Template for metabox form
+     * @param \kabar\Utility\Template\Template|null      $template          Template for metabox form
      * @param string                                       $fieldsTemplateDir Fields templates subdirectory name
      */
     public function __construct(
@@ -97,7 +97,7 @@ final class Metabox extends \kabar\Module\Module\Module
         $context = 'normal',
         $priority = 'high',
         \kabar\Utility\Storage\InterfaceStorage $storage = null,
-        \kabar\Component\Template\Template $template = null,
+        \kabar\Utility\Template\Template $template = null,
         $fieldsTemplateDir = ''
     ) {
         $this->id                = $id;
@@ -109,7 +109,7 @@ final class Metabox extends \kabar\Module\Module\Module
         $this->template          = $template;
         $this->fieldsTemplateDir = $fieldsTemplateDir;
 
-        $this->form = new \kabar\Component\Form\Form(
+        $this->form = new \kabar\Utility\Form\Form(
             $this->id,
             '',
             '',
@@ -123,9 +123,19 @@ final class Metabox extends \kabar\Module\Module\Module
     }
 
     /**
+     * Get component/form id
+     * @since  2.39.0
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Returns metabox form
      * @since  2.24.4
-     * @return \kabar\Component\Form\Form
+     * @return \kabar\Utility\Form\Form
      */
     public function getForm()
     {

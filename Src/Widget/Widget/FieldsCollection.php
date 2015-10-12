@@ -232,10 +232,10 @@ class FieldsCollection
      *
      * @param  array                              $args     Widget arguments.
      * @param  array                              $instance Saved values from database.
-     * @param  \kabar\Component\Template\Template $template Template object
-     * @return \kabar\Component\Template\Template
+     * @param  \kabar\Utility\Template\Template $template Template object
+     * @return \kabar\Utility\Template\Template
      */
-    public function populateTemplate($args, $instance, \kabar\Component\Template\Template $template)
+    public function populateTemplate($args, $instance, \kabar\Utility\Template\Template $template)
     {
         $this->args     = $args; // required by get method
         $this->instance = $instance; // required by get method

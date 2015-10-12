@@ -53,7 +53,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Render field
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     abstract public function render();
 
@@ -148,7 +148,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
     /**
      * Get field template
      * @since  2.24.4
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     protected function getTemplate()
     {
@@ -158,7 +158,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
             $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$this->templateDirectory.DIRECTORY_SEPARATOR;
         }
         $templatePath = $templateDirectoryPath.$this->getFieldType().'.php';
-        $template     = new \kabar\Component\Template\Template;
+        $template     = new \kabar\Utility\Template\Template;
         $template($templatePath);
         return $template;
     }

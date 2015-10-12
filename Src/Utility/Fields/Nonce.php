@@ -48,7 +48,7 @@ class Nonce extends AbstractFormPart
     /**
      * Output nonce field in form
      * @see    https://codex.wordpress.org/Function_Reference/wp_nonce_field
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {

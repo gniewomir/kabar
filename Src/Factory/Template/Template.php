@@ -19,22 +19,22 @@ class Template
 
     /**
      * Template prototype
-     * @var \kabar\Component\Template\Template
+     * @var \kabar\Utility\Template\Template
      */
     private $prototype;
 
     /**
      * Setup template factory
-     * @param \kabar\Component\Template\Template $prototype
+     * @param \kabar\Utility\Template\Template $prototype
      */
-    public function __construct(\kabar\Component\Template\Template $prototype)
+    public function __construct(\kabar\Utility\Template\Template $prototype)
     {
         $this->prototype = $prototype;
     }
 
     /**
      * Return new template
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function create()
     {

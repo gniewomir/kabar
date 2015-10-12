@@ -11,7 +11,7 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Component\Template;
+namespace kabar\Utility\Template;
 
 /**
  * Template class

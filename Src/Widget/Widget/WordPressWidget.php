@@ -34,7 +34,7 @@ class WordPressWidget extends \WP_Widget
 
     /**
      * Widget template
-     * @var \kabar\Component\Template\Template
+     * @var \kabar\Utility\Template\Template
      */
     protected $template;
 

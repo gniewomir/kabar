@@ -67,7 +67,7 @@ class ImageLibrary extends Image
 
     /**
      * Render field
-     * @return \kabar\Component\Template\Template
+     * @return \kabar\Utility\Template\Template
      */
     public function render()
     {
