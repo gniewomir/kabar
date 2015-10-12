@@ -32,6 +32,7 @@ class Scripts extends \kabar\Module\Module\Module
 
     /**
      * Template factory
+     * @since 2.38.0
      * @var \kabar\Factory\Template\Template
      */
     private $templateFactory;

@@ -25,12 +25,13 @@ final class Styles extends \kabar\Module\Module\Module
 
     /**
      * Cache object
-     * @var object
+     * @var \kabar\Module\Cache\Cache
      */
     private $cache;
 
     /**
      * Template factory
+     * @since 2.38.0
      * @var \kabar\Factory\Template\Template
      */
     private $templateFactory;

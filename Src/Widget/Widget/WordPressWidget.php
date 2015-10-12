@@ -66,7 +66,7 @@ class WordPressWidget extends \WP_Widget
         foreach ($sidebars as $sidebar => $widgets) {
             foreach ($widgets as $index => $widgetId) {
                 if (strpos($widgetId, $this->config['id']) === 0) {
-                    $template                   = ServiceLocator::getNew('Component', 'Template');
+                    $template                   = ServiceLocator::get('Factory', 'Template')->create();
                     $template($this->config['template']);
                     $template                   = $this->getParentModule()->objects($widgetId, $template);
                     $this->templates[$widgetId] = $template;

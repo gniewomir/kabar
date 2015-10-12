@@ -121,7 +121,7 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
     {
         $config           = $this->config();
         $id               = trim($id, '#');
-        $widget           = ServiceLocator::getNew('Component', 'Template');
+        $widget           = ServiceLocator::get('Factory', 'Template')->create();
         $widget($config['template']);
         $widget->widgetId = $id;
         foreach ($options as $name => $value) {

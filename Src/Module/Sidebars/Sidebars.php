@@ -1,31 +1,36 @@
 <?php
 /**
- * Module without any functionality, providing utility functions for other classes
+ * Sidebars module
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.17.0
  * @package    kabar
- * @subpackage Modules
+ * @subpackage module
+ * @since      2.17.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
 namespace kabar\Module\Sidebars;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
- * Sidebars module main class
+ * Register and render WordPress sidebars
  */
 final class Sidebars extends \kabar\Module\Module\Module
 {
+    /**
+     * Template factory
+     * @since 2.38.0
+     * @var \kabar\Factory\Template\Template
+     */
+    private $templateFactory;
 
     /**
-     * Config
+     * Config module
      * @var \kabar\Module\Config\Config
      */
     private $config;
 
     /**
-     * Cache
+     * Cache module
      * @var \kabar\Module\Cache\Cache
      */
     private $cache;
@@ -45,19 +50,31 @@ final class Sidebars extends \kabar\Module\Module\Module
     // INTERFACE
 
     /**
-     * Setup
+     * Setup sidebars module
+     * @param \kabar\Factory\Template\Template $templateFactory
+     * @param \kabar\Module\Config\Config      $config
+     * @param \kabar\Module\Cache\Cache        $cache
      */
     public function __construct(
+        \kabar\Factory\Template\Template $templateFactory,
         \kabar\Module\Config\Config $config,
         \kabar\Module\Cache\Cache $cache
     ) {
         $this->requireBeforeAction('after_setup_theme');
 
-        $this->config = $config;
-        $this->cache  = $cache;
+        $this->templateFactory = $templateFactory;
+        $this->config          = $config;
+        $this->cache           = $cache;
+
+        // if in admin - initialize cache cleaner
+        if (is_admin()) {
+            $this->cleaner = new Cleaner($this);
+        }
+
+        $moduleName = $this->getModuleName();
 
         $this->config->registerSection(
-            $this->getModuleName(),
+            $moduleName,
             array(
                 'sectionTitle'          => __('Sidebars', $this->getLibrarySlug()),
                 'sectionCapability'     => 'update_core',
@@ -70,7 +87,7 @@ final class Sidebars extends \kabar\Module\Module\Module
         );
 
         // unregister default widgets
-        if ($this->config->Sidebars->disableDefaultWidgets) {
+        if ($this->config->$moduleName->disableDefaultWidgets) {
             add_action('widgets_init', array($this, 'unregisterDefaultWidgets'), 11);
         }
         // Add widgetized pages sidebars and widgets
@@ -134,7 +151,7 @@ final class Sidebars extends \kabar\Module\Module\Module
     {
         ob_start();
         if (!dynamic_sidebar($id)) {
-            $template = ServiceLocator::getNew('Component', 'Template');
+            $template = $this->templateFactory->create();
             $template($this->getTemplatesDirectory().'/NoWidgets.php');
             $template->librarySlug = $this->getLibrarySlug();
             echo $template;
@@ -144,7 +161,7 @@ final class Sidebars extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Registers all added sidebars with WordPress.
-     * @access private
+     * @internal
      * @return void
      */
     public function registerSidebars()
@@ -156,15 +173,11 @@ final class Sidebars extends \kabar\Module\Module\Module
         foreach ($this->sidebars as $id => $arguments) {
             register_sidebar($arguments);
         }
-        // if in admin - initialize cache cleaner
-        if (is_admin()) {
-            $this->cleaner = new Cleaner($this);
-        }
     }
 
     /**
      * WordPress action. Unregister default widgets
-     * @access private
+     * @internal
      * @return void
      */
     public function unregisterDefaultWidgets()

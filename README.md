@@ -40,6 +40,11 @@ Development branch:
 
 # Changelog
 
+### 2.38.0
+
+#### Features
+* Template factory
+
 ### 2.37.3
 
 #### Features

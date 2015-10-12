@@ -155,7 +155,7 @@ class Repeater extends AbstractField
      */
     public function form($instance)
     {
-        $template = ServiceLocator::getNew('Component', 'Template');
+        $template = ServiceLocator::get('Factory', 'Template')->create();
         $template($this->getTemplatesDirectory().$this->getFieldType().self::TEMPLATE_EXTENSION);
         $template->fieldId   = $this->getWordPressFieldId();
         $template->fieldName = $this->getWordPressFieldName();

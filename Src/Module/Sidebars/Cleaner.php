@@ -1,19 +1,18 @@
 <?php
 /**
- * Sidebars cache cleaning
+ * Sidebars module cache cleaning
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.17.0
  * @package    kabar
- * @subpackage Modules
+ * @subpackage module
+ * @since      2.17.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
 namespace kabar\Module\Sidebars;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
- * Sidebars cache module main class
+ * Purge sidebars module cache if needed
  */
 final class Cleaner extends \kabar\Module\Module\Module
 {
@@ -34,6 +33,7 @@ final class Cleaner extends \kabar\Module\Module\Module
 
     /**
      * Hook to all actions and filters that should trigger sidebars cache purge
+     * @todo  Hook to category/tag/taxonomy creation/removal/update
      * @param \kabar\Module\Sidebars\Sidebars $sidebars
      */
     public function __construct(\kabar\Module\Sidebars\Sidebars $sidebars)
@@ -57,8 +57,8 @@ final class Cleaner extends \kabar\Module\Module\Module
     // INTERNAL
 
     /**
-     * WordPress filter. Grab widgets list
-     * @access private
+     * WordPress filter 'sidebars_widgets'. Grab widgets list
+     * @internal
      * @param  array $widgets
      * @return array
      */
@@ -69,8 +69,8 @@ final class Cleaner extends \kabar\Module\Module\Module
     }
 
     /**
-     * WordPress filter. Clear cache for sidebar containing this widget
-     * @access private
+     * WordPress filter 'widget_update_callback'. Clear cache for sidebar containing current widget
+     * @internal
      * @since  2.12.0
      * @param  array  $instance
      * @param  array  $newInstance
@@ -89,8 +89,8 @@ final class Cleaner extends \kabar\Module\Module\Module
     }
 
     /**
-     * WordPress action. Clear pages cache on post save/delete
-     * @access private
+     * WordPress action for 'save_post' and 'delete_post'. Clear pages cache on post save/delete
+     * @internal
      * @param  int $postId
      * @return void
      */
@@ -112,8 +112,8 @@ final class Cleaner extends \kabar\Module\Module\Module
     }
 
     /**
-     * WordPress action. Check if we need to clear sidebar cache after customizer update
-     * @access private
+     * WordPress action 'customize_save_after'. Check if we need to clear sidebar cache after customizer update
+     * @internal
      * @since  2.12.0
      * @param  \WP_Customize_Manager $object
      * @return void
