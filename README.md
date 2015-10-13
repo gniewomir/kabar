@@ -10,9 +10,9 @@ I will be happy seeing pull requests to development branch anyway. Coding standa
 
 Development branch:
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/?branch=develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gniewomir/kabar/?branch=develop)
 
-[![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/develop)
+[![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=master)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/develop)
 
 # Roadmap
 
@@ -42,8 +42,13 @@ Development branch:
 
 ### 2.50.0
 
+#### Done
 * AdminUI components (Taxonomy, User, Metabox etc.)
 * Form, Fields and Storage object moved to utility
+* getForId(), saveForId(), searchStorage() methods added to form fields
+* Storage objects updated() method  now allows setting updated value
+
+#### In progress
 * Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions
 * Dice Dependancy Injection container - at least for modules
 * Package definition for composer

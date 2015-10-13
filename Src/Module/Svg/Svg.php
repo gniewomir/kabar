@@ -45,7 +45,7 @@ class Svg extends \kabar\Module\Module\Module implements \enshrined\svgSanitize\
 
     /**
      * WordPress filter 'upload_mimes'.
-     * @access private
+     * @internal
      * @param  array $mimes
      * @return array
      */

@@ -160,7 +160,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Refresh config after site settings update
-     * @access private
+     * @internal
      * @since  2.12.20
      * @param  bool|\WP_Customize_Manager $object
      * @return void
@@ -180,7 +180,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Register our settings in customizer
-     * @access private
+     * @internal
      * @param  \WP_Customize_Manager $wpCustomize
      * @return void
      */

@@ -144,7 +144,7 @@ final class Sidebars extends \kabar\Module\Module\Module
 
     /**
      * Callback. Get widget area
-     * @access private
+     * @internal
      * @return string
      */
     public function getSidebar($id)

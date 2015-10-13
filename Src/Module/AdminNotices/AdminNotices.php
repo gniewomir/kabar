@@ -110,7 +110,7 @@ class AdminNotices extends \kabar\Module\Module\Module
 
     /**
      * WordPress action. Show admin notices.
-     * @access private
+     * @internal
      * @return void
      */
     public function adminNotices()

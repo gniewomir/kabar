@@ -11,8 +11,6 @@
 
 namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Field abstraction and utility functions
  */
