@@ -19,20 +19,20 @@ class HTTPPost implements InterfaceStorage
      * Id
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * Prefix for keys
      * @var string
      */
-    private $prefix;
+    protected $prefix;
 
     /**
      * Updated field values
      * @since 2.50.0
      * @var array
      */
-    private $updated = array();
+    protected $updated = array();
 
     // INTERFACE
 

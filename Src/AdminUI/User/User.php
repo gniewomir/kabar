@@ -36,6 +36,12 @@ final class User extends \kabar\Module\Module\Module
      */
     private $form;
 
+    /**
+     * Form position
+     * @var string
+     */
+    private $position;
+
     // INTERFACE
 
     /**
@@ -47,7 +53,7 @@ final class User extends \kabar\Module\Module\Module
     public function __construct($id, $title = '', $postion = 'bottom')
     {
         $this->id       = $id;
-        $this->tittle   = $title;
+        $this->title    = $title;
         $this->position = $postion;
 
         $storage                     = new \kabar\Utility\Storage\UserMeta();
@@ -114,13 +120,15 @@ final class User extends \kabar\Module\Module\Module
      */
     public function enqueueAssets()
     {
-        wp_enqueue_script(
-            $this->getModuleSlug(),
-            $this->getAssetsUri().'js/UserProfile.js',
-            array(),
-            $this->getLibraryVersion(),
-            self::IN_FOOTER
-        );
+        if ($this->position != 'bottom') {
+            wp_enqueue_script(
+                $this->getModuleSlug(),
+                $this->getAssetsUri().'js/UserProfile.js',
+                array(),
+                $this->getLibraryVersion(),
+                self::IN_FOOTER
+            );
+        }
     }
 
     /**
