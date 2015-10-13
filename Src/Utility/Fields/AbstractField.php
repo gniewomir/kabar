@@ -25,14 +25,14 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
     protected $storage;
 
     /**
-     * Returns field value
+     * Make sure that copy won't interfere with source object
+     * @since  2.37.3
+     * @return void
      */
-    abstract public function get();
-
-    /**
-     * Saves field value
-     */
-    abstract public function save();
+    public function __clone()
+    {
+        $this->storage = clone $this->storage;
+    }
 
     /**
      * Checks if field has storage object assigned
@@ -45,7 +45,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
     }
 
     /**
-     * Binds storage object to this field
+     * Bind storage object to this field
      * @param \kabar\Utility\Storage\InterfaceStorage $storage
      */
     public function setStorage(\kabar\Utility\Storage\InterfaceStorage $storage)
@@ -64,12 +64,60 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
     }
 
     /**
-     * Make sure that copy won't interfere with source object
-     * @since  2.37.3
-     * @return void
+     * Search field storage for provided value, and return id's array
+     * @since  2.50.0
+     * @return array
      */
-    public function __clone()
+    public function searchStorage($value)
     {
-        $this->storage = clone $this->storage;
+        return $this->storage->search($this->getSlug(), $value);
     }
+
+    /**
+     * Get field value for particular id
+     * @since  2.50.0
+     * @param  integer $id
+     * @return mixed
+     */
+    public function getForId($id)
+    {
+        if (!$this->hasStorage()) {
+            trigger_error('Field don\'t have storage object.', E_USER_ERROR);
+        }
+        $backup        = $this->storage;
+        $this->storage = clone $backup;
+        $this->storage->setId($id);
+        $value         = $this->get();
+        $this->storage = $backup;
+        return $value;
+    }
+
+    /**
+     * Get field value for particular id
+     * @since  2.50.0
+     * @param  integer $id
+     * @param  mixed   $value
+     */
+    public function saveForId($id, $value)
+    {
+        if (!$this->hasStorage()) {
+            trigger_error('Field don\'t have storage object.', E_USER_ERROR);
+        }
+        $backup        = $this->storage;
+        $this->storage = clone $backup;
+        $this->storage->setId($id);
+        $this->storage->updated($this->getSlug(), $value);
+        $this->save();
+        $this->storage = $backup;
+    }
+
+    /**
+     * Returns field value
+     */
+    abstract public function get();
+
+    /**
+     * Saves field value
+     */
+    abstract public function save();
 }

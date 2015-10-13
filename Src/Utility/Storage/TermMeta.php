@@ -13,24 +13,12 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storing data in term meta
  */
-final class TermMeta implements InterfaceStorage
+final class TermMeta extends HTTPPost implements InterfaceStorage
 {
     /**
      * @see https://codex.wordpress.org/Function_Reference/get_metadata
      */
     const SINGLE = true;
-
-    /**
-     * Id
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * Prefix for keys
-     * @var string
-     */
-    private $prefix;
 
     // INTERFACE
 
@@ -55,34 +43,6 @@ final class TermMeta implements InterfaceStorage
     }
 
     /**
-     * Sets prefix used for storing values
-     * @param string $prefix
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-    }
-
-    /**
-     * Returns prefixed field key
-     * @return string
-     */
-    public function getPrefixedKey($key)
-    {
-        return $this->prefix.$key;
-    }
-
-    /**
-     * Returns updated value
-     * @param  string $key
-     * @return mixed
-     */
-    public function updated($key)
-    {
-        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
-    }
-
-    /**
      * Save value to storage
      * @param  string $key
      * @param  mixed  $value
@@ -91,7 +51,7 @@ final class TermMeta implements InterfaceStorage
     public function store($key, $value)
     {
         // available since WP 4.4 or implemented by plugin
-        update_term_meta($this->getTermId(), $this->getPrefixedKey($key), $value);
+        update_term_meta($this->getTermId(), $this->getStorageKey($key), $value);
     }
 
     /**
@@ -102,7 +62,7 @@ final class TermMeta implements InterfaceStorage
     public function retrieve($key)
     {
         // available since WP 4.4 or implemented by plugin
-        return get_term_meta($this->getTermId(), $this->getPrefixedKey($key), self::SINGLE);
+        return get_term_meta($this->getTermId(), $this->getStorageKey($key), self::SINGLE);
     }
 
     /**
@@ -114,7 +74,7 @@ final class TermMeta implements InterfaceStorage
     public function search($key, $value)
     {
         $args = array(
-            'meta_key'   => $this->getPrefixedKey($key),
+            'meta_key'   => $this->getStorageKey($key),
             'meta_value' => $value,
             'fields'     => 'ID'
         );
@@ -135,9 +95,6 @@ final class TermMeta implements InterfaceStorage
         if ($this->id) {
             return $this->id;
         }
-        if (defined(WP_DEBUG) && WP_DEBUG) {
-            trigger_error('Cannot determine term ID.', E_USER_WARNING);
-        }
-        return false;
+        trigger_error('Cannot determine term ID.', E_USER_ERROR);
     }
 }

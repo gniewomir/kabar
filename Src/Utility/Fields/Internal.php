@@ -60,6 +60,8 @@ class Internal extends AbstractField
      */
     public function save()
     {
-        return $this->get();
+        $value = $this->storage->updated($this->getSlug());
+        $this->storage->store($this->getSlug(), $value);
+        return $value;
     }
 }

@@ -7,9 +7,8 @@
  * @package    kabar
  * @subpackage Fields
  */
-namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
+namespace kabar\Utility\Fields;
 
 /**
  * Color picker field class

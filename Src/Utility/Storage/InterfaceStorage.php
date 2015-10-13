@@ -37,11 +37,20 @@ interface InterfaceStorage
     public function getPrefixedKey($key);
 
     /**
-     * Returns updated value
+     * Returns storage key
+     * @since  2.50.0
      * @param  string $key
+     * @return string
+     */
+    public function getStorageKey($key);
+
+    /**
+     * Returns updated value and allows setting value for particular key
+     * @param  string $key
+     * @param  mixed  $value
      * @return mixed
      */
-    public function updated($key);
+    public function updated($key, $value = null);
 
     /**
      * Saves value in storage

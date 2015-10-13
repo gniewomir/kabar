@@ -13,7 +13,7 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storing data in $_POST array
  */
-final class HTTPPost implements InterfaceStorage
+class HTTPPost implements InterfaceStorage
 {
     /**
      * Id
@@ -26,6 +26,13 @@ final class HTTPPost implements InterfaceStorage
      * @var string
      */
     private $prefix;
+
+    /**
+     * Updated field values
+     * @since 2.50.0
+     * @var array
+     */
+    private $updated = array();
 
     // INTERFACE
 
@@ -49,8 +56,7 @@ final class HTTPPost implements InterfaceStorage
      */
     public function setId($id)
     {
-        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
-        $this->id = $id;
+        trigger_error('This storage method don\'t support id\'s', E_USER_ERROR);
     }
 
     /**
@@ -72,12 +78,32 @@ final class HTTPPost implements InterfaceStorage
     }
 
     /**
+     * Returns storage key
+     * @since  2.50.0
+     * @param  string $key
+     * @return string
+     */
+    public function getStorageKey($key)
+    {
+        return $this->getPrefixedKey($key);
+    }
+
+    /**
      * Returns updated value
      * @param  string $key
+     * @param  mixed  $value
      * @return mixed
      */
-    public function updated($key)
+    public function updated($key, $value = null)
     {
+        if (!is_null($value)) {
+            $this->updated[$key] = $value;
+        }
+
+        if (isset($this->updated[$key])) {
+            return $this->updated[$key];
+        }
+
         return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
     }
 
@@ -111,11 +137,9 @@ final class HTTPPost implements InterfaceStorage
      * @since  2.27.7
      * @param  string  $key
      * @param  mixed   $value
-     * @return integer
      */
     public function search($key, $value)
     {
-        trigger_error('This storage method don\'t support id\'s', E_USER_WARNING);
-        return 0;
+        trigger_error('This storage method don\'t support id\'s', E_USER_ERROR);
     }
 }

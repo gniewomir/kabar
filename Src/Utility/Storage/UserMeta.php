@@ -13,25 +13,12 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storing data in user meta
  */
-final class UserMeta implements InterfaceStorage
+final class UserMeta extends HTTPPost implements InterfaceStorage
 {
     /**
      * @see https://codex.wordpress.org/Function_Reference/get_metadata
      */
     const SINGLE = true;
-
-    /**
-     * Id
-     * @since 2.27.7
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * Prefix for keys
-     * @var string
-     */
-    private $prefix;
 
     // INTERFACE
 
@@ -58,34 +45,6 @@ final class UserMeta implements InterfaceStorage
     }
 
     /**
-     * Sets prefix used for storing values
-     * @param string $prefix
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-    }
-
-    /**
-     * Returns prefixed field key
-     * @return string
-     */
-    public function getPrefixedKey($key)
-    {
-        return $this->prefix.$key;
-    }
-
-    /**
-     * Returns updated value
-     * @param  string $key
-     * @return mixed
-     */
-    public function updated($key)
-    {
-        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
-    }
-
-    /**
      * Save value to storage
      * @param  string $key
      * @param  mixed  $value
@@ -93,7 +52,7 @@ final class UserMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_metadata('user', $this->getUserId(), $this->getPrefixedKey($key), $value);
+        update_metadata('user', $this->getUserId(), $this->getStorageKey($key), $value);
     }
 
     /**
@@ -103,7 +62,7 @@ final class UserMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_metadata('user', $this->getUserId(), $this->getPrefixedKey($key), self::SINGLE);
+        return get_metadata('user', $this->getUserId(), $this->getStorageKey($key), self::SINGLE);
     }
 
     /**
@@ -116,7 +75,7 @@ final class UserMeta implements InterfaceStorage
     public function search($key, $value)
     {
         $args = array(
-            'meta_key'   => $this->getPrefixedKey($key),
+            'meta_key'   => $this->getStorageKey($key),
             'meta_value' => $value,
             'fields'     => 'ID'
         );
@@ -142,9 +101,6 @@ final class UserMeta implements InterfaceStorage
         if ($user_id && defined('IS_PROFILE_PAGE')) {
             return (integer) $user_id;
         }
-        if (defined(WP_DEBUG) && WP_DEBUG) {
-            trigger_error('Cannot determine user ID.', E_USER_WARNING);
-        }
-        return false;
+        trigger_error('Cannot determine user ID.', E_USER_ERROR);
     }
 }

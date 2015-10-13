@@ -13,7 +13,7 @@ namespace kabar\Utility\Storage;
 /**
  * Class for storing data in post meta
  */
-final class PostMeta implements InterfaceStorage
+final class PostMeta extends HTTPPost implements InterfaceStorage
 {
     /**
      * @see https://codex.wordpress.org/Function_Reference/get_post_meta
@@ -24,19 +24,6 @@ final class PostMeta implements InterfaceStorage
      * @see https://codex.wordpress.org/Function_Reference/get_post_meta
      */
     const HIDE_CUSTOM_FIELD = '_';
-
-    /**
-     * Id
-     * @since 2.27.7
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * Prefix for keys
-     * @var string
-     */
-    private $prefix;
 
     // INTERFACE
 
@@ -63,32 +50,14 @@ final class PostMeta implements InterfaceStorage
     }
 
     /**
-     * Sets prefix used for storing values
-     * @param string $prefix
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-    }
-
-    /**
-     * Returns prefixed key
-     * @param string $key
+     * Returns storage key
+     * @since  2.50.0
+     * @param  string $key
      * @return string
      */
-    public function getPrefixedKey($key)
+    public function getStorageKey($key)
     {
-        return $this->prefix.$key;
-    }
-
-    /**
-     * Returns updated value
-     * @param  string $key
-     * @return mixed
-     */
-    public function updated($key)
-    {
-        return isset($_POST[$this->getPrefixedKey($key)]) ? $_POST[$this->getPrefixedKey($key)] : null;
+        return self::HIDE_CUSTOM_FIELD.$this->getPrefixedKey($key);
     }
 
     /**
@@ -99,7 +68,7 @@ final class PostMeta implements InterfaceStorage
      */
     public function store($key, $value)
     {
-        update_metadata('post', $this->getPostId(), $this->getStorageId($key), $value);
+        update_metadata('post', $this->getPostId(), $this->getStorageKey($key), $value);
     }
 
     /**
@@ -110,7 +79,7 @@ final class PostMeta implements InterfaceStorage
     */
     public function retrieve($key)
     {
-        return get_metadata('post', $this->getPostId(), $this->getStorageId($key), self::SINGLE);
+        return get_metadata('post', $this->getPostId(), $this->getStorageKey($key), self::SINGLE);
     }
 
     /**
@@ -123,7 +92,7 @@ final class PostMeta implements InterfaceStorage
     public function search($key, $value)
     {
         $args = array(
-            'meta_key'   => $this->getStorageId($key),
+            'meta_key'   => $this->getStorageKey($key),
             'meta_value' => $value,
             'fields'     => 'ID'
         );
@@ -134,17 +103,6 @@ final class PostMeta implements InterfaceStorage
     }
 
     // INTERNAL
-
-    /**
-     * Returns storage id
-     * @since  2.25.1
-     * @param  string $key
-     * @return string
-     */
-    private function getStorageId($key)
-    {
-        return self::HIDE_CUSTOM_FIELD.$this->prefix.$key;
-    }
 
     /**
      * Get post id
@@ -160,9 +118,6 @@ final class PostMeta implements InterfaceStorage
         if ($post instanceof \WP_Post) {
             return $post->ID;
         }
-        if (defined(WP_DEBUG) && WP_DEBUG) {
-            trigger_error('Cannot determine post ID.', E_USER_WARNING);
-        }
-        return false;
+        trigger_error('Cannot determine post ID.', E_USER_ERROR);
     }
 }
