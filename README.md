@@ -47,7 +47,7 @@ Development branch:
 * Form, Fields and Storage object moved to utility
 * getForId(), saveForId(), searchStorage() methods added to form fields
 * Storage objects updated() method  now allows setting updated value
-* Adjust AdminUI components to have more sonsitent API when applicable
+* Adjust AdminUI components to have more consitent API when applicable
 
 #### In progress
 * Add "Table" templates for all fields
