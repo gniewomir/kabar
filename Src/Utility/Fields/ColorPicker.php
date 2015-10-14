@@ -61,6 +61,8 @@ class ColorPicker extends AbstractField
         $this->slug     = $slug;
         $this->title    = $title;
         $this->default  = $default;
+        $this->help     = $help;
+
         add_action('admin_enqueue_scripts', array($this, 'addScripts'));
     }
 
