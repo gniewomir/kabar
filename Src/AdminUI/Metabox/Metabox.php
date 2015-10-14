@@ -50,24 +50,6 @@ final class Metabox extends \kabar\Module\Module\Module
     private $priority;
 
     /**
-     * Template object for metabox form
-     * @var \kabar\Utility\Template\Template
-     */
-    private $template;
-
-    /**
-     * Storage object for metabox form fields
-     * @var \kabar\Utility\Storage\InterfaceStorage
-     */
-    private $storage;
-
-    /**
-     * Fields templates subdirectory name
-     * @var string
-     */
-    private $fieldsTemplateDir;
-
-    /**
      * Form for this metabox
      * @var \kabar\Utility\Form\Form
      */
@@ -185,11 +167,6 @@ final class Metabox extends \kabar\Module\Module\Module
     {
         // Bail if autosave or post revision
         if (wp_is_post_autosave($postId) || wp_is_post_revision($postId)) {
-            return;
-        }
-
-        // If there is no nonce or it is invalid we do nothing
-        if (!$this->form->sent()) {
             return;
         }
 
