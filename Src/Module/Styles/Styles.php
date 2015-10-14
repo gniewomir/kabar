@@ -4,7 +4,7 @@
  *
  * @package    kabar
  * @subpackage Modules
- * @since      2.0.0
+ * @since      0.0.0
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
@@ -31,7 +31,7 @@ final class Styles extends \kabar\Module\Module\Module
 
     /**
      * Template factory
-     * @since 2.38.0
+     * @since 0.38.0
      * @var \kabar\Factory\Template\Template
      */
     private $templateFactory;
@@ -101,7 +101,7 @@ final class Styles extends \kabar\Module\Module\Module
 
     /**
      * Clear styles cache
-     * @since  2.12.9
+     * @since  0.12.9
      * @return void
      */
     public function clearCache()
@@ -136,7 +136,7 @@ final class Styles extends \kabar\Module\Module\Module
     /**
      * Deprecated functionality
      * @deprecated deprecated since version 2.38.0
-     * @since      2.38.0
+     * @since      0.38.0
      * @return     void
      */
     private function deprecated()

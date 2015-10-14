@@ -3,7 +3,7 @@
  * Post meta storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -29,7 +29,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Setup storage object
-     * @since 2.31.0
+     * @since 0.31.0
      * @param string       $prefix
      * @param integer|null $id
      */
@@ -41,7 +41,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.27.7
+     * @since 0.27.7
      * @param integer $id
      */
     public function setId($id)
@@ -51,7 +51,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Returns storage key
-     * @since  2.50.0
+     * @since  0.50.0
      * @param  string $key
      * @return string
      */
@@ -84,7 +84,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Search for key/value pair and return array of id's
-     * @since  2.27.7
+     * @since  0.27.7
      * @param  string  $key
      * @param  mixed   $value
      * @return integer
@@ -106,7 +106,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Get post id
-     * @since  2.25.1
+     * @since  0.25.1
      * @return integer
      */
     private function getPostId()

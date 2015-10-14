@@ -3,7 +3,7 @@
  * Providing admin interface for widgetized pages
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.17.0
+ * @since      0.17.0
  * @package    kabar
  * @subpackage modules
  */

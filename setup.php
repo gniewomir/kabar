@@ -8,14 +8,14 @@
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             2.16.0
+ * @since             0.16.0
  * @package           kabar
  *
  * @wordpress-plugin
  * Plugin Name:       Kabar library
  * Plugin URI:        https://github.com/gniewomir/kabar
  * Description:       Library of component and modules used to speed up WordPress sites development
- * Version:           2.38.0
+ * Version:           0.50.0
  * Author:            Gniewomir Świechowski
  * Author URI:        http://cv.enraged.pl
  * License:           GNU GENERAL PUBLIC LICENSE Version 3

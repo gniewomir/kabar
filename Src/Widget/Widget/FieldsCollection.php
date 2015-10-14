@@ -11,7 +11,7 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @see        \kabar\Widget\Widget\WordPressWidget
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage Widgets
  */
@@ -58,7 +58,7 @@ class FieldsCollection
 
     /**
      * Add field to collection
-     * @since 2.0.0
+     * @since 0.0.0
      * @param \kabar\Widget\Widget\Fields\AbstractField $field
      */
     public function addField(\kabar\Widget\Widget\Fields\AbstractField $field)
@@ -70,7 +70,7 @@ class FieldsCollection
 
     /**
      * Add fields to collection
-     * @since 2.0.0
+     * @since 0.0.0
      * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      */
     public function addFields()
@@ -96,7 +96,7 @@ class FieldsCollection
 
     /**
      * Add field after field with specified id
-     * @since 2.0.0
+     * @since 0.0.0
      * @param string                                    $fieldId Existing field ID
      * @param \kabar\Widget\Widget\Fields\AbstractField $field   Field object
      * @return void
@@ -121,7 +121,7 @@ class FieldsCollection
 
     /**
      * Add fields after field with specified id
-     * @since 2.0.0
+     * @since 0.0.0
      * @param string                                    $fieldId    Existing field ID
      * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      * @return void
@@ -151,7 +151,7 @@ class FieldsCollection
 
     /**
      * Add field before field with specified id
-     * @since 2.0.0
+     * @since 0.0.0
      * @param string                                    $fieldId Existing field ID
      * @param \kabar\Widget\Widget\Fields\AbstractField $field   Field object
      * @return void
@@ -188,7 +188,7 @@ class FieldsCollection
 
     /**
      * Add fields before field with specified id
-     * @since 2.0.0
+     * @since 0.0.0
      * @param string                                    $fieldId    Existing field ID
      * @param \kabar\Widget\Widget\Fields\AbstractField ...$field
      */

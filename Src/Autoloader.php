@@ -8,7 +8,7 @@ namespace kabar;
  * Provides autoloading functionality for kabar library API
  *
  * @author  Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since   1.0.0
+ * @since   0.0.0
  * @package kabar
  */
 final class Autoloader
@@ -18,21 +18,21 @@ final class Autoloader
 
     /**
      * Registered namespaces
-     * @since 2.16.0
+     * @since 0.16.0
      * @var array
      */
     private $namespaces = array();
 
     /**
      * Already known class paths
-     * @since 2.16.0
+     * @since 0.16.0
      * @var array
      */
     private $classPaths = array();
 
     /**
      * Class names
-     * @since 2.16.0
+     * @since 0.16.0
      * @var array
      */
     private $classNames = array();
@@ -54,7 +54,7 @@ final class Autoloader
 
     /**
      * Register namespace and it's path, as a extension for the default set of modules and components
-     * @since  2.16.0
+     * @since  0.16.0
      * @param  string $namespace
      * @param  string $path
      * @return void
@@ -95,7 +95,7 @@ final class Autoloader
 
     /**
      * Returns module class name by his name
-     * @since  2.16.0
+     * @since  0.16.0
      * @param  string $name
      * @param  string $type
      * @return string
@@ -126,7 +126,7 @@ final class Autoloader
 
     /**
      * Returns module directory
-     * @since  2.16.0
+     * @since  0.16.0
      * @param  string $name
      * @param  string $type
      * @return string
@@ -143,7 +143,7 @@ final class Autoloader
 
     /**
      * Get class path
-     * @since  2.16.0
+     * @since  0.16.0
      * @param  string $class
      * @return string
      */

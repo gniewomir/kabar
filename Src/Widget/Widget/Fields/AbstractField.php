@@ -10,7 +10,7 @@ use \kabar\ServiceLocator as ServiceLocator;
  * @internal
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage WidgetFields
  */
@@ -40,21 +40,21 @@ abstract class AbstractField
 
     /**
      * Templates directory
-     * @since 2.16.0
+     * @since 0.16.0
      * @var string
      */
     protected $templatesDirectory;
 
     /**
      * Assets uri
-     * @since 2.16.0
+     * @since 0.16.0
      * @var string
      */
     protected $assetsUri;
 
     /**
      * Binds field instance to WordPress widget
-     * @since 2.0.0
+     * @since 0.0.0
      * @param WP_Widget $widget  WordPress widget instance
      */
     public function bindToWidget(\WP_Widget $widget)

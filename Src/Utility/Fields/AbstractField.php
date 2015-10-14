@@ -3,7 +3,7 @@
  * Base class for fields
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage fields
  * @see        https://codex.wordpress.org/Function_Reference/add_meta_box
@@ -24,7 +24,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Make sure that copy won't interfere with source object
-     * @since  2.37.3
+     * @since  0.37.3
      * @return void
      */
     public function __clone()
@@ -34,7 +34,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Checks if field has storage object assigned
-     * @since  2.31.0
+     * @since  0.31.0
      * @return bool
      */
     public function hasStorage()
@@ -53,7 +53,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Returns field storage object
-     * @since 2.37.2
+     * @since 0.37.2
      * @return \kabar\Utility\Storage\InterfaceStorage $storage
      */
     public function getStorage()
@@ -63,7 +63,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Search field storage for provided value, and return id's array
-     * @since  2.50.0
+     * @since  0.50.0
      * @return array
      */
     public function searchStorage($value)
@@ -73,7 +73,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Get field value for particular id
-     * @since  2.50.0
+     * @since  0.50.0
      * @param  integer $id
      * @return mixed
      */
@@ -92,7 +92,7 @@ abstract class AbstractField extends AbstractFormPart implements InterfaceField
 
     /**
      * Get field value for particular id
-     * @since  2.50.0
+     * @since  0.50.0
      * @param  integer $id
      * @param  mixed   $value
      */

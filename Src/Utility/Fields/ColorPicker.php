@@ -3,7 +3,7 @@
  * ColorPicker field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage fields
  */
@@ -44,7 +44,7 @@ class ColorPicker extends AbstractField
 
     /**
      * Help text
-     * @since 2.34.0
+     * @since 0.34.0
      * @var   string
      */
     protected $help;

@@ -3,7 +3,7 @@
  * Show other fields field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.24.4
+ * @since      0.24.4
  * @package    kabar
  * @subpackage fields
  */

@@ -3,7 +3,7 @@
  * Scripts module
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.18.0
+ * @since      0.18.0
  * @package    kabar
  * @subpackage Modules
  */
@@ -32,7 +32,7 @@ class Scripts extends \kabar\Module\Module\Module
 
     /**
      * Template factory
-     * @since 2.38.0
+     * @since 0.38.0
      * @var \kabar\Factory\Template\Template
      */
     private $templateFactory;
@@ -104,7 +104,7 @@ class Scripts extends \kabar\Module\Module\Module
 
     /**
      * Clear styles cache
-     * @since  2.38.0
+     * @since  0.38.0
      * @return void
      */
     public function clearCache()

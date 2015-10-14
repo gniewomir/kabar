@@ -3,7 +3,7 @@
  * Slider field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage fields
  */

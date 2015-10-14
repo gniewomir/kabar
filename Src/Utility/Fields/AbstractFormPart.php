@@ -3,7 +3,7 @@
  * Base class for form parts that are not typical fields
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage fields
  * @see        https://codex.wordpress.org/Function_Reference/add_meta_box
@@ -26,14 +26,14 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Field type
-     * @since 2.24.4
+     * @since 0.24.4
      * @var string
      */
     private $fieldType;
 
     /**
      * Field template directory
-     * @since 2.24.4
+     * @since 0.24.4
      * @var string
      */
     private $templateDirectory;
@@ -46,7 +46,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Library assets uri
-     * @since 2.26.4
+     * @since 0.26.4
      * @var   string
      */
     protected $libraryAssetsUri;
@@ -122,7 +122,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Get library assets uri
-     * @since  2.26.4
+     * @since  0.26.4
      * @return string
      */
     protected function getLibraryAssetsUri()
@@ -136,7 +136,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Set field template directory
-     * @since  2.24.4
+     * @since  0.24.4
      * @param  string $templateDirectory
      * @return void
      */
@@ -147,7 +147,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
 
     /**
      * Get field template
-     * @since  2.24.4
+     * @since  0.24.4
      * @return \kabar\Utility\Template\Template
      */
     protected function getTemplate()

@@ -3,7 +3,7 @@
  * HTTPPost storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -29,7 +29,7 @@ class HTTPPost implements InterfaceStorage
 
     /**
      * Updated field values
-     * @since 2.50.0
+     * @since 0.50.0
      * @var array
      */
     protected $updated = array();
@@ -38,7 +38,7 @@ class HTTPPost implements InterfaceStorage
 
     /**
      * Setup storage object
-     * @since 2.31.0
+     * @since 0.31.0
      * @param string       $prefix
      */
     public function __construct($prefix = '')
@@ -51,7 +51,7 @@ class HTTPPost implements InterfaceStorage
      *
      * Does nothing in HTTPPost storage
      *
-     * @since 2.27.7
+     * @since 0.27.7
      * @param integer $id
      */
     public function setId($id)
@@ -79,7 +79,7 @@ class HTTPPost implements InterfaceStorage
 
     /**
      * Returns storage key
-     * @since  2.50.0
+     * @since  0.50.0
      * @param  string $key
      * @return string
      */
@@ -134,7 +134,7 @@ class HTTPPost implements InterfaceStorage
      * Stub. POST data are not associated with any id's,
      * so we are returning empty array every time
      *
-     * @since  2.27.7
+     * @since  0.27.7
      * @param  string  $key
      * @param  mixed   $value
      */

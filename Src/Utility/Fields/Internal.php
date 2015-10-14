@@ -6,7 +6,7 @@
  * available on front end - in the same context.
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.29.1
+ * @since      0.29.1
  * @package    kabar
  * @subpackage fields
  */

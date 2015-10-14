@@ -3,7 +3,7 @@
  * Term meta storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.33.0
+ * @since      0.33.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */

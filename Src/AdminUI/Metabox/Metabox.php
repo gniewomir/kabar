@@ -4,7 +4,7 @@
  *
  * @package    kabar
  * @subpackage component
- * @since      2.0.0
+ * @since      0.0.0
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
@@ -99,7 +99,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Get component/form id
-     * @since  2.39.0
+     * @since  0.39.0
      * @return string
      */
     public function getId()
@@ -109,7 +109,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Returns metabox form
-     * @since  2.24.4
+     * @since  0.24.4
      * @return \kabar\Utility\Form\Form
      */
     public function getForm()
@@ -119,7 +119,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
     /**
      * Return metabox setting for particular post
-     * @since  2.24.4
+     * @since  0.24.4
      * @param  string      $setting
      * @param  integer     $postId
      * @return string|null

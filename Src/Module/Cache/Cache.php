@@ -4,7 +4,7 @@
  *
  * @package    kabar
  * @subpackage module
- * @since      2.12.0
+ * @since      0.12.0
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
@@ -88,7 +88,7 @@ class Cache extends \kabar\Module\Module\Module
 
     /**
      * Remove cached data - all or of prticular type
-     * @since  2.12.9
+     * @since  0.12.9
      * @param  string $type
      * @return void
      */

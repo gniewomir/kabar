@@ -4,7 +4,7 @@
  *
  * @package    kabar
  * @subpackage module
- * @since      2.17.0
+ * @since      0.17.0
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
@@ -71,7 +71,7 @@ final class Cleaner extends \kabar\Module\Module\Module
     /**
      * WordPress filter 'widget_update_callback'. Clear cache for sidebar containing current widget
      * @internal
-     * @since  2.12.0
+     * @since  0.12.0
      * @param  array  $instance
      * @param  array  $newInstance
      * @param  array  $oldInstance
@@ -114,7 +114,7 @@ final class Cleaner extends \kabar\Module\Module\Module
     /**
      * WordPress action 'customize_save_after'. Check if we need to clear sidebar cache after customizer update
      * @internal
-     * @since  2.12.0
+     * @since  0.12.0
      * @param  \WP_Customize_Manager $object
      * @return void
      */
@@ -150,7 +150,7 @@ final class Cleaner extends \kabar\Module\Module\Module
 
     /**
      * Find in which sidebar this particular widget id is
-     * @since  2.12.0
+     * @since  0.12.0
      * @param  string $widgetId
      * @return string
      */

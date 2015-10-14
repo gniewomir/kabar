@@ -3,7 +3,7 @@
  * Select widget field.
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage WidgetFields
  */
@@ -30,7 +30,7 @@ class TaxonomyTermSelect extends AbstractField
 
     /**
      * Taxonomy to fetch terms from
-     * @since 2.0.0
+     * @since 0.0.0
      * @var array
      */
     protected $taxonomy;
@@ -58,7 +58,7 @@ class TaxonomyTermSelect extends AbstractField
 
     /**
      * Returns taxonomy terms as options array
-     * @since  2.0.0
+     * @since  0.0.0
      * @return array
      */
     protected function getTerms()

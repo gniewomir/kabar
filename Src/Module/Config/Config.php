@@ -3,7 +3,7 @@
  * Site config module
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.10.0
+ * @since      0.10.0
  * @package    kabar
  * @subpackage Modules
  */
@@ -32,14 +32,14 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Modules configuration
-     * @since 2.17.3
+     * @since 0.17.3
      * @var array
      */
     private $modules;
 
     /**
      * Parsed config
-     * @since 2.11.0
+     * @since 0.11.0
      * @var \stdClass
      */
     private $parsedConfig;
@@ -61,7 +61,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Setup customization screen
-     * @since 2.11.0
+     * @since 0.11.0
      */
     public function __construct(\kabar\Module\Cache\Cache $cache)
     {
@@ -87,7 +87,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Register config section
-     * @since  2.17.3
+     * @since  0.17.3
      * @param  string $sectionName
      * @param  array  $sectionSettings
      * @return void
@@ -136,7 +136,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Create configuration section object
-     * @since  2.11.0
+     * @since  0.11.0
      * @param  string $sectionName
      * @param  array  $sectionSettings
      * @return \stdClass
@@ -161,7 +161,7 @@ class Config extends \kabar\Module\Module\Module
     /**
      * WordPress action. Refresh config after site settings update
      * @internal
-     * @since  2.12.20
+     * @since  0.12.20
      * @param  bool|\WP_Customize_Manager $object
      * @return void
      */
@@ -225,7 +225,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Get setting
-     * @since  2.11.0
+     * @since  0.11.0
      * @param  string $sectionName
      * @param  string $settingName
      * @param  mixed $default
@@ -238,7 +238,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Get name of the setting
-     * @since  2.11.0
+     * @since  0.11.0
      * @param  string $sectionName
      * @param  string $settingName
      * @return string
@@ -327,7 +327,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Check arguments for choices for select fields or fetch them if applicable
-     * @since 2.32.1
+     * @since 0.32.1
      * @param  array $fieldSettings
      * @param  array $arguments
      * @return array
@@ -345,7 +345,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Chceck if provided array is module callback
-     * @since  2.11.0
+     * @since  0.11.0
      * @param  array  $array
      * @return boolean
      */
@@ -361,7 +361,7 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Run module callback and return result
-     * @since  2.11.0
+     * @since  0.11.0
      * @param  array $callback
      * @return array
      */

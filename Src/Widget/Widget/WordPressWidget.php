@@ -3,7 +3,7 @@
  * WordPress widget class child, that is ancestor for all kabar widgets providing them with acces to FieldsCollection API.
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage widgets
  */

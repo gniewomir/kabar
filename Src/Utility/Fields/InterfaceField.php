@@ -6,7 +6,7 @@ namespace kabar\Utility\Fields;
  * Interface for fields
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage fields
  */
@@ -36,7 +36,7 @@ interface InterfaceField
 
     /**
      * Checks if field has storage object assigned
-     * @since  2.31.0
+     * @since  0.31.0
      * @return bool
      */
     public function hasStorage();

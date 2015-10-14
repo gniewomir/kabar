@@ -3,7 +3,7 @@
  * Storage (strategy) interface
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -24,7 +24,7 @@ interface InterfaceStorage
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.27.7
+     * @since 0.27.7
      * @param integer $id
      */
     public function setId($id);
@@ -38,7 +38,7 @@ interface InterfaceStorage
 
     /**
      * Returns storage key
-     * @since  2.50.0
+     * @since  0.50.0
      * @param  string $key
      * @return string
      */

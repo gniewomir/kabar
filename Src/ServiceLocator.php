@@ -3,7 +3,7 @@
  * Service locator for this kabar library
  *
  * @author  Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since   1.0.0
+ * @since   0.0.0
  * @package kabar
  */
 
@@ -11,11 +11,11 @@ namespace kabar;
 
 /**
  * Service locator class
- * @deprecated Deprecated since 2.38.0
+ * @deprecated Deprecated since 0.38.0
  */
 final class ServiceLocator
 {
-    const VERSION          = '2.38.0';
+    const VERSION          = '0.38.0';
     const VENDOR_NAMESPACE = 'kabar';
 
     const AUTOLOADER       = '\\kabar\\Autoloader';
@@ -44,7 +44,7 @@ final class ServiceLocator
 
     /**
      * Register namespace and path for module location
-     * @since 2.16.0
+     * @since 0.16.0
      * @param  string $namespace
      * @param  string $path
      * @return void
@@ -94,7 +94,7 @@ final class ServiceLocator
 
     /**
      * Creates and stores or returns already created module instance
-     * @since  2.17.0
+     * @since  0.17.0
      * @param  string $type
      * @param  string $name
      * @return object|boolean
@@ -124,7 +124,7 @@ final class ServiceLocator
 
     /**
      * Returns module directory
-     * @since  2.16.0
+     * @since  0.16.0
      * @param  string $name
      * @param  string $type
      * @return string

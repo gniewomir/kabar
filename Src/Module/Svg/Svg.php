@@ -3,7 +3,7 @@
  * Svg module
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.36.0
+ * @since      0.36.0
  * @package    kabar
  * @subpackage Modules
  */

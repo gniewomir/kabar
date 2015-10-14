@@ -3,7 +3,7 @@
  * Module without any functionality, providing utility functions for other classes
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage Modules
  */
@@ -22,35 +22,35 @@ class Module
 
     /**
      * Current module name
-     * @since 2.14.0
+     * @since 0.14.0
      * @var string
      */
     private $moduleName;
 
     /**
      * Current module type
-     * @since 2.14.0
+     * @since 0.14.0
      * @var string
      */
     private $moduleType;
 
     /**
      * Current module slug used as ID
-     * @since 2.14.0
+     * @since 0.14.0
      * @var string
      */
     private $moduleSlug;
 
     /**
      * Templates directory
-     * @since 2.14.0
+     * @since 0.14.0
      * @var string
      */
     private $templatesDirectory;
 
     /**
      * Assets uri
-     * @since 2.14.0
+     * @since 0.14.0
      * @var string
      */
     private $assetsUri;
@@ -82,7 +82,7 @@ class Module
 
     /**
      * Returns current module slug used as ID
-     * @since 2.15.0
+     * @since 0.15.0
      * @return string
      */
     protected function getModuleSlug()
@@ -110,7 +110,7 @@ class Module
 
     /**
      * Returns field css class
-     * @since  2.24.4
+     * @since  0.24.4
      * @return string
      */
     public function getCssClass()
@@ -185,7 +185,7 @@ class Module
 
     /**
      * Check if required value is already set and not empty
-     * @since  2.19.0
+     * @since  0.19.0
      * @return void
      */
     protected function requireNotEmpty($what, $value)
@@ -197,7 +197,7 @@ class Module
 
     /**
      * Check if we are before action required by module
-     * @since  2.19.0
+     * @since  0.19.0
      * @return void
      */
     protected function requireBeforeAction($action)
@@ -209,7 +209,7 @@ class Module
 
     /**
      * Check if we are after action, that needs to be executed before module
-     * @since  2.19.0
+     * @since  0.19.0
      * @return void
      */
     protected function requireAfterAction($action)

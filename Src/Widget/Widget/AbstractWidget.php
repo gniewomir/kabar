@@ -5,7 +5,7 @@
  * @see        \kabar\Widget\Widget\WordPressWidget
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage Widgets
  */
@@ -77,7 +77,7 @@ abstract class AbstractWidget extends \kabar\Module\Module\Module
     /**
      * Inject dependancies to template created for WordPress widget instance ( which is not an object, just array of data )
      *
-     * @since  2.0.0
+     * @since  0.0.0
      * @param  string                              $widgetId Uniqe id for this wiget
      * @param  \kabar\Utility\Template\Template $template
      * @return \kabar\Utility\Template\Template

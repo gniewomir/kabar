@@ -3,7 +3,7 @@
  * Site options storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.30.0
+ * @since      0.30.0
  * @package    kabar
  * @subpackage FormFieldsStorage
  */

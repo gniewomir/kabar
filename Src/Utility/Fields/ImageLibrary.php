@@ -3,7 +3,7 @@
  * Image upload field
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.28.7
+ * @since      0.28.7
  * @package    kabar
  * @subpackage fields
  */

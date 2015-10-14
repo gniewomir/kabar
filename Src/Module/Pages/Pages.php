@@ -3,7 +3,7 @@
  * Module providing pages, you can assembly fully from provided widgets.
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      1.0.0
+ * @since      0.0.0
  * @package    kabar
  * @subpackage modules
  */
@@ -23,21 +23,21 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Config module
-     * @since 2.17.0
+     * @since 0.17.0
      * @var \kabar\Module\Styles\Styles
      */
     protected $styles;
 
     /**
      * Cache module
-     * @since 2.12.0
+     * @since 0.12.0
      * @var \kabar\Module\Cache\Cache
      */
     protected $cache;
 
     /**
      * Sidebars module
-     * @since 2.17.0
+     * @since 0.17.0
      * @var \kabar\Module\Sidebars\Sidebars
      */
     protected $sidebars;
@@ -56,7 +56,7 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Widgetized Pages
-     * @since 2.12.0
+     * @since 0.12.0
      * @var array
      */
     protected $pages;
@@ -127,7 +127,7 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Get widgetized pages list
-     * @since 2.12.19
+     * @since 0.12.19
      * @return array
      */
     protected function getWidgetizedPagesList()
@@ -287,7 +287,7 @@ class Pages extends \kabar\Module\Module\Module
 
     /**
      * Get choices for Widgetized Page select
-     * @since 2.11.0
+     * @since 0.11.0
      * @return array
      */
     public function getSelectChoices()

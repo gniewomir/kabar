@@ -3,7 +3,7 @@
  * User meta storage
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.24.4
+ * @since      0.24.4
  * @package    kabar
  * @subpackage FormFieldsStorage
  */
@@ -24,7 +24,7 @@ final class UserMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Setup storage object
-     * @since 2.31.0
+     * @since 0.31.0
      * @param string       $prefix
      * @param integer|null $id
      */
@@ -36,7 +36,7 @@ final class UserMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Set ID just in case storage object cannot determine it automaticaly
-     * @since 2.27.7
+     * @since 0.27.7
      * @param integer $id
      */
     public function setId($id)
@@ -67,7 +67,7 @@ final class UserMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Search for key/value pair and return array of id's
-     * @since  2.27.7
+     * @since  0.27.7
      * @param  string  $key
      * @param  mixed   $value
      * @return array
@@ -89,7 +89,7 @@ final class UserMeta extends HTTPPost implements InterfaceStorage
 
     /**
      * Get user id
-     * @since  2.25.1
+     * @since  0.25.1
      * @return integer
      */
     private function getUserId()

@@ -3,7 +3,7 @@
  * HTML Textarea field class
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.26.4
+ * @since      0.26.4
  * @package    kabar
  * @subpackage fields
  */
