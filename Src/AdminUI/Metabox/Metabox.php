@@ -84,7 +84,7 @@ final class Metabox extends \kabar\Module\Module\Module
 
         // form
         $storage = new \kabar\Utility\Storage\PostMeta();
-        $storage->setPrefix($id.'-');
+        $storage->setPrefix($this->id.'-');
 
         $this->form = new \kabar\Utility\Form\Form(
             $this->id,

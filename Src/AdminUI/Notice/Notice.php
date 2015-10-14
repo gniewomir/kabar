@@ -1,18 +1,17 @@
 <?php
 /**
- * Admin notices module
+ * Admin notices component
  *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      2.19.0
  * @package    kabar
- * @subpackage modules
+ * @subpackage component
+ * @since      2.19.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\Module\AdminNotices;
+namespace kabar\AdminUI\Notice;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
-class AdminNotices extends \kabar\Module\Module\Module
+class Notice extends \kabar\Module\Module\Module
 {
     const NOTICES_EXPIRATION = MINUTE_IN_SECONDS;
     const NAG_CSS_CLASS      = 'update-nag';
@@ -42,7 +41,7 @@ class AdminNotices extends \kabar\Module\Module\Module
             return;
         }
         $this->requireBeforeAction('admin_notices');
-        add_action('admin_notices', array($this, 'adminNotices'));
+        add_action('admin_notices', array($this, 'render'));
     }
 
     /**
@@ -113,7 +112,7 @@ class AdminNotices extends \kabar\Module\Module\Module
      * @internal
      * @return void
      */
-    public function adminNotices()
+    public function render()
     {
         // notices not set, which probably means that we where redirected
         // get them from transient

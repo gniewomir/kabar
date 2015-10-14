@@ -45,16 +45,18 @@ Development branch:
 * Form, Fields and Storage object moved to utility
 * getForId(), saveForId(), searchStorage() methods added to form fields
 * Storage objects updated() method  now allows setting updated value
+* Adjust AdminUI components to have more sonsitent API when applicable
 
 #### In progress
-* Adjust metabox AdminUI component, to use form
-* Form fields validator objects
-* AJAX forms
 * Add "Table" templates for all fields
 * Widget forms as Form component?
 * Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
-* Dice Dependancy Injection container - at least for modules
+* Rename Modules to services
+* Dice Dependancy Injection container
+* Extend Dice 'create' method to automaticaly add 'shared' rule to selected namespaces
 * Package definition for composer
+* Form fields validator objects
+* AJAX forms
 
 ### 2.38.0
 

@@ -48,7 +48,7 @@ final class Taxonomy extends \kabar\Module\Module\Module
 
         // form
         $storage = new \kabar\Utility\Storage\TermMeta();
-        $storage->setPrefix($id.'-');
+        $storage->setPrefix($this->id.'-');
 
         $template = new \kabar\Utility\Template\Template();
         $template($this->getTemplatesDirectory().'Form.php');
