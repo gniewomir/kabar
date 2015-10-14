@@ -147,7 +147,7 @@ final class Metabox extends \kabar\Module\Module\Module
         if ($postId) {
             return $this->form->getField($setting)->getForId($postId);
         }
-        return $field->get();
+        return $this->form->getField($setting)->get();
     }
 
     // INTERNAL
