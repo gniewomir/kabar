@@ -5,7 +5,7 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
  * @package    kabar
- * @subpackage Fields
+ * @subpackage fields
  */
 
 namespace kabar\Utility\Fields;
@@ -65,6 +65,7 @@ class Select extends Text
         $this->title    = $title;
         $this->options  = $options;
         $this->default  = $default;
+        $this->help     = $help;
     }
 
     /**

@@ -5,7 +5,7 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.28.7
  * @package    kabar
- * @subpackage Fields
+ * @subpackage fields
  */
 
 namespace kabar\Utility\Fields;

@@ -5,7 +5,7 @@
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      2.0.0
  * @package    kabar
- * @subpackage Fields
+ * @subpackage fields
  * @see        https://codex.wordpress.org/WordPress_Nonces
  */
 

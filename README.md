@@ -18,6 +18,7 @@ Development branch:
 
 ### Features
 * Form fields validator objects
+* AJAX forms
 * Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
@@ -34,7 +35,6 @@ Development branch:
 
 ### Deployment & documentation
 * Publish as Composer package
-* Proper automatic documentation
 * Proper examples and tutorials
 * Proper build process for JS and CSS contained in library
 
@@ -49,7 +49,8 @@ Development branch:
 * Storage objects updated() method  now allows setting updated value
 
 #### In progress
-* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions
+* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
+* Widget forms as Form component?
 * Dice Dependancy Injection container - at least for modules
 * Package definition for composer
 
