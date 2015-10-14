@@ -86,36 +86,29 @@ final class Metabox extends \kabar\Module\Module\Module
      * @param string|array<string>                         $screen
      * @param string                                       $context
      * @param string                                       $priority
-     * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object for metabox form fields
-     * @param \kabar\Utility\Template\Template|null      $template          Template for metabox form
-     * @param string                                       $fieldsTemplateDir Fields templates subdirectory name
      */
     public function __construct(
         $id,
         $title,
         $screen = 'post',
         $context = 'normal',
-        $priority = 'high',
-        \kabar\Utility\Storage\InterfaceStorage $storage = null,
-        \kabar\Utility\Template\Template $template = null,
-        $fieldsTemplateDir = ''
+        $priority = 'high'
     ) {
         $this->id                = $id;
         $this->title             = $title;
         $this->screens           = is_array($screen) ? $screen : array($screen);
         $this->context           = $context;
         $this->priority          = $priority;
-        $this->storage           = $storage;
-        $this->template          = $template;
-        $this->fieldsTemplateDir = $fieldsTemplateDir;
+
+        // form
+        $storage = new \kabar\Utility\Storage\PostMeta();
+        $storage->setPrefix($id.'-');
 
         $this->form = new \kabar\Utility\Form\Form(
             $this->id,
             '',
             '',
-            $this->getStorage(),
-            $this->template,
-            $this->fieldsTemplateDir
+            $storage
         );
 
         add_action('add_meta_boxes', array($this, 'add'));
@@ -151,9 +144,8 @@ final class Metabox extends \kabar\Module\Module\Module
      */
     public function getSetting($setting, $postId = 0)
     {
-        $field = clone $this->form->getField($setting);
         if ($postId) {
-            $field->getStorage()->setId($postId);
+            return $this->form->getField($setting)->getForId($postId);
         }
         return $field->get();
     }
@@ -213,19 +205,5 @@ final class Metabox extends \kabar\Module\Module\Module
         }
 
         $this->form->save();
-    }
-
-    /**
-     * Returns storage object, if it doesn't exists it will be created
-     * @return \kabar\Utility\Storage\InterfaceStorage
-     */
-    private function getStorage()
-    {
-        if ($this->storage) {
-            return $this->storage;
-        }
-        $this->storage = new \kabar\Utility\Storage\PostMeta;
-        $this->storage->setPrefix($this->id.'-');
-        return $this->storage;
     }
 }

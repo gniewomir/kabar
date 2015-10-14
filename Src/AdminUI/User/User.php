@@ -101,11 +101,11 @@ final class User extends \kabar\Module\Module\Module
 
     /**
      * Get user setting
-     * @param  string $userId
      * @param  string $setting
+     * @param  string $userId
      * @return string
      */
-    public function getSetting($userId, $setting)
+    public function getSetting($setting, $userId)
     {
         $field = clone $this->form->getField($setting);
         $field->getStorage()->setId($userId);

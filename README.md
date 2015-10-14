@@ -47,6 +47,7 @@ Development branch:
 * Storage objects updated() method  now allows setting updated value
 
 #### In progress
+* Adjust metabox AdminUI component, to use form
 * Form fields validator objects
 * AJAX forms
 * Add "Table" templates for all fields

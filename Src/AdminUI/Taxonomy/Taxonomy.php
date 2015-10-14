@@ -92,15 +92,13 @@ final class Taxonomy extends \kabar\Module\Module\Module
 
     /**
      * Return taxonomy form field value
-     * @param  string $termId  ID of term
      * @param  string $setting Field slug
+     * @param  string $termId  ID of term
      * @return mixed
      */
-    public function getSetting($termId, $setting)
+    public function getSetting($setting, $termId)
     {
-        $field = clone $this->form->getField($setting);
-        $field->getStorage()->setId($termId);
-        return $field->get();
+        return $this->form->getField($setting)->getForId($termId);
     }
 
     // INTERNAL
