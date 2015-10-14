@@ -11,6 +11,7 @@ namespace kabar;
 
 /**
  * Service locator class
+ * @deprecated Deprecated since 2.38.0
  */
 final class ServiceLocator
 {
