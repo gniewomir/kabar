@@ -17,6 +17,8 @@ Development branch:
 # Roadmap
 
 ### Features
+* Inline styles served as file
+* Events service
 * Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
