@@ -34,6 +34,7 @@ Development branch:
 * Widget fields based on \kabar\Utitlity\Fields classes
 
 ### Deployment & documentation
+* Change versioning form 2.xx to 0.xx, to allow sticking to semantic versioning spec
 * Publish as Composer package
 * Proper examples and tutorials
 * Proper build process for JS and CSS contained in library
