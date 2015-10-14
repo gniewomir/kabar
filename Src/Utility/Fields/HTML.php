@@ -79,14 +79,10 @@ class HTML extends TextArea
      */
     public function render()
     {
-        $template           = $this->getTemplate();
-        $template->id       = $this->storage->getPrefixedKey($this->getSlug());
-        $template->cssClass = $this->getCssClass();
-        $template->title    = $this->title;
-        $template->help     = $this->help;
-        $template->wysiwyg   = $this->wysiwyg;
-        $value              = $this->get();
-        $template->value    = empty($value) ? $this->default : $value;
+        $template = parent::render();
+
+        $template->wysiwyg  = $this->wysiwyg;
+
         return $template;
     }
 

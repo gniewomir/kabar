@@ -77,8 +77,10 @@ class Text extends AbstractField
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
         $template->help     = $this->help;
+
         $value              = $this->get();
         $template->value    = empty($value) ? $this->default : $value;
+
         return $template;
     }
 

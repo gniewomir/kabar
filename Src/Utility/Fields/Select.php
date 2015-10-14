@@ -43,6 +43,12 @@ class Select extends Text
     protected $default;
 
     /**
+     * Additional description of field
+     * @var string
+     */
+    protected $help;
+
+    /**
      * Setup field
      *
      * Passing null as default value will add empty option to select field which will be selected by default
@@ -51,8 +57,9 @@ class Select extends Text
      * @param string $title
      * @param array  $options Options to populate select field in label => value pairs
      * @param mixed  $default
+     * @param string $help
      */
-    public function __construct($slug, $title, $options, $default = null)
+    public function __construct($slug, $title, $options, $default = null, $help = '')
     {
         $this->slug     = $slug;
         $this->title    = $title;
@@ -66,15 +73,11 @@ class Select extends Text
      */
     public function render()
     {
-        $template           = $this->getTemplate();
-        $template->id       = $this->storage->getPrefixedKey($this->getSlug());
-        $template->cssClass = $this->getCssClass();
-        $template->title    = $this->title;
+        $template = parent::render();
+
         $template->options  = $this->options;
         $template->default  = $this->default;
-        $value              = $this->get();
-        $value              = empty($value) ? $this->default : $this->get();
-        $template->value    = $value;
+
         return $template;
     }
 }
