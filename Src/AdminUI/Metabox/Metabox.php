@@ -18,20 +18,20 @@ final class Metabox extends \kabar\Module\Module\Module
 {
     /**
      * Metabox ID
-     * @var   string
+     * @var string
      */
     private $id;
 
     /**
      * Metabox title
-     * @var   string
+     * @var string
      */
     private $title;
 
     /**
      * Locations where to add this metabox
-     * @var   array
-     * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
+     * @var array
+     * @see https://codex.wordpress.org/Function_Reference/add_meta_box
      */
     private $screens;
 
@@ -61,7 +61,7 @@ final class Metabox extends \kabar\Module\Module\Module
      * Setup metabox
      *
      * Arguments $id, $title, $screen, $context, $priority are passed to WordPress 'add_meta_box' function.
-     * @see   https://codex.wordpress.org/Function_Reference/add_meta_box
+     * @see https://codex.wordpress.org/Function_Reference/add_meta_box
      *
      * @param string                                       $id
      * @param string                                       $title
