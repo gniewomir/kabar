@@ -6,4 +6,7 @@
         <span><?php echo esc_html($label); ?></span>
     </label><br>
     <?php endforeach; ?>
+    <?php if (!empty($help)) : ?>
+        <p class="field-help"><?php echo esc_html($help); ?></p>
+    <?php endif; ?>
 </fieldset>

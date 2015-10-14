@@ -17,8 +17,6 @@ Development branch:
 # Roadmap
 
 ### Features
-* Form fields validator objects
-* AJAX forms
 * Image sizes handling, srcset handling
 * Full translation support
 * Panel support for Config/Customization module
@@ -49,8 +47,11 @@ Development branch:
 * Storage objects updated() method  now allows setting updated value
 
 #### In progress
-* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
+* Form fields validator objects
+* AJAX forms
+* Add "Table" templates for all fields
 * Widget forms as Form component?
+* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
 * Dice Dependancy Injection container - at least for modules
 * Package definition for composer
 
