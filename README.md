@@ -2,7 +2,9 @@
 
 Set of modules and components for speeding up WordPress development contained in a plugin / composer package.
 
-Until version 1.0 public API of all components may be changed, and other changes breaking compatibility may be introduced. You have been warned.
+This project uses semantic versioning (http://semver.org/spec/v2.0.0.html).
+
+Until version 1.0 is out breaking changes will be introduced and API changed - a lot. You have been warned.
 
 Documentation and examples are work in progress, so I advice against trying to use it right now. If you are more experienced than me (very probable), you probably have your own solution, and if not, spare youtself frustration and wait for proper guide explaining how and why things are done in that particular way.
 
@@ -26,10 +28,9 @@ Development branch:
 
 ### Code quality
 * Clear Scrutinizer backlog
-* Replace 'module callbacks' with callbacks, force registering settings sections instead extending 'Config' module
+* Replace 'module callbacks' with callbacks or - better yet - injecting objects/interfaces
 * Find a way around eval in widgets module
 * Unit tests
-* Widget fields based on \kabar\Utitlity\Fields classes
 
 ### Deployment & documentation
 * Publish as Composer package
@@ -46,11 +47,11 @@ Development branch:
 * Form, Fields and Storage classes moved to utility namespace
 * getForId(), saveForId(), searchStorage() methods added to form fields classes
 * Storage objects updated() method now allows setting updated value
-* Adjust AdminUI components to have more consitent API when applicable
+* Adjust AdminUI components to have more consitent API
 
 #### In progress
 * Add "Table" templates for all fields
-* Widget forms as Form component?
+* Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
 * Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
 * Rename Modules to services
 * Dice Dependancy Injection container
