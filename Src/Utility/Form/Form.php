@@ -245,26 +245,12 @@ final class Form extends \kabar\Module\Module\Module
     {
         $template = new \kabar\Utility\Template\Template();
 
-        // no id provided
-        if (!$id) {
-            foreach ($this->fields as $field) {
-                if ($field instanceof \kabar\Utility\Fields\InterfaceField) {
-                    $name            = $field->getSlug();
-                    $template->$name = $field->get();
-                }
-            }
-            return $template;
-        }
-
-        // id provided
         foreach ($this->fields as $field) {
             if (!$field instanceof \kabar\Utility\Fields\InterfaceField) {
                 continue;
             }
-            $copy = clone $field;
-            $copy->getStorage()->setId($id);
-            $name            = $copy->getSlug();
-            $template->$name = $copy->get();
+            $name            = $field->getSlug();
+            $template->$name = $id ? $field->getForId($id) : $field->get();
         }
         return $template;
     }
