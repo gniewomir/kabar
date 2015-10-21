@@ -36,7 +36,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
      * @since 0.24.4
      * @var string
      */
-    private $templateDirectory;
+    private $templateDirectory = 'Default';
 
     /**
      * Assets directory uri
@@ -152,14 +152,11 @@ abstract class AbstractFormPart implements InterfaceFormPart
      */
     protected function getTemplate()
     {
-        if (empty($this->templateDirectory)) {
-            $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.'Default'.DIRECTORY_SEPARATOR;
-        } else {
-            $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$this->templateDirectory.DIRECTORY_SEPARATOR;
-        }
-        $templatePath = $templateDirectoryPath.$this->getFieldType().'.php';
-        $template     = new \kabar\Utility\Template\Template;
+        $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$this->templateDirectory.DIRECTORY_SEPARATOR;
+        $templatePath          = $templateDirectoryPath.$this->getFieldType().'.php';
+        $template              = new \kabar\Utility\Template\Template();
         $template($templatePath);
+
         return $template;
     }
 
