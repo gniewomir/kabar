@@ -75,8 +75,11 @@ final class User extends \kabar\Module\Module\Module
 
         add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'));
 
+        $this->requireBeforeAction('show_user_profile');
         add_action('show_user_profile', array($this, 'profile'));
+        $this->requireBeforeAction('edit_user_profile');
         add_action('edit_user_profile', array($this, 'profile'));
+
         add_action('personal_options_update', array($this, 'update'));
         add_action('edit_user_profile_update', array($this, 'update'));
     }

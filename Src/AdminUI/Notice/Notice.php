@@ -40,6 +40,7 @@ class Notice extends \kabar\Module\Module\Module
         if (!is_admin()) {
             return;
         }
+
         $this->requireBeforeAction('admin_notices');
         add_action('admin_notices', array($this, 'render'));
     }

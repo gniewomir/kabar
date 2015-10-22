@@ -16,7 +16,7 @@ use \enshrined\svgSanitize\Sanitizer as Sanitizer;
 /**
  * Svg module main class
  */
-class Svg extends \kabar\Module\Module\Module implements \enshrined\svgSanitize\data\AttributeInterface, \enshrined\svgSanitize\data\TagInterface
+final class Svg extends \kabar\Module\Module\Module implements \enshrined\svgSanitize\data\AttributeInterface, \enshrined\svgSanitize\data\TagInterface
 {
     const SVG      = 'svg';
     const SVG_MIME = 'image/svg+xml';

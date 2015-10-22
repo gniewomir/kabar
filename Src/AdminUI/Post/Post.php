@@ -1,6 +1,6 @@
 <?php
 /**
- * Metabox component
+ * Post Admin UI component
  *
  * @package    kabar
  * @subpackage component
@@ -9,12 +9,12 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
-namespace kabar\AdminUI\Metabox;
+namespace kabar\AdminUI\Post;
 
 /**
  * Registers metabox with WordPress and allows interacting with metabox form object
  */
-final class Metabox extends \kabar\Module\Module\Module
+final class Post extends \kabar\Module\Module\Module
 {
     /**
      * Metabox ID
@@ -93,6 +93,7 @@ final class Metabox extends \kabar\Module\Module\Module
             $storage
         );
 
+        $this->requireBeforeAction('add_meta_boxes');
         add_action('add_meta_boxes', array($this, 'add'));
         add_action('save_post', array($this, 'update'));
     }

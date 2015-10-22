@@ -63,10 +63,12 @@ final class Taxonomy extends \kabar\Module\Module\Module
         );
 
         // existing term edition
+        $this->requireBeforeAction($this->taxonomy.'_edit_form_fields');
         add_action($this->taxonomy.'_edit_form_fields', array($this, 'form'), 10, 2);
         add_action('edited_'.$this->taxonomy, array($this, 'update'), 10, 2);
 
         // creating new term
+        $this->requireBeforeAction($this->taxonomy.'_add_form_fields');
         add_action($this->taxonomy.'_add_form_fields', array($this, 'addForm'), 10, 2);
         add_action('create_'.$this->taxonomy, array($this, 'update'), 10, 2);
     }

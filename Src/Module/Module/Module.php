@@ -191,7 +191,7 @@ class Module
     protected function requireNotEmpty($what, $value)
     {
         if (empty($value)) {
-            trigger_error('Module "'.$this->getModuleName().'" requires to '.$what.' to not be empty at this point.', E_USER_ERROR);
+            trigger_error('Class "'.$this->getModuleClass().'" requires to '.$what.' to not be empty at this point.', E_USER_ERROR);
         }
     }
 
@@ -203,7 +203,7 @@ class Module
     protected function requireBeforeAction($action)
     {
         if (did_action($action)) {
-            trigger_error('Module "'.$this->getModuleName().'" requires to be called before "'.$action.'" action.', E_USER_ERROR);
+            trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated before "'.$action.'" action.', E_USER_ERROR);
         }
     }
 
@@ -215,7 +215,7 @@ class Module
     protected function requireAfterAction($action)
     {
         if (!did_action($action)) {
-            trigger_error('Module "'.$this->getModuleName().'" requires to be called after "'.$action.'" action.', E_USER_ERROR);
+            trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated after "'.$action.'" action.', E_USER_ERROR);
         }
     }
 }

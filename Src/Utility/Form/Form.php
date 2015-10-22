@@ -93,7 +93,7 @@ final class Form extends \kabar\Module\Module\Module
      * @param string                                       $method            Method. POST if not specified
      * @param string                                       $action            Action. SELF if not specified
      * @param \kabar\Utility\Storage\InterfaceStorage|null $storage           Storage object. \kabar\Utility\Storage\HTTPPost if not specified
-     * @param \kabar\Utility\Template\Template|null      $template          Template object. Default template if not specified
+     * @param \kabar\Utility\Template\Template|null        $template          Template object. Default template if not specified
      * @param string                                       $fieldsTemplateDir Fields templates subdirectory. Field default if not specified
      * @param callable|null                                $updateCallback    Callback to run when form is saved
      */

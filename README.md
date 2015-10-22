@@ -48,6 +48,7 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Adjust AdminUI components to have more consitent API
 
 #### In progress
+* Rewrite fieldset field/add fieldset handling to form component
 * Add "Table" templates for all fields
 * Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
 * Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
@@ -57,6 +58,7 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Package definition for composer
 * Form fields validator objects
 * AJAX forms
+* Add tests for basic components (fields, storage, form?)
 
 ### 0.38.0
 
