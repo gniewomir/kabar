@@ -14,6 +14,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "enshrined/svg-sanitize": "^0.2.1"
+        "enshrined/svg-sanitize": "^0.2.1",
+        "level-2/dice": "dev-v2.0-PHP5.4-5.5"
     }
 }

@@ -176,8 +176,8 @@ class Module
     {
         if (empty($this->templatesDirectory)) {
             $this->templatesDirectory = ServiceLocator::getModuleDirectory(
-                $this->getModuleName(),
-                $this->getModuleType()
+                $this->getModuleType(),
+                $this->getModuleName()
             ).DIRECTORY_SEPARATOR.self::TEMPLATES_DIRECTORY.DIRECTORY_SEPARATOR;
         }
         return $this->templatesDirectory;

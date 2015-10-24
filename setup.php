@@ -30,7 +30,6 @@ if (!defined('WPINC')) {
 }
 
 /**
- * Setup kabar library
+ * Bootstrap Kabar library
  */
-require_once plugin_dir_path(__FILE__).'Src/ServiceLocator.php';
-\kabar\ServiceLocator::setup();
+require_once plugin_dir_path(__FILE__).'Src/Bootstrap.php';
