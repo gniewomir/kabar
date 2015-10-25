@@ -14,7 +14,7 @@ namespace kabar\AdminUI\Post;
 /**
  * Registers metabox with WordPress and allows interacting with metabox form object
  */
-final class Post extends \kabar\Module\Module\Module
+final class Post extends \kabar\Module
 {
     /**
      * Metabox ID

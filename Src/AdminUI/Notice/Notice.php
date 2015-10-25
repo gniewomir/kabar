@@ -11,7 +11,7 @@
 
 namespace kabar\AdminUI\Notice;
 
-class Notice extends \kabar\Module\Module\Module
+class Notice extends \kabar\Module
 {
     const NOTICES_EXPIRATION = MINUTE_IN_SECONDS;
     const NAG_CSS_CLASS      = 'update-nag';

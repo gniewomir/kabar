@@ -71,16 +71,16 @@ class ServiceLocatorTests extends WP_UnitTestCase {
     public function sharedClasses()
     {
         return array(
-            array('Module',  'Styles',   '\\kabar\\Module\\Styles\\Styles'),
-            array('Module',  'Scripts',  '\\kabar\\Module\\Scripts\\Scripts'),
-            array('Factory', 'Template', '\\kabar\\Factory\\Template\\Template')
+            array('Module',  'Styles',   'kabar\\Module\\Styles\\Styles'),
+            array('Module',  'Scripts',  'kabar\\Module\\Scripts\\Scripts'),
+            array('Factory', 'Template', 'kabar\\Factory\\Template\\Template')
         );
     }
 
     public function newableClasses()
     {
         return array(
-            array('Utility', 'Template', '\\kabar\\Utility\\Template\\Template', 'test')
+            array('Utility', 'Template', 'kabar\\Utility\\Template\\Template', 'test')
         );
     }
 }

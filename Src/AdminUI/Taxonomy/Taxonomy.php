@@ -14,7 +14,7 @@ namespace kabar\AdminUI\Taxonomy;
 /**
  * Registers additional fields for taxonomy term forms
  */
-final class Taxonomy extends \kabar\Module\Module\Module
+final class Taxonomy extends \kabar\Module
 {
     /**
      * Taxonomy name

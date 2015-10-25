@@ -1,0 +1,34 @@
+<?php
+
+class ModuleTests extends WP_UnitTestCase {
+
+    /**
+     * @dataProvider modulePathProvider
+     */
+    public function testGetModuleDirectory_ShouldReturnModuleDirectory($class, $path) {
+        $kabar  = new \kabar\Kabar();
+        $tested = $kabar->create($class);
+        $method = self::getMethod($tested, 'getModuleDirectory');
+        $result = $method->invokeArgs($tested, array());
+        $this->assertEquals(
+            $path,
+            $result
+        );
+    }
+
+    public function modulePathProvider()
+    {
+        return array(
+            array('\\kabar\\Module\\Scripts\\Scripts', KABAR_SRC_DIR.'Module/Scripts/'),
+            array('\\kabar\\Module\\Styles\\Styles',   KABAR_SRC_DIR.'Module/Styles/'),
+            array('\\fixtures\\Module\\Test\\Test',    KABAR_FIXTURES_DIR.'Module/Test/')
+        );
+    }
+
+    protected static function getMethod($object, $name) {
+        $reflection = new ReflectionClass($object);
+        $method     = $reflection->getMethod($name);
+        $method->setAccessible(true);
+        return $method;
+    }
+}

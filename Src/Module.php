@@ -8,9 +8,7 @@
  * @subpackage Modules
  */
 
-namespace kabar\Module\Module;
-
-use \kabar\ServiceLocator as ServiceLocator;
+namespace kabar;
 
 /**
  * Class providing base for module you can extend
@@ -118,9 +116,10 @@ class Module
     /**
      * Returns field css class
      * @since  0.24.4
+     * @since  0.50.0 is protected
      * @return string
      */
-    public function getCssClass()
+    protected function getCssClass()
     {
         $class = explode('\\', get_class($this));
         array_pop($class);
@@ -156,11 +155,7 @@ class Module
             // check if module is in plugin or in theme directory
             // and return appropriate url
             if (strpos($this->getTemplatesDirectory(), get_stylesheet_directory()) !== false) {
-                $assets = str_replace(
-                    self::TEMPLATES_DIRECTORY,
-                    self::ASSETS_DIRECTORY,
-                    $this->getTemplatesDirectory()
-                );
+                $assets = $this->getModuleDirectory().self::ASSETS_DIRECTORY;
                 $assets = str_replace(
                     get_stylesheet_directory(),
                     '',
@@ -196,8 +191,12 @@ class Module
     protected function getModuleDirectory()
     {
         if (!$this->moduleDirectory) {
-            $reflection            = new \ReflectionClass(get_class($this));
-            $this->moduleDirectory = dirname($reflection->getFileName()).DIRECTORY_SEPARATOR;
+            if (strpos($this->getModuleClass(), KABAR_NAMESPACE) === 0) {
+                $this->moduleDirectory = dirname(__FILE__).DIRECTORY_SEPARATOR.$this->getModuleType().DIRECTORY_SEPARATOR.$this->getModuleName().DIRECTORY_SEPARATOR;
+            } else {
+                $reflection            = new \ReflectionClass($this->getModuleClass());
+                $this->moduleDirectory = dirname($reflection->getFileName()).DIRECTORY_SEPARATOR;
+            }
         }
         return $this->moduleDirectory;
     }
@@ -221,6 +220,9 @@ class Module
      */
     protected function requireBeforeAction($action)
     {
+        if (defined('KABAR_UNIT_TESTING') && KABAR_UNIT_TESTING === true) {
+            return;
+        }
         if (did_action($action)) {
             trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated before "'.$action.'" action.', E_USER_ERROR);
         }
@@ -233,6 +235,9 @@ class Module
      */
     protected function requireAfterAction($action)
     {
+        if (defined('KABAR_UNIT_TESTING') && KABAR_UNIT_TESTING === true) {
+            return;
+        }
         if (!did_action($action)) {
             trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated after "'.$action.'" action.', E_USER_ERROR);
         }

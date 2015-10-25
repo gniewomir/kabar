@@ -122,7 +122,9 @@ final class ServiceLocator
             $rule['constructParams'] = array_values($arguments);
         }
 
-        self::$container->addRule($class, $rule);
+        if (!empty($rule) && !empty($class)) {
+            self::$container->addRule($class, $rule);
+        }
     }
 
     /**
@@ -169,17 +171,5 @@ final class ServiceLocator
         }
 
         return self::$container->create($class);
-    }
-
-    /**
-     * Check if module is already created
-     * @param  string $type
-     * @param  string $name
-     * @return boolean
-     */
-    public static function isLoaded($type, $name)
-    {
-        $class = self::getClass($type, $name);
-        return self::$container->isCreated($class);
     }
 }

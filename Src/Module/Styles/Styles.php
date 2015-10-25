@@ -14,7 +14,7 @@ namespace kabar\Module\Styles;
 /**
  * Allows collecting inline style from other modules, and outputing them where needed
  */
-final class Styles extends \kabar\Module\Module\Module
+final class Styles extends \kabar\Module
 {
 
     /**

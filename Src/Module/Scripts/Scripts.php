@@ -15,7 +15,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Scripts module main class
  */
-class Scripts extends \kabar\Module\Module\Module
+class Scripts extends \kabar\Module
 {
 
     /**

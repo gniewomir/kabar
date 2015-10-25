@@ -15,7 +15,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Allows creation of pages constructed from widgets
  */
-class Pages extends \kabar\Module\Module\Module
+class Pages extends \kabar\Module
 {
 
     const DEFAULT_WRAPER_BEFORE    = '<section id="%1$s" class="widget %2$s">';

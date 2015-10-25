@@ -14,7 +14,7 @@ namespace kabar\Utility\Form;
 /**
  * Provides easy way of assembling forms from field objects
  */
-final class Form extends \kabar\Module\Module\Module
+final class Form extends \kabar\Module
 {
 
     const NONCE_SUFFIX  = '_nonce';

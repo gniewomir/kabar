@@ -17,8 +17,9 @@ class KabarTests extends WP_UnitTestCase {
     /**
      * @dataProvider classNameProvider
      */
-    public function testCreate_ShouldInstantiateClass($class, $expected) {
+    public function testCreate_ShouldInstantiateClass($class, $expected, $rule) {
         $kabar = new \kabar\Kabar();
+        if (!empty($rule)) $kabar->addRule($class, $rule);
         $this->assertInstanceOf(
             $expected,
             $kabar->create($class)
@@ -47,23 +48,24 @@ class KabarTests extends WP_UnitTestCase {
     {
         return array(
             // full names
-            array('kabar\\Utility\\Template\\Template',   '\\kabar\\Utility\\Template\\Template'),
-            array('kabar/Utility/Template/Template',      '\\kabar\\Utility\\Template\\Template'),
-            array('\\kabar\\Utility\\Template\\Template', '\\kabar\\Utility\\Template\\Template'),
-            array('/kabar/Utility/Template/Template',     '\\kabar\\Utility\\Template\\Template'),
+            array('kabar\\Utility\\Template\\Template',   'kabar\\Utility\\Template\\Template', array()),
+            array('kabar/Utility/Template/Template',      'kabar\\Utility\\Template\\Template', array()),
+            array('\\kabar\\Utility\\Template\\Template', 'kabar\\Utility\\Template\\Template', array()),
+            array('/kabar/Utility/Template/Template',     'kabar\\Utility\\Template\\Template', array()),
             // shortcuts
-            array('kabar/Utility/Template',               '\\kabar\\Utility\\Template\\Template'),
-            array('/kabar/Utility/Template',              '\\kabar\\Utility\\Template\\Template'),
-            array('/kabar/Utility/Template/',             '\\kabar\\Utility\\Template\\Template'),
-            array('kabar/Utility/Template/',              '\\kabar\\Utility\\Template\\Template'),
+            array('kabar/Utility/Template',               'kabar\\Utility\\Template\\Template', array()),
+            array('/kabar/Utility/Template',              'kabar\\Utility\\Template\\Template', array()),
+            array('/kabar/Utility/Template/',             'kabar\\Utility\\Template\\Template', array()),
+            array('kabar/Utility/Template/',              'kabar\\Utility\\Template\\Template', array()),
+            array('kabar\\Module\\Sidebars\\Cleaner',     'kabar\\Module\\Sidebars\\Cleaner',   array())
         );
     }
 
     public function sharedObjectsClassNameProvider()
     {
         return array(
-            array('\\kabar\\Module\\Scripts\\Scripts'),
-            array('\\kabar\\Factory\\Template\\Template')
+            array('kabar\\Module\\Scripts\\Scripts'),
+            array('kabar\\Factory\\Template\\Template')
         );
     }
 }

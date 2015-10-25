@@ -17,7 +17,7 @@ use \kabar\ServiceLocator as ServiceLocator;
 /**
  * Provides ability to create WordPress widgets on the fly.
  */
-abstract class AbstractWidget extends \kabar\Module\Module\Module
+abstract class AbstractWidget extends \kabar\Module
 {
 
     const DEFAULT_WRAPER_BEFORE    = '<section id="%1$s" class="widget %2$s">';

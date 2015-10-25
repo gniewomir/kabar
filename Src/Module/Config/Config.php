@@ -10,12 +10,10 @@
 
 namespace kabar\Module\Config;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Site config class
  */
-class Config extends \kabar\Module\Module\Module
+class Config extends \kabar\Module
 {
 
     /**
@@ -52,6 +50,7 @@ class Config extends \kabar\Module\Module\Module
      * Function to allow using translation functions,
      * which we cannot do when setting default value for property
      *
+     * @deprecated since 0.50.0, registerSection should be used instead
      * @return array
      */
     protected function getConfig()
@@ -334,7 +333,12 @@ class Config extends \kabar\Module\Module\Module
     private function getChoices($fieldSettings, $arguments)
     {
         if (isset($fieldSettings['choices']) && is_array($fieldSettings['choices'])) {
-            if ($this->isModuleCallback($fieldSettings['choices'])) {
+            if (is_callable($fieldSettings['choices'])) {
+                $fieldSettings['choices'] = $this->runCallback($fieldSettings['choices']);
+            /**
+             * @deprecated module callbacks are deprecated since 0.50.0
+             */
+            } else if ($this->isModuleCallback($fieldSettings['choices'])) {
                 $fieldSettings['choices'] = $this->runModuleCallback($fieldSettings['choices']);
             }
             $arguments['choices'] = $fieldSettings['choices'];
@@ -344,30 +348,42 @@ class Config extends \kabar\Module\Module\Module
 
     /**
      * Chceck if provided array is module callback
-     * @since  0.11.0
-     * @param  array  $array
-     * @return boolean
+     * @deprecated since 0.50.0
+     * @since      0.11.0
+     * @param      array  $array
+     * @return     boolean
      */
-    private function isModuleCallback($array)
+    private function isModuleCallback(array $array)
     {
-        /**
-         * We expect that module callback
-         * 1/ Have exactly two elements - module name, and method name - both strings
-         * 2/ Is not associative array
-         */
-        return count($array) == 2 && !(bool) count(array_filter(array_keys($array), 'is_string'));
+        trigger_error(__METHOD__.' is deprecated since 0.50.0', E_USER_WARNING);
+        return !is_callable($array) &&
+                count($array) == 2 &&
+               !(bool) count(array_filter(array_keys($array), 'is_string'));
+    }
+
+    /**
+     * Run ccallback and return result
+     * @since  0.50.0
+     * @param  callable
+     * @return array
+     */
+    private function runCallback(callable $callback)
+    {
+        return call_user_func($callback);
     }
 
     /**
      * Run module callback and return result
+     * @deprecated since 0.50.0
      * @since  0.11.0
      * @param  array $callback
      * @return array
      */
     private function runModuleCallback($callback)
     {
+        trigger_error(__METHOD__.' is deprecated since 0.50.0', E_USER_WARNING);
         $module = array_shift($callback);
         $method = array_shift($callback);
-        return ServiceLocator::get('Module', $module)->$method();
+        return \kabar\ServiceLocator::get('Module', $module)->$method();
     }
 }

@@ -76,6 +76,9 @@ final class Kabar extends \Dice\Dice
      */
     public function create($name, array $args = array(), array $share = array())
     {
+        if (!is_string($name)) {
+            return parent::create($name, $args, $share);
+        }
         $name = $this->parseName($name);
         return parent::create($name, $args, $share);
     }
@@ -118,8 +121,8 @@ final class Kabar extends \Dice\Dice
     /**
      * Make class instance shared if it matches our convention
      *
-     * - first namespace after vndor one should be on the 'shared' list
-     * - class name have to match service/module namespace, marking it as main one
+     * - class name is equal to preceding namespace name
+     * - namespace preceding class namespace is on the shared list
      *
      * @deprecated public visibility of this method is deprecated since 0.50.0, it will be made private in future relase
      * @param  string $class
@@ -128,12 +131,11 @@ final class Kabar extends \Dice\Dice
     public function maybeShare($class)
     {
         $class = $this->parseName($class);
-        foreach ($this->shared as $namespace) {
-            if (strpos($class, '\\'.$namespace.'\\') !== false) {
-                $this->addRule($class, array('shared' => true));
+        $parts = explode('\\', $class);
+        if (array_pop($parts) === array_pop($parts) && in_array(array_pop($parts), $this->shared)) {
+            $this->addRule($class, array('shared' => true));
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -157,10 +159,7 @@ final class Kabar extends \Dice\Dice
             }
             $name = str_replace('/', '\\', $name);
         }
-        if (strpos($name, '\\') !== 0) {
-            $name = '\\'.$name;
-        }
-
+        $name = trim($name, '\\');
         return $name;
     }
 }

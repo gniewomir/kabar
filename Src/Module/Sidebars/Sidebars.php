@@ -14,7 +14,7 @@ namespace kabar\Module\Sidebars;
 /**
  * Register and render WordPress sidebars
  */
-final class Sidebars extends \kabar\Module\Module\Module
+class Sidebars extends \kabar\Module
 {
     /**
      * Template factory
@@ -60,8 +60,6 @@ final class Sidebars extends \kabar\Module\Module\Module
         \kabar\Module\Config\Config $config,
         \kabar\Module\Cache\Cache $cache
     ) {
-        $this->requireBeforeAction('after_setup_theme');
-
         $this->templateFactory = $templateFactory;
         $this->config          = $config;
         $this->cache           = $cache;
@@ -91,6 +89,7 @@ final class Sidebars extends \kabar\Module\Module\Module
             add_action('widgets_init', array($this, 'unregisterDefaultWidgets'), 11);
         }
         // Add widgetized pages sidebars and widgets
+        $this->requireBeforeAction('widgets_init');
         add_action('widgets_init', array($this, 'registerSidebars'), 9);
     }
 

@@ -14,7 +14,7 @@ namespace kabar\Module\Cache;
 /**
  * Site cache class
  */
-class Cache extends \kabar\Module\Module\Module
+class Cache extends \kabar\Module
 {
     /**
      * WordPress transient prefix
@@ -267,7 +267,7 @@ class Cache extends \kabar\Module\Module\Module
      */
     private function hash($id, $type)
     {
-        return self::TRANSIENT_PREFIX.$type.md5(\kabar\ServiceLocator::VERSION.$id);
+        return self::TRANSIENT_PREFIX.$type.md5(KABAR_VERSION.$id);
     }
 
     /**

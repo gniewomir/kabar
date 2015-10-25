@@ -47,10 +47,11 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Storage objects updated() method now allows setting updated value
 * Adjust AdminUI components to have more consistent API
 * Dice Dependancy Injection container
-* Extend Dice 'create' method to automaticaly add 'shared' rule to selected namespaces
-* Rewrite ServiceLocator to use Dice, and keep it backward compatibile within reasonale boundries
+* Extend Dice to automaticaly share objects in selected namespaces
+* Rewrite ServiceLocator to act as facade for Dice to keep library mostly backward compatibile
 
 #### In progress
+* Use Storage object for Config module
 * Widget factory object?
 * Rewrite fieldset field/add fieldset handling to form component
 * Add "Table" templates for all fields

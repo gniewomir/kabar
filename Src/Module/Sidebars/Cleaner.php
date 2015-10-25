@@ -14,7 +14,7 @@ namespace kabar\Module\Sidebars;
 /**
  * Purge sidebars module cache if needed
  */
-final class Cleaner extends \kabar\Module\Module\Module
+final class Cleaner extends \kabar\Module
 {
 
     /**

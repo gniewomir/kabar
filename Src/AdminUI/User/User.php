@@ -14,7 +14,7 @@ namespace kabar\AdminUI\User;
 /**
  * Allows for easy extension of user profile
  */
-final class User extends \kabar\Module\Module\Module
+final class User extends \kabar\Module
 {
     const IN_FOOTER = true;
 

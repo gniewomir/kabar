@@ -1,0 +1,128 @@
+<?php
+
+class ModuleConfigTests extends WP_UnitTestCase {
+
+    /**
+     * @dataProvider configSectionProvider
+     */
+    public function test__get_ShouldReturnConfigurationValue($sectionName, $sectionConfig, $properties, $value) {
+        $kabar  = new \kabar\Kabar();
+        $config = $kabar->create('/kabar/Module/Config');
+        $config->registerSection(
+            $sectionName,
+            $sectionConfig
+        );
+
+        $sectionKey = array_shift($properties);
+        $settingKey = array_shift($properties);
+
+        $this->assertEquals(
+            $value,
+            $config->$sectionKey->$settingKey
+        );
+    }
+
+    public function configSectionProvider()
+    {
+        return array(
+            array(
+                'keys',
+                array(
+                    'sectionTitle'      => 'Keys',
+                    'sectionCapability' => 'edit_theme_options',
+                    'apiKey'            => array(
+                        'type'       => 'text',
+                        'default'    => 'test1234567890',
+                        'label'      => 'API key',
+                        'capability' => 'update_core'
+                    ),
+                ),
+                array(
+                    'keys',
+                    'apiKey'
+                ),
+                'test1234567890'
+            ),
+            array(
+                'checkbox',
+                array(
+                    'sectionTitle'      => 'Checkboxes',
+                    'sectionCapability' => 'edit_theme_options',
+                    'checkbox'          => array(
+                        'type'       => 'checkbox',
+                        'default'    => true,
+                        'label'      => 'Checkbox',
+                        'capability' => 'update_core'
+                    ),
+                ),
+                array(
+                    'checkbox',
+                    'checkbox'
+                ),
+                true
+            ),
+            array(
+                'simple',
+                array(
+                    'sectionTitle'      => 'Checkboxes',
+                    'sectionCapability' => 'edit_theme_options',
+                    'simple'            => 'simpleValue'
+                ),
+                array(
+                    'simple',
+                    'simple'
+                ),
+                'simpleValue'
+            ),
+            array(
+                'select',
+                array(
+                    'sectionTitle'      => 'Select',
+                    'sectionCapability' => 'edit_theme_options',
+                    'select'          => array(
+                        'type'       => 'select',
+                        'default'    => 'defaultOption',
+                        'label'      => 'Select',
+                        'choices'    => array(
+                            'First'   => 'firstOption',
+                            'Default' => 'defaultOption',
+                            'Last'    => 'lastOption'
+                        )
+                    ),
+                ),
+                array(
+                    'select',
+                    'select'
+                ),
+                'defaultOption'
+            ),
+            array(
+                'select',
+                array(
+                    'sectionTitle'      => 'Select',
+                    'sectionCapability' => 'edit_theme_options',
+                    'select'          => array(
+                        'type'       => 'select',
+                        'default'    => 'defaultOption',
+                        'label'      => 'Select',
+                        'choices'    => array($this, 'getSelectOptions')
+                    ),
+                ),
+                array(
+                    'select',
+                    'select'
+                ),
+                'defaultOption'
+            )
+
+        );
+    }
+
+    public function getSelectOptions() {
+        return array(
+            'First'   => 'firstOption',
+            'Default' => 'defaultOption',
+            'Last'    => 'lastOption'
+        );
+    }
+}
