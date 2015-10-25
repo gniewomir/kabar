@@ -12,7 +12,12 @@ namespace kabar;
 
 /**
  * Service locator class
- * @deprecated Deprecated since 0.38.0
+ * @deprecated since 0.38.0, provided only for backwards compatibility
+ *
+ * Most of methods in this class assumes to much about code organisation
+ * and constructor signatures which may and eventualy will lead to errors.
+ * It's not a fully backwards compatibile and never meant to be. It should ease
+ * the pain of moving from 0.38.0 to 0.50.0, but not eliminate it completylly.
  */
 final class ServiceLocator
 {
@@ -67,11 +72,9 @@ final class ServiceLocator
         $namespaces = array_reverse($namespaces);
         foreach ($namespaces as $space => $path) {
             $relativeClass = $type.'\\'.$name.'\\'.$name;
-            error_log($relativeClass);
             $file          = $path.str_replace('\\', '/', $relativeClass).'.php';
-            error_log($file);
             if (file_exists($file)) {
-                return $space.'\\'.$relativeClass;
+                return self::$container->parseName('\\'.$space.'\\'.$relativeClass);
             }
         }
         trigger_error('Cannot determine class name for type:'.$type.' and name:'.$name, E_USER_ERROR);
@@ -143,7 +146,6 @@ final class ServiceLocator
 
         // Make instance shared if needed
         self::$container->maybeShare($class);
-
         return self::$container->create($class);
     }
 

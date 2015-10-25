@@ -67,8 +67,6 @@ class Cache extends \kabar\Module\Module\Module
      */
     public function __construct()
     {
-        $this->requireBeforeAction('after_setup_theme');
-
         if (isset($_GET['purge'])) {
             $this->startPurge();
         }

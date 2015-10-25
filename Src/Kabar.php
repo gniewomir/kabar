@@ -28,8 +28,8 @@ final class Kabar extends \Dice\Dice
      * @var array
      */
     private $shared = array(
-        'Service',
         'Module',
+        'Service',
         'Factory'
     );
 
@@ -76,25 +76,8 @@ final class Kabar extends \Dice\Dice
      */
     public function create($name, array $args = array(), array $share = array())
     {
-        if (strpos($name, '/') !== false) {
-            $name = trim($name, '/');
-            $name = explode('/', $name);
-            if (count($name) == 3) {
-                $name[] = $name[2];
-            }
-            $name = implode('\\', $name);
-        }
+        $name = $this->parseName($name);
         return parent::create($name, $args, $share);
-    }
-
-    /**
-     * Check if class instance is already created and stored
-     * @deprecated since 0.50.0, introduced only to allow ServiceLocator backwards compatibility, will be removed in future relase
-     * @return boolean
-     */
-    public function isCreated($name)
-    {
-        return isset($this->instances[$name]);
     }
 
     /**
@@ -140,16 +123,44 @@ final class Kabar extends \Dice\Dice
      *
      * @deprecated public visibility of this method is deprecated since 0.50.0, it will be made private in future relase
      * @param  string $class
-     * @return void
+     * @return bool
      */
     public function maybeShare($class)
     {
-        $parts = explode('\\', $class);
-        if (!in_array($parts[1], $this->shared)) {
-            return;
+        $class = $this->parseName($class);
+        foreach ($this->shared as $namespace) {
+            if (strpos($class, '\\'.$namespace.'\\') !== false) {
+                $this->addRule($class, array('shared' => true));
+
+                return true;
+            }
         }
-        if ($parts[2] == $parts[3]) {
-            $this->addRule($class, array('shared' => true));
+
+        return false;
+    }
+
+    /**
+     * Normalize class name
+     * @param  string $name
+     * @return string
+     */
+    public function parseName($name)
+    {
+        // '/' instead '\\'
+        if (strpos($name, '/') !== false) {
+            $name = trim($name, '/');
+            // shortcut, 'kabar/Module/Scripts' instead 'kabar/Module/Scripts/Scripts'
+            if (substr_count($name, '/') === 2) {
+                $name   = explode('/', $name);
+                $name[] = end($name);
+                $name   = implode('/', $name);
+            }
+            $name = str_replace('/', '\\', $name);
         }
+        if (strpos($name, '\\') !== 0) {
+            $name = '\\'.$name;
+        }
+
+        return $name;
     }
 }

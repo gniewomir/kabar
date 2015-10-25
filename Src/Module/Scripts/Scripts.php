@@ -46,8 +46,6 @@ class Scripts extends \kabar\Module\Module\Module
      */
     public function __construct(\kabar\Factory\Template\Template $templateFactory, \kabar\Module\Cache\Cache $cache)
     {
-        $this->requireBeforeAction('after_setup_theme');
-
         $this->templateFactory = $templateFactory;
         $this->cache           = $cache;
 
