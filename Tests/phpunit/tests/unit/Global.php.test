@@ -1,0 +1,15 @@
+<?php
+
+class GlobalTests extends WP_UnitTestCase {
+
+    public function testLibrary_ShouldReturnSameInstanceProvidedOnSetup() {
+        require_once dirname(dirname(dirname(dirname(__DIR__)))).'/Src/Global.php';
+        $kabar = new kabar\Kabar();
+        $kabar->prop = 'test';
+        Kabar::setup($kabar);
+        $this->assertEquals(
+            $kabar,
+            Kabar::library()
+        );
+    }
+}

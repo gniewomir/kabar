@@ -5,3 +5,4 @@ filter:
     excluded_paths:
         - Doc/*
         - vendor/*
+        - Tests/*

@@ -3,7 +3,9 @@
     "description": "Library of modules used to speed up WordPress sites development.",
     "type": "wordpress-plugin",
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "^2.8"
+        "phpdocumentor/phpdocumentor": "^2.8",
+        "phpunit/phpunit": "^4.8",
+        "johnpbloch/wordpress": "^4.3"
     },
     "license": "GNU GENERAL PUBLIC LICENSE Version 3",
     "authors": [
@@ -14,6 +16,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "php" : "5.5.x",
         "enshrined/svg-sanitize": "^0.2.1",
         "level-2/dice": "dev-v2.0-PHP5.4-5.5"
     }

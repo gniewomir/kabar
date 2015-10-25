@@ -1,0 +1,86 @@
+<?php
+
+class ServiceLocatorTests extends WP_UnitTestCase {
+
+    /**
+     * @dataProvider sharedClasses
+     */
+    public function testGetClass_ShouldReturnFullClassName($type, $name, $class) {
+        $kabar = new \kabar\Kabar();
+        \kabar\ServiceLocator::setup($kabar);
+        $this->assertEquals(
+            $class,
+            \kabar\ServiceLocator::getClass($type, $name)
+        );
+    }
+
+    /**
+     * @dataProvider sharedClasses
+     */
+    public function testGet_ShouldReturnSameInstanceAsDIC($type, $name, $class) {
+        $kabar = new \kabar\Kabar();
+        \kabar\ServiceLocator::setup($kabar);
+
+        // make sure that $class is marked as shared
+        // normally it happends on autoload
+        // maybeShare modifies autoloader rules
+        $this->assertTrue(
+            $kabar->maybeShare($class)
+        );
+
+        $expected = $kabar->create($class);
+        $expected->prop = 'test';
+        $tested   = \kabar\ServiceLocator::get($type, $name);
+
+        $this->assertEquals(
+            $expected,
+            $tested
+        );
+    }
+
+    /**
+     * @dataProvider newableClasses
+     */
+    public function testGetNew_ShouldReturnNewInstance($type, $name, $class) {
+        $kabar = new \kabar\Kabar();
+        \kabar\ServiceLocator::setup($kabar);
+
+        $expected = \kabar\ServiceLocator::getNew($type, $name);
+        $expected->prop = 'expected';
+
+        $tested  = \kabar\ServiceLocator::getNew($type, $name);
+        $tested->prop = 'tested';
+
+        $this->assertInstanceOf(
+            $class,
+            $expected
+        );
+
+        $this->assertInstanceOf(
+            $class,
+            $tested
+        );
+
+        $this->assertNotEquals(
+            $expected->prop,
+            $tested->prop
+        );
+
+    }
+
+    public function sharedClasses()
+    {
+        return array(
+            array('Module',  'Styles',   '\\kabar\\Module\\Styles\\Styles'),
+            array('Module',  'Scripts',  '\\kabar\\Module\\Scripts\\Scripts'),
+            array('Factory', 'Template', '\\kabar\\Factory\\Template\\Template')
+        );
+    }
+
+    public function newableClasses()
+    {
+        return array(
+            array('Utility', 'Template', '\\kabar\\Utility\\Template\\Template', 'test')
+        );
+    }
+}

@@ -12,3 +12,7 @@ composer.phar
 
 #documentation
 /Doc/
+
+#testing suite data
+/wordpress
+.svn

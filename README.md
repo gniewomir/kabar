@@ -45,20 +45,23 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Form, Fields and Storage classes moved to utility namespace
 * getForId(), saveForId(), searchStorage() methods added to form fields classes
 * Storage objects updated() method now allows setting updated value
-* Adjust AdminUI components to have more consitent API
+* Adjust AdminUI components to have more consistent API
+* Dice Dependancy Injection container
+* Extend Dice 'create' method to automaticaly add 'shared' rule to selected namespaces
+* Rewrite ServiceLocator to use Dice, and keep it backward compatibile within reasonale boundries
 
 #### In progress
+* Widget factory object?
 * Rewrite fieldset field/add fieldset handling to form component
 * Add "Table" templates for all fields
 * Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
 * Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
-* Rename Modules to services
-* Dice Dependancy Injection container
-* Extend Dice 'create' method to automaticaly add 'shared' rule to selected namespaces
+* Rename Modules to Services?
 * Package definition for composer
 * Form fields validator objects
 * AJAX forms
 * Add tests for basic components (fields, storage, form?)
+* Exceptions throwing/handling instead trigger error?
 
 ### 0.38.0
 
