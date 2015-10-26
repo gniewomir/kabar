@@ -10,8 +10,6 @@
 
 namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Handles redering select field, keeping text field save/get methods
  */

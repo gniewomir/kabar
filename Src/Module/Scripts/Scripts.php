@@ -10,8 +10,6 @@
 
 namespace kabar\Module\Scripts;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Scripts module main class
  */

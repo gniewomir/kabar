@@ -2,8 +2,6 @@
 
 namespace kabar\Widget\Widget\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Abstract widget field.
  *
@@ -89,7 +87,10 @@ abstract class AbstractField
      */
     public function form($instance)
     {
-        $template = ServiceLocator::get('Factory', 'Template')->create();
+        /**
+         * @deprecated ServiceLocator is deprecated since 0.50.0
+         */
+        $template = \kabar\ServiceLocator::get('Factory', 'Template')->create();
         $template($this->getTemplatesDirectory().$this->getFieldType().self::TEMPLATE_EXTENSION);
         $template->fieldId   = $this->getWordPressFieldId();
         $template->fieldName = $this->getWordPressFieldName();
@@ -160,7 +161,7 @@ abstract class AbstractField
      */
     protected function getLibrarySlug()
     {
-        return ServiceLocator::VENDOR_NAMESPACE;
+        return KABAR_NAMESPACE;
     }
 
     /**
@@ -169,7 +170,7 @@ abstract class AbstractField
      */
     public function getLibraryVersion()
     {
-        return ServiceLocator::VERSION;
+        return KABAR_VERSION;
     }
 
     /**

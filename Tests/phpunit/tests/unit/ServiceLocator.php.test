@@ -21,20 +21,18 @@ class ServiceLocatorTests extends WP_UnitTestCase {
         $kabar = new \kabar\Kabar();
         \kabar\ServiceLocator::setup($kabar);
 
-        // make sure that $class is marked as shared
-        // normally it happends on autoload
-        // maybeShare modifies autoloader rules
-        $this->assertTrue(
-            $kabar->maybeShare($class)
-        );
+        $kabar->maybeShare($class);
 
         $expected = $kabar->create($class);
         $expected->prop = 'test';
         $tested   = \kabar\ServiceLocator::get($type, $name);
 
-        $this->assertEquals(
-            $expected,
-            $tested
+        $this->assertTrue(
+            ($kabar === \kabar\ServiceLocator::library())
+        );
+
+        $this->assertTrue(
+            ($expected === $tested)
         );
     }
 
@@ -73,7 +71,10 @@ class ServiceLocatorTests extends WP_UnitTestCase {
         return array(
             array('Module',  'Styles',   'kabar\\Module\\Styles\\Styles'),
             array('Module',  'Scripts',  'kabar\\Module\\Scripts\\Scripts'),
-            array('Factory', 'Template', 'kabar\\Factory\\Template\\Template')
+            array('Factory', 'Template', 'kabar\\Factory\\Template\\Template'),
+            array('Module',  'Pages',    'kabar\\Module\\Pages\\Pages'),
+            array('Module',  'Pages',    'kabar\\Module\\Pages\\Pages'),
+            array('Module',  'Pages',    'kabar\\Module\\Pages\\Pages')
         );
     }
 

@@ -30,7 +30,8 @@ final class Kabar extends \Dice\Dice
     private $shared = array(
         'Module',
         'Service',
-        'Factory'
+        'Factory',
+        'Widget'
     );
 
     /**
@@ -159,7 +160,7 @@ final class Kabar extends \Dice\Dice
             }
             $name = str_replace('/', '\\', $name);
         }
-        $name = trim($name, '\\');
+        $name = ltrim($name, '\\');
         return $name;
     }
 }

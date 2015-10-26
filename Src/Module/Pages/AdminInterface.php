@@ -10,8 +10,6 @@
 
 namespace kabar\Module\Pages;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Allows creation of pages constructed from widgets
  */

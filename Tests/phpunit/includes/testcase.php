@@ -495,7 +495,6 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	function unlink( $file ) {
 		$exists = is_file( $file );
 		if ( $exists && ! in_array( $file, self::$ignore_files ) ) {
-			//error_log( $file );
 			unlink( $file );
 		} elseif ( ! $exists ) {
 			$this->fail( "Trying to delete a file that doesn't exist: $file" );

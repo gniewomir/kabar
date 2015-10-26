@@ -10,12 +10,12 @@
  * @subpackage Widgets
  */
 
-namespace kabar\Widget\Widget;
+namespace kabar;
 
 /**
  * Provides ability to create WordPress widgets on the fly.
  */
-abstract class AbstractWidget extends \kabar\Module
+abstract class Widget extends \kabar\Module
 {
 
     const DEFAULT_WRAPER_BEFORE    = '<section id="%1$s" class="widget %2$s">';
@@ -45,9 +45,7 @@ abstract class AbstractWidget extends \kabar\Module
      */
     public function __construct(\kabar\Factory\Template\Template $templateFactory = null)
     {
-        add_action('widgets_init', array($this, 'register'));
         $this->config = $this->config();
-
         $this->templateFactory = $templateFactory;
 
         /**
@@ -56,50 +54,6 @@ abstract class AbstractWidget extends \kabar\Module
         if (is_null($this->templateFactory)) {
             $this->templateFactory = \kabar\ServiceLocator::get('Factory', 'Template');
         }
-    }
-
-    /**
-     * Register widget
-     */
-    public function register()
-    {
-        register_widget($this->getWidgetClass());
-    }
-
-    /**
-     * Returns our widget class name, and acctualy creates appropriate class, if it doesn't exists already.
-     * @return string
-     */
-    private function getWidgetClass()
-    {
-        // determine new widget class name
-        $className = $this->getModuleName().'WordPressWidget';
-
-        // base widget that we extending
-        $baseClass = '\kabar\Widget\Widget\WordPressWidget';
-
-        // do not try to autoload
-        if (!class_exists($className, false)) {
-            // create WordPress widget class for this widget module
-            eval('class '.$className.' extends '.$baseClass.' { private $kabarModule = '.$this->getModuleClass().'; };');
-        }
-
-        // return created class name
-        return $className;
-    }
-
-    /**
-     * Inject dependancies to template created for WordPress widget instance ( which is not an object, just array of data )
-     *
-     * @since  0.0.0
-     * @param  string                              $widgetId Uniqe id for this wiget
-     * @param  \kabar\Utility\Template\Template $template
-     * @return \kabar\Utility\Template\Template
-     */
-    public function objects($widgetId, \kabar\Utility\Template\Template $template)
-    {
-        $template->widgetId = $widgetId;
-        return $template;
     }
 
     /**
@@ -135,17 +89,20 @@ abstract class AbstractWidget extends \kabar\Module
     {
         $config           = $this->config();
         $id               = trim($id, '#');
+
         $widget           = $this->templateFactory->create();
         $widget($config['template']);
         $widget->widgetId = $id;
         foreach ($options as $name => $value) {
             $widget->$name = $value;
         }
+
         $widget = $this->wrapForReuse(
             $id,
             $config['css_classes'],
             $this->render($widget)
         );
+
         echo $widget;
     }
 

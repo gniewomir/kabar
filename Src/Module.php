@@ -64,7 +64,7 @@ class Module
      * Returns module name
      * @return string
      */
-    protected function getModuleName()
+    public function getModuleName()
     {
         if (empty($this->moduleName)) {
             /**
@@ -209,7 +209,7 @@ class Module
     protected function requireNotEmpty($what, $value)
     {
         if (empty($value)) {
-            trigger_error('Class "'.$this->getModuleClass().'" requires to '.$what.' to not be empty at this point.', E_USER_ERROR);
+            throw new \Exception('Class "'.$this->getModuleClass().'" requires to '.$what.' to not be empty at this point.', 1);
         }
     }
 
@@ -224,7 +224,7 @@ class Module
             return;
         }
         if (did_action($action)) {
-            trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated before "'.$action.'" action.', E_USER_ERROR);
+            throw new \Exception('Class "'.$this->getModuleClass().'" requires to be instantiated before "'.$action.'" action.', 1);
         }
     }
 
@@ -239,7 +239,7 @@ class Module
             return;
         }
         if (!did_action($action)) {
-            trigger_error('Class "'.$this->getModuleClass().'" requires to be instantiated after "'.$action.'" action.', E_USER_ERROR);
+            throw new \Exception('Class "'.$this->getModuleClass().'" requires to be instantiated after "'.$action.'" action.', 1);
         }
     }
 }

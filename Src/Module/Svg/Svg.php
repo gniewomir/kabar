@@ -10,7 +10,6 @@
 
 namespace kabar\Module\Svg;
 
-use \kabar\ServiceLocator as ServiceLocator;
 use \enshrined\svgSanitize\Sanitizer as Sanitizer;
 
 /**

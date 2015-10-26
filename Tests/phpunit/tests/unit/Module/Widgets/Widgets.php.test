@@ -1,0 +1,17 @@
+<?php
+
+class ModuleWidgetsWidgetsTests extends WP_UnitTestCase {
+
+
+    public function testRegister_ShouldRegisterWidgetWithWordpress() {
+        $kabar   = new \kabar\Kabar();
+        $widgets = $kabar->create('kabar/Module/Widgets');
+        $widget  = $kabar->create('fixtures/Widget/Widget/Widget');
+        $key     = $widgets->getWidgetKey($widget);
+        $widgets->register($widget);
+
+        $this->assertTrue(
+            ($widget === $GLOBALS['wp_widget_factory']->widgets[$key]->getWidget())
+        );
+    }
+}

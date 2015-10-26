@@ -13,8 +13,6 @@
 
 namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Internal field class
  */

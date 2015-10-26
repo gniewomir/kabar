@@ -43,12 +43,6 @@ class Pages extends \kabar\Module
     protected $sidebars;
 
     /**
-     * Widget modules callbacks
-     * @var array
-     */
-    protected $widgets;
-
-    /**
      * Widgetized page template name
      * @var string
      */
@@ -84,19 +78,16 @@ class Pages extends \kabar\Module
     public function __construct(
         \kabar\Module\Styles\Styles     $styles,
         \kabar\Module\Cache\Cache       $cache,
-        \kabar\Module\Sidebars\Sidebars $sidebars,
-        array $widgets = array(),
-        $pageTemplate = 'templates/widgetized-page.php'
+        \kabar\Module\Sidebars\Sidebars $sidebars
     ) {
         $this->requireBeforeAction('after_setup_theme');
+
+        $pageTemplate = 'templates/widgetized-page.php';
 
         // Dependencies
         $this->styles   = $styles;
         $this->cache    = $cache;
         $this->sidebars = $sidebars;
-
-        // Widget callbacks
-        $this->widgets = $widgets;
 
         // Page tamplate path, relative to theme directory
         $this->template = $pageTemplate;
@@ -106,9 +97,6 @@ class Pages extends \kabar\Module
 
         // register sidebars
         $this->registerSidebars();
-
-        // register widgets
-        $this->registerWidgets();
 
         // admin interface
         if (is_admin()) {
@@ -261,20 +249,6 @@ class Pages extends \kabar\Module
                 'after_title'   => '',
             )
         );
-    }
-
-    /**
-     * Register widgets
-     * @return void
-     */
-    protected function registerWidgets()
-    {
-        if (!is_admin() && !$this->isWidgetizedPage()) {
-            return;
-        }
-        foreach ($this->widgets as $widget) {
-            ServiceLocator::get(array_shift($widget), array_shift($widget));
-        }
     }
 
     /**

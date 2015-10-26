@@ -26,9 +26,7 @@ Documentation and examples are work in progress, so I advice against trying to u
 
 ### Code quality
 * Clear Scrutinizer backlog
-* Replace 'module callbacks' with callbacks or - better yet - injecting objects/interfaces
-* Find a way around eval in widgets module
-* Unit tests
+* Grater unit tests coverage
 
 ### Deployment & documentation
 * Publish as Composer package
@@ -49,20 +47,24 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Dice Dependancy Injection container
 * Extend Dice to automaticaly share objects in selected namespaces
 * Rewrite ServiceLocator to act as facade for Dice to keep library mostly backward compatibile
+* Widgets module/factory object
+* Replace 'module callbacks' with callbacks or - better yet - injecting objects/interfaces
+* Find a way around eval in widgets module
 
 #### In progress
+* Widget cache class
+* Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
+* Add tests for basic components (fields, storage, form?)
+* Exceptions throwing/handling instead trigger error?
+* Form factory
+* Fields factory
 * Use Storage object for Config module
-* Widget factory object?
 * Rewrite fieldset field/add fieldset handling to form component
 * Add "Table" templates for all fields
-* Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
-* Widgets as descendants of \WP_Widget forcing overiding methods by throwing exceptions?
-* Rename Modules to Services?
 * Package definition for composer
 * Form fields validator objects
 * AJAX forms
-* Add tests for basic components (fields, storage, form?)
-* Exceptions throwing/handling instead trigger error?
+* Select for page template for widgetized pages
 
 ### 0.38.0
 

@@ -10,8 +10,6 @@
 
 namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Handles redering, saving and retrieveing checkbox field
  */

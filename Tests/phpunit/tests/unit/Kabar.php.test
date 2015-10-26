@@ -29,6 +29,21 @@ class KabarTests extends WP_UnitTestCase {
     /**
      * @dataProvider sharedObjectsClassNameProvider
      */
+    public function testCreate_ShouldReturnSharedInstance($class)
+    {
+        $kabar    = new \kabar\Kabar();
+        $kabar->addRule($class, array('shared'=>true));
+        $expected = $kabar->create($class);
+        $expected->prop = 'test';
+        $tested   = $kabar->create($class);
+        $this->assertTrue(
+            ($expected === $tested)
+        );
+    }
+
+    /**
+     * @dataProvider sharedObjectsClassNameProvider
+     */
     public function testMaybeShare_ShouldAddSharedRuleToClassesInSpecifedNamespaces($class)
     {
         $kabar = new \kabar\Kabar();
@@ -52,12 +67,12 @@ class KabarTests extends WP_UnitTestCase {
             array('kabar/Utility/Template/Template',      'kabar\\Utility\\Template\\Template', array()),
             array('\\kabar\\Utility\\Template\\Template', 'kabar\\Utility\\Template\\Template', array()),
             array('/kabar/Utility/Template/Template',     'kabar\\Utility\\Template\\Template', array()),
+            array('kabar\\Module\\Sidebars\\Cleaner',     'kabar\\Module\\Sidebars\\Cleaner',   array()),
             // shortcuts
             array('kabar/Utility/Template',               'kabar\\Utility\\Template\\Template', array()),
             array('/kabar/Utility/Template',              'kabar\\Utility\\Template\\Template', array()),
             array('/kabar/Utility/Template/',             'kabar\\Utility\\Template\\Template', array()),
-            array('kabar/Utility/Template/',              'kabar\\Utility\\Template\\Template', array()),
-            array('kabar\\Module\\Sidebars\\Cleaner',     'kabar\\Module\\Sidebars\\Cleaner',   array())
+            array('kabar/Utility/Template/',              'kabar\\Utility\\Template\\Template', array())
         );
     }
 
@@ -65,7 +80,11 @@ class KabarTests extends WP_UnitTestCase {
     {
         return array(
             array('kabar\\Module\\Scripts\\Scripts'),
-            array('kabar\\Factory\\Template\\Template')
+            array('kabar\\Factory\\Template\\Template'),
+            array('kabar\\Module\\Sidebars\\Sidebars'),
+            array('kabar\\Module\\Pages\\Pages'),
+            array('kabar\\Module\\Pages\\Pages'),
+            array('kabar\\Module\\Pages\\Pages')
         );
     }
 }

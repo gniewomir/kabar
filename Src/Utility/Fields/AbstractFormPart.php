@@ -11,8 +11,6 @@
 
 namespace kabar\Utility\Fields;
 
-use \kabar\ServiceLocator as ServiceLocator;
-
 /**
  * Form part abstraction and utility functions
  */
@@ -86,7 +84,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
      */
     public function getLibrarySlug()
     {
-        return ServiceLocator::VENDOR_NAMESPACE;
+        return KABAR_NAMESPACE;
     }
 
     /**
@@ -95,7 +93,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
      */
     public function getLibraryVersion()
     {
-        return ServiceLocator::VERSION;
+        return KABAR_VERSION;
     }
 
     /**

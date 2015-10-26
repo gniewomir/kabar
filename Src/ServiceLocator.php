@@ -32,6 +32,12 @@ final class ServiceLocator
     private static $container;
 
     /**
+     * Instantiated classes
+     * @var array<string>
+     */
+    private static $created = array();
+
+    /**
      * Private constructor as this class in purely static
      */
     private function __construct()
@@ -46,6 +52,15 @@ final class ServiceLocator
     public static function setup(\kabar\Kabar $kabar)
     {
         self::$container = $kabar;
+    }
+
+    /**
+     * Return library
+     * @return \kabar\Kabar
+     */
+    public static function library()
+    {
+        return self::$container;
     }
 
     /**
@@ -74,7 +89,7 @@ final class ServiceLocator
             $relativeClass = $type.'\\'.$name.'\\'.$name;
             $file          = $path.str_replace('\\', '/', $relativeClass).'.php';
             if (file_exists($file)) {
-                return self::$container->parseName('\\'.$space.'\\'.$relativeClass);
+                return self::$container->parseName($space.'\\'.$relativeClass);
             }
         }
         trigger_error('Cannot determine class name for type:'.$type.' and name:'.$name, E_USER_ERROR);
@@ -135,19 +150,16 @@ final class ServiceLocator
      */
     public static function get($type, $name)
     {
-        $class = self::getClass($type, $name);
-
-        $arguments = func_get_args();
-        if (count($arguments) > 2) {
-            // Get arguments that should be passed to module constructor
-            // We don't need module type or name
-            $arguments = array_slice($arguments, 2);
-            // Change arguments to DIC rules
-            self::parseArguments($arguments);
+        if (defined('WP_DEBUG') && WP_DEBUG && !defined('KABAR_UNIT_TESTING')) {
+            if (defined('KABAR_DEPRECATED_NOTICE') && KABAR_DEPRECATED_BACKTRACE) {
+                trigger_error('Service Locator is deprecated since 0.50.0.', E_USER_WARNING);
+            }
+            if (defined('KABAR_DEPRECATED_BACKTRACE') && KABAR_DEPRECATED_BACKTRACE) {
+                error_log(var_export(debug_backtrace(), true));
+            }
         }
 
-        // Make instance shared if needed
-        self::$container->maybeShare($class);
+        $class = self::getClass($type, $name);
         return self::$container->create($class);
     }
 
@@ -159,17 +171,16 @@ final class ServiceLocator
      */
     public static function getNew($type, $name)
     {
-        $class = self::getClass($type, $name);
-
-        $arguments = func_get_args();
-        if (count($arguments) > 2) {
-            // Get arguments that should be passed to module constructor
-            // We don't need module type or name
-            $arguments = array_slice($arguments, 2);
-            // Change arguments to DIC rules
-            self::parseArguments($arguments);
+        if (defined('WP_DEBUG') && WP_DEBUG && !defined('KABAR_UNIT_TESTING')) {
+            if (defined('KABAR_DEPRECATED_NOTICE') && KABAR_DEPRECATED_BACKTRACE) {
+                trigger_error('Service Locator is deprecated since 0.50.0.', E_USER_WARNING);
+            }
+            if (defined('KABAR_DEPRECATED_BACKTRACE') && KABAR_DEPRECATED_BACKTRACE) {
+                error_log(var_export(debug_backtrace(), true));
+            }
         }
 
+        $class = self::getClass($type, $name);
         return self::$container->create($class);
     }
 }

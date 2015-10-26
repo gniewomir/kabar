@@ -3,49 +3,47 @@
  * WordPress widget class child, that is ancestor for all kabar widgets providing them with acces to FieldsCollection API.
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      0.0.0
+ * @since      0.50.0
  * @package    kabar
  * @subpackage widgets
  */
 
-namespace kabar\Widget\Widget;
-
-use \kabar\ServiceLocator as ServiceLocator;
+namespace kabar\Module\Widgets;
 
 /**
  * Decorator for default WordPress widget class connecting it with our Widget module
  */
-class WordPressWidget extends \WP_Widget
+class Decorator extends \WP_Widget
 {
-
-    const BASE_CLASS_NAME = 'WordPressWidget';
 
     /**
      * Configuration pulled from parent module
      * @var array
      */
-    protected $config = array();
+    private $config = array();
 
     /**
      * Fields collection
      * @var \kabar\Widget\Widget\FieldsCollection
      */
-    protected $fieldsCollection;
+    private $fieldsCollection;
 
     /**
      * Widget template
      * @var \kabar\Utility\Template\Template
      */
-    protected $template;
+    private $templateFactory;
+
+    private $widget;
+
 
     /**
      * Register widget with WordPress.
      */
-    public function __construct()
+    public function __construct(\kabar\Factory\Template\Template $templateFactory, \kabar\Widget $widget)
     {
-        $this->config = $this->getParentModule()->config();
-
-
+        $this->widget = $widget;
+        $this->config = $this->widget->config();
         parent::__construct(
             $this->config['id'], // Base ID
             $this->config['title'], // Name
@@ -54,27 +52,16 @@ class WordPressWidget extends \WP_Widget
                 'classname'   => $this->config['css_classes'],
             )
         );
-        $this->fieldsCollection = $this->getParentModule()->fields(new FieldsCollection($this));
-        add_action('template_redirect', array($this, 'setupTemplates'));
+        // $this->fieldsCollection = $this->widget->fields(new FieldsCollection($this));
     }
 
     /**
-     * Create template objects for each Widget
-     * @return void
+     * Return widget object
+     * @return \kabar\Widget
      */
-    public function setupTemplates()
+    public function getWidget()
     {
-        $sidebars = wp_get_sidebars_widgets();
-        foreach ($sidebars as $sidebar => $widgets) {
-            foreach ($widgets as $index => $widgetId) {
-                if (strpos($widgetId, $this->config['id']) === 0) {
-                    $template                   = ServiceLocator::get('Factory', 'Template')->create();
-                    $template($this->config['template']);
-                    $template                   = $this->getParentModule()->objects($widgetId, $template);
-                    $this->templates[$widgetId] = $template;
-                }
-            }
-        }
+        return $this->widget;
     }
 
     /**
@@ -88,13 +75,14 @@ class WordPressWidget extends \WP_Widget
     public function widget($args, $instance)
     {
         $widgetId = $args['widget_id'];
-        $template = $this->templates[$widgetId];
+        $template = $this->templateFactory->create();
+        $template($this->config['template']);
         $template = $this->fieldsCollection->populateTemplate(
             $args,
             $instance,
             $template
         );
-        $template = $this->getParentModule()->render($template);
+        $template = $this->widget->render($template);
         echo $args['before_widget'].$template.$args['after_widget'];
     }
 
@@ -123,14 +111,5 @@ class WordPressWidget extends \WP_Widget
     public function update($newInstance, $oldInstance)
     {
         return $this->fieldsCollection->updateFields($newInstance, $oldInstance);
-    }
-
-    /**
-     * Returns parent module
-     * @return object
-     */
-    protected function getParentModule()
-    {
-        return \Kabar::library()->create($this->kabarModule);
     }
 }

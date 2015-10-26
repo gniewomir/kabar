@@ -93,7 +93,7 @@ class Config extends \kabar\Module
     public function registerSection($sectionName, $sectionSettings)
     {
         if (isset($this->parsedConfig->$sectionName) || isset($this->modules->$sectionName)) {
-            trigger_error('Config section '.$sectionName.' already registered!', E_USER_ERROR);
+            throw new \Exception('Config section '.$sectionName.' already registered!', 1);
         }
         $this->modules[$sectionName] = $sectionSettings;
     }
