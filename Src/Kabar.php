@@ -30,8 +30,7 @@ final class Kabar extends \Dice\Dice
     private $shared = array(
         'Module',
         'Service',
-        'Factory',
-        'Widget'
+        'Factory'
     );
 
     /**

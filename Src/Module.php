@@ -1,6 +1,6 @@
 <?php
 /**
- * Module without any functionality, providing utility functions for other classes
+ * Common foundation for all Kabar modules
  *
  * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
  * @since      0.0.0
@@ -11,12 +11,16 @@
 namespace kabar;
 
 /**
- * Class providing base for module you can extend
+ * Base for all Kabar modules provides common utility methods accros whole library
  */
-class Module
+abstract class Module
 {
-    const TEMPLATES_DIRECTORY = 'Templates';
-    const ASSETS_DIRECTORY    = 'assets';
+    /**
+     * Current module class
+     * @since 0.50.0
+     * @var string
+     */
+    private $moduleClass;
 
     /**
      * Current module name
@@ -51,30 +55,14 @@ class Module
      * @since 0.14.0
      * @var string
      */
-    private $templatesDirectory;
+    private $moduleTemplatesDirectory;
 
     /**
      * Assets uri
      * @since 0.14.0
      * @var string
      */
-    private $assetsUri;
-
-    /**
-     * Returns module name
-     * @return string
-     */
-    public function getModuleName()
-    {
-        if (empty($this->moduleName)) {
-            /**
-             * Fastest way
-             * @see http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
-             */
-            $this->moduleName = substr(strrchr($this->getModuleClass(), '\\'), 1);
-        }
-        return $this->moduleName;
-    }
+    private $moduleAssetsUri;
 
     /**
      * Returns current module class
@@ -82,7 +70,26 @@ class Module
      */
     protected function getModuleClass()
     {
-        return get_class($this);
+        if (!$this->moduleClass) {
+            $this->moduleClass = get_class($this);
+        }
+        return $this->moduleClass;
+    }
+
+    /**
+     * Returns module name
+     * @return string
+     */
+    public function getModuleName()
+    {
+        if (!$this->moduleName) {
+            /**
+             * Fastest way
+             * @see http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
+             */
+            $this->moduleName = substr(strrchr($this->getModuleClass(), '\\'), 1);
+        }
+        return $this->moduleName;
     }
 
     /**
@@ -105,10 +112,9 @@ class Module
      */
     protected function getModuleType()
     {
-        if (empty($this->moduleType)) {
-            $exploded = explode('\\', $this->getModuleClass());
-            array_shift($exploded);
-            $this->moduleType = (string) array_shift($exploded);
+        if (!$this->moduleType) {
+            $exploded         = explode('\\', $this->getModuleClass());
+            $this->moduleType = $exploded[1];
         }
         return $this->moduleType;
     }
@@ -121,10 +127,15 @@ class Module
      */
     protected function getCssClass()
     {
-        $class = explode('\\', get_class($this));
-        array_pop($class);
-        $cssClass = implode('-', $class);
-        return $cssClass;
+        if (!$this->moduleCssClass) {
+            $module = explode('-', $this->getModuleSlug());
+            $module = array_slice($module, 0, -1);
+            $module = implode('-', $module);
+            $class  = $this->getModuleSlug();
+
+            $this->moduleCssClass = $module.' '.$class;
+        }
+        return $this->moduleCssClass;
     }
 
     /**
@@ -151,23 +162,22 @@ class Module
      */
     protected function getAssetsUri()
     {
-        if (empty($this->assetsUri)) {
+        if (empty($this->moduleAssetsUri)) {
             // check if module is in plugin or in theme directory
             // and return appropriate url
             if (strpos($this->getTemplatesDirectory(), get_stylesheet_directory()) !== false) {
-                $assets = $this->getModuleDirectory().self::ASSETS_DIRECTORY;
-                $assets = str_replace(
+                $assetsDirectory                = $this->getModuleDirectory().'assets';
+                $assetsDirectoryRelativeToTheme = str_replace(
                     get_stylesheet_directory(),
                     '',
-                    $assets
+                    $assetsDirectory
                 );
-
-                $this->assetsUri = get_stylesheet_directory_uri().$assets;
+                $this->moduleAssetsUri = get_stylesheet_directory_uri().$assetsDirectoryRelativeToTheme;
             } else {
-                $this->assetsUri = plugins_url('', dirname(__DIR__)).'/'.$this->getModuleType().'/'.$this->getModuleName().'/'.self::ASSETS_DIRECTORY.'/';
+                $this->moduleAssetsUri = plugins_url('/assets/', $this->getModuleDirectory());
             }
         }
-        return $this->assetsUri;
+        return $this->moduleAssetsUri;
     }
 
     /**
@@ -176,10 +186,10 @@ class Module
      */
     protected function getTemplatesDirectory()
     {
-        if (empty($this->templatesDirectory)) {
-            $this->templatesDirectory = $this->getModuleDirectory().DIRECTORY_SEPARATOR.self::TEMPLATES_DIRECTORY.DIRECTORY_SEPARATOR;
+        if (empty($this->moduleTemplatesDirectory)) {
+            $this->moduleTemplatesDirectory = $this->getModuleDirectory().'Templates'.DIRECTORY_SEPARATOR;
         }
-        return $this->templatesDirectory;
+        return $this->moduleTemplatesDirectory;
     }
 
     /**

@@ -8,12 +8,12 @@
  * @subpackage widgets
  */
 
-namespace kabar\Module\Widgets;
+namespace kabar\Factory\Widget;
 
 /**
  * Decorator for default WordPress widget class connecting it with our Widget module
  */
-class Decorator extends \WP_Widget
+final class Decorator extends \WP_Widget
 {
 
     /**
@@ -34,6 +34,10 @@ class Decorator extends \WP_Widget
      */
     private $templateFactory;
 
+    /**
+     * Kabar Widget
+     * @var \kabar\Widget
+     */
     private $widget;
 
 

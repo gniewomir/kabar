@@ -2,29 +2,105 @@
 
 class ModuleTests extends WP_UnitTestCase {
 
-    /**
-     * @dataProvider modulePathProvider
-     */
-    public function testGetModuleDirectory_ShouldReturnModuleDirectory($class, $path) {
-        $kabar  = new \kabar\Kabar();
-        $tested = $kabar->create($class);
-        $method = self::getMethod($tested, 'getModuleDirectory');
-        $result = $method->invokeArgs($tested, array());
+    public function setUp() {
+        $this->moduleClass              = 'fixtures\\Module\\Test\\Test';
+        $this->moduleName               = 'Test';
+        $this->moduleSlug               = 'fixtures-Module-Test-Test';
+        $this->moduleType               = 'Module';
+        $this->moduleCssClass           = 'fixtures-Module-Test fixtures-Module-Test-Test';
+        $this->moduleLibrarySlug        = KABAR_NAMESPACE;
+        $this->moduleLibraryVersion     = KABAR_VERSION;
+        $this->moduleDirectory          = KABAR_FIXTURES_DIR.'Module/Test/';
+        $this->moduleTemplatesDirectory = KABAR_FIXTURES_DIR.'Module/Test/Templates/';
+        $this->assetsUri                = plugins_url('/assets/', $this->moduleDirectory);
+
+        $this->kabar                    = new \kabar\Kabar();
+        $this->module                   = $this->kabar->create($this->moduleClass);
+    }
+
+    public function testGetModuleClass_ShouldReturnModuleClass() {
+        $method = self::getMethod($this->module, 'getModuleClass');
         $this->assertEquals(
-            $path,
-            $result
+            $this->moduleClass,
+            $method->invokeArgs($this->module, array())
         );
     }
 
-    public function modulePathProvider()
-    {
-        return array(
-            array('\\kabar\\Module\\Scripts\\Scripts', KABAR_SRC_DIR.'Module/Scripts/'),
-            array('\\kabar\\Module\\Styles\\Styles',   KABAR_SRC_DIR.'Module/Styles/'),
-            array('\\fixtures\\Module\\Test\\Test',    KABAR_FIXTURES_DIR.'Module/Test/')
+    public function testGetModuleName_ShouldReturnModuleClassNameWithoutNamespaces() {
+        $method = self::getMethod($this->module, 'getModuleName');
+        $this->assertEquals(
+            $this->moduleName,
+            $method->invokeArgs($this->module, array())
         );
     }
 
+    public function testGetModuleSlug_ShouldReturnModuleSlug() {
+        $method = self::getMethod($this->module, 'getModuleSlug');
+        $this->assertEquals(
+            $this->moduleSlug,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetModuleType_ShouldReturnFirstNamespaceAfterVendor() {
+        $method = self::getMethod($this->module, 'getModuleType');
+        $this->assertEquals(
+            $this->moduleType,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetModuleCssClas_ShouldReturnModuleSlugAndModuleSlugWithoutClassName() {
+        $method = self::getMethod($this->module, 'getCssClass');
+        $this->assertEquals(
+            $this->moduleCssClass,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetLibrarySlug_ShouldReturnVendorNamespace() {
+        $method = self::getMethod($this->module, 'getLibrarySlug');
+        $this->assertEquals(
+            $this->moduleLibrarySlug,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetLibraryVesion_ShouldReturnLibraryVersion() {
+        $method = self::getMethod($this->module, 'getLibraryVersion');
+        $this->assertEquals(
+            $this->moduleLibraryVersion,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetModuleDirectory_ShouldReturnModuleDirectory() {
+        $method = self::getMethod($this->module, 'getModuleDirectory');
+        $this->assertEquals(
+            $this->moduleDirectory,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetTemplatesDirectory_ShouldReturnTemplatesDirectory() {
+        $method = self::getMethod($this->module, 'getTemplatesDirectory');
+        $this->assertEquals(
+            $this->moduleTemplatesDirectory,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    public function testGetAssetsUri_ShouldReturnAssetsUri() {
+        $method = self::getMethod($this->module, 'getAssetsUri');
+        $this->assertEquals(
+            $this->assetsUri,
+            $method->invokeArgs($this->module, array())
+        );
+    }
+
+    /**
+     * Get inacessibile method
+     */
     protected static function getMethod($object, $name) {
         $reflection = new ReflectionClass($object);
         $method     = $reflection->getMethod($name);
@@ -32,3 +108,4 @@ class ModuleTests extends WP_UnitTestCase {
         return $method;
     }
 }
+

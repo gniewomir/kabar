@@ -1,6 +1,6 @@
 <?php
 /**
- * Global access to Kabar library
+ * Global access for Kabar library
  *
  * @package    kabar
  * @subpackage kabar
@@ -18,6 +18,14 @@ class Kabar
     private static $library;
 
     /**
+     * Private constructor, this class is not meant to be instantiated
+     */
+    private function __construct()
+    {
+
+    }
+
+    /**
      * Iject library to locator
      * @param  \kabar\Kabar $kabar
      * @return void
@@ -25,7 +33,7 @@ class Kabar
     public static function setup(\kabar\Kabar $kabar)
     {
         if (self::$library) {
-            trigger_error('You cannot switch library instance at runtime.', E_USER_ERROR);
+            throw new \Exception('You cannot switch library instance at runtime.', 1);
         }
         self::$library = $kabar;
     }
@@ -37,5 +45,16 @@ class Kabar
     public static function library()
     {
         return self::$library;
+    }
+
+    /**
+     * Render template tag
+     * @param  strign $tagName
+     * @param  array  $arguments
+     * @return mixed
+     */
+    public static function tag($tagName, $arguments)
+    {
+        return self::$library->create('kabar\\Module\\Tag\\Tag')->render($tagName, $arguments);
     }
 }

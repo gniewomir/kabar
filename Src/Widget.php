@@ -1,19 +1,18 @@
 <?php
 /**
- * Wrapper module for our widgets.
+ * Widget
  *
- * @see        \kabar\Widget\Widget\WordPressWidget
- *
- * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
- * @since      0.0.0
  * @package    kabar
- * @subpackage Widgets
+ * @subpackage kabar
+ * @since      0.50.0
+ * @author     Gniewomir Świechowski <gniewomir.swiechowski@gmail.com>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GNU GENERAL PUBLIC LICENSE Version 3
  */
 
 namespace kabar;
 
 /**
- * Provides ability to create WordPress widgets on the fly.
+ * Provides OO API for WordPress Widget
  */
 abstract class Widget extends \kabar\Module
 {
@@ -22,38 +21,77 @@ abstract class Widget extends \kabar\Module
     const DEFAULT_WRAPER_AFTER     = '</section>';
 
     /**
-     * Template factory
-     * @var \kabar\Factory\Template\Teamplate
+     * Widget ID
+     * @var string
      */
-    private $templateFactory;
+    private $id;
 
     /**
-     * Configuration array
+     * Widget title
+     * @var string
+     */
+    private $title;
+
+    /**
+     * Widget description
+     * @var string
+     */
+    private $description;
+
+    /**
+     * Widget css classes
+     * @var string|array<string>
+     */
+    private $cssClasses;
+
+    /**
+     * Template name or path
+     * @var string
+     */
+    private $defaultTemplate;
+
+    /**
+     * Config array
      * @var array
      */
-    protected $config;
+    private $config;
+
+    // INTERFACE
 
     /**
-     * Returns widget config
+     * Setup widget
+     * @param string               $id
+     * @param string               $title
+     * @param string               $description
+     * @param string|array<string> $cssClasses
+     * @param string               $defaultTemplate
+     */
+    public function __construct($id, $title, $description, $cssClasses = '', $defaultTemplate = 'Widget.php')
+    {
+        $this->id         = (strpos($id, $this->getLibrarySlug()) === 0) ? $id :  $this->getLibrarySlug().'_'.$id;
+        $this->title      = $title;
+        $this->desciption = $description;
+        $this->cssClasses = !empty($cssClasses) && is_array($cssClasses) ? implode(' ', $cssClasses) : (string) $cssClasses;
+        $this->cssClasses = $this->getCssClass().' '.$this->cssClasses;
+
+        $this->defaultTemplate = strpos($defaultTemplate, DIRECTORY_SEPARATOR) === false ? $this->getTemplatesDirectory().$defaultTemplate : $defaultTemplate;
+
+        $this->config = array(
+            'id'          => $this->id,
+            'title'       => $this->title,
+            'description' => $this->desciption,
+            'css_classes' => $this->cssClasses,
+            'template'    => $this->defaultTemplate,
+        );
+    }
+
+    /**
+     * Return widget config
      * @return array
      */
-    abstract public function config();
-
-    /**
-     * Setup module
-     * @param \kabar\Factory\Template\Template|null $templateFactory
-     */
-    public function __construct(\kabar\Factory\Template\Template $templateFactory = null)
+    public function getConfig()
     {
-        $this->config = $this->config();
-        $this->templateFactory = $templateFactory;
-
-        /**
-         * @deprecated since 0.50.0
-         */
-        if (is_null($this->templateFactory)) {
-            $this->templateFactory = \kabar\ServiceLocator::get('Factory', 'Template');
-        }
+        return $this->config;
     }
 
     /**
@@ -61,12 +99,12 @@ abstract class Widget extends \kabar\Module
      *
      * IMPORTANT: Fields ID's have to be valid php variable names, as later they are extracted in template
      *
-     * @param \kabar\Widget\Widget\FieldsCollection $fieldsCollection
-     * @return FieldsCollection
+     * @param  \kabar\Utility\Form\Form $form
+     * @return \kabar\Utility\Form\Form
      */
-    public function fields(\kabar\Widget\Widget\FieldsCollection $fieldsCollection)
+    public function fields(\kabar\Utility\Form\Form $form)
     {
-        return $fieldsCollection;
+        return $form;
     }
 
     /**
@@ -78,50 +116,5 @@ abstract class Widget extends \kabar\Module
     public function render(\kabar\Utility\Template\Template $template)
     {
         return $template;
-    }
-
-    /**
-     * Use widget stucture outside sidebar
-     * @param  string $id   CSS id of widget
-     * @return void
-     */
-    public function reuse($id, $options = array())
-    {
-        $config           = $this->config();
-        $id               = trim($id, '#');
-
-        $widget           = $this->templateFactory->create();
-        $widget($config['template']);
-        $widget->widgetId = $id;
-        foreach ($options as $name => $value) {
-            $widget->$name = $value;
-        }
-
-        $widget = $this->wrapForReuse(
-            $id,
-            $config['css_classes'],
-            $this->render($widget)
-        );
-
-        echo $widget;
-    }
-
-    /**
-     * Wraps provided string in standard widget wrapper for widgetized page
-     *
-     * Function created, to allow echoing widget outside sidebar
-     *
-     * @param  string $id
-     * @param  string $class
-     * @param  string $content
-     * @return string
-     */
-    private function wrapForReuse($id, $class, $content)
-    {
-        return implode('', array(
-            sprintf(self::DEFAULT_WRAPER_BEFORE, $id, $class),
-            $content,
-            self::DEFAULT_WRAPER_AFTER
-        ));
     }
 }

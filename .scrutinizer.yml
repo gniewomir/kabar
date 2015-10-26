@@ -5,4 +5,10 @@ filter:
     excluded_paths:
         - Doc/*
         - vendor/*
-        - Tests/*
+build:
+    environment:
+        php:
+            version: 5.5
+    tests:
+        override:
+            - ./bin/run-unit-tests.sh

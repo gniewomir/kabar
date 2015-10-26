@@ -2,16 +2,31 @@
 
 class ModuleWidgetsWidgetsTests extends WP_UnitTestCase {
 
+    public function setUp() {
+        $this->kabar          = new \kabar\Kabar();
+        $this->widgets        = $this->kabar->create('kabar/Factory/Widget');
+        $this->widget         = $this->kabar->create('fixtures/Widget/Widget/Widget');
+        $this->expectedKey    = 'WidgetWordPressWidget';
+        $this->decoratorClass = 'kabar\\Factory\\Widget\\Decorator';
+    }
+
+    public function testGetWidgetKey_ShouldReturnModuleNameAndStringWordPressWidget() {
+        $this->assertEquals(
+            $this->expectedKey,
+            $this->widgets->getWidgetKey($this->widget)
+        );
+    }
 
     public function testRegister_ShouldRegisterWidgetWithWordpress() {
-        $kabar   = new \kabar\Kabar();
-        $widgets = $kabar->create('kabar/Module/Widgets');
-        $widget  = $kabar->create('fixtures/Widget/Widget/Widget');
-        $key     = $widgets->getWidgetKey($widget);
-        $widgets->register($widget);
-
+        $this->widgets->register($this->widget);
+        $this->assertInstanceOf(
+            $this->decoratorClass,
+            $GLOBALS['wp_widget_factory']->widgets[$this->expectedKey],
+            'Instance registered with WordPress is not a '.$this->decoratorClass.' instace'
+        );
         $this->assertTrue(
-            ($widget === $GLOBALS['wp_widget_factory']->widgets[$key]->getWidget())
+            ($this->widget === $GLOBALS['wp_widget_factory']->widgets[$this->expectedKey]->getWidget()),
+            'Instance provided by decorator is not indentical with registered one.'
         );
     }
 }

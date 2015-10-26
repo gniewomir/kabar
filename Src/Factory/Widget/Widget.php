@@ -8,12 +8,12 @@
  * @subpackage Modules
  */
 
-namespace kabar\Module\Widgets;
+namespace kabar\Factory\Widget;
 
 /**
  * Widgets module main class
  */
-final class Widgets extends \kabar\Module
+final class Widget extends \kabar\Module
 {
 
     /**
@@ -39,7 +39,7 @@ final class Widgets extends \kabar\Module
     public function register(\kabar\Widget $widget)
     {
         $widgets = func_get_args();
-        $factory = $this->getWidgetFactory();
+        $factory = $this->getWordPressWidgetFactory();
         foreach ($widgets as $widget) {
             $key     = $this->getWidgetKey($widget);
             $adapter = new Decorator($this->templateFactory, $widget);
@@ -60,7 +60,7 @@ final class Widgets extends \kabar\Module
         return $widget->getModuleName().'WordPressWidget';
     }
 
-    private function getWidgetFactory()
+    private function getWordPressWidgetFactory()
     {
         return $GLOBALS['wp_widget_factory'];
     }
@@ -69,4 +69,53 @@ final class Widgets extends \kabar\Module
     {
         return getWidgetFactory()->widgets;
     }
+
+
+
+    /**
+     * Use widget stucture outside sidebar
+     * @param  string $id   CSS id of widget
+     * @return void
+     */
+    public function reuse($id, $options = array())
+    {
+        $id               = trim($id, '#');
+        $widget           = $this->templateFactory->create();
+
+        $widget($this->config['template']);
+        $widget->widgetId = $id;
+        foreach ($options as $name => $value) {
+            $widget->$name = $value;
+        }
+
+        $widget = $this->wrapForReuse(
+            $id,
+            $this->config['css_classes'],
+            $this->render($widget)
+        );
+
+        echo $widget;
+    }
+
+    // INTERNAL
+
+    /**
+     * Wraps provided string in standard widget wrapper for widgetized page
+     *
+     * Function created, to allow echoing widget outside sidebar
+     *
+     * @param  string $id
+     * @param  string $class
+     * @param  string $content
+     * @return string
+     */
+    private function wrapForReuse($id, $class, $content)
+    {
+        return implode('', array(
+            sprintf(self::DEFAULT_WRAPER_BEFORE, $id, $class),
+            $content,
+            self::DEFAULT_WRAPER_AFTER
+        ));
+    }
+
 }
