@@ -1,8 +1,6 @@
-# Run after dependencies
-project_setup:
-    before:
-        - mysql -e "CREATE DATABASE uwazaj.dev_test"
-        - mysql -e "SET PASSWORD = root"
+before_commands:
+    - mysql -e "CREATE DATABASE uwazaj.dev_test"
+    - mysql -e "SET PASSWORD = root"
 filter:
     paths:
         - Src/*
