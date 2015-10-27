@@ -11,9 +11,9 @@ build:
             version: 5.5
     dependencies:
         before:
-            - mysql -uroot -e "create database IF NOT EXISTS kabar_tests;"
+            - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS kabar_tests;"
             - mysql -uroot -e "CREATE USER 'kabar'@'localhost' IDENTIFIED BY 'kabar';"
-            - mysql -uroot -e "GRANT ALL ON kabar_tests TO 'kabar'@'localhost';"
+            - mysql -uroot -e "GRANT ALL ON kabar_tests.* TO 'kabar'@'localhost';"
     tests:
         override:
             - ./bin/run-unit-tests.sh
