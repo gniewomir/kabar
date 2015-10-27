@@ -1,6 +1,3 @@
-before_commands:
-    - mysql -e "CREATE DATABASE uwazaj.dev_test"
-    - mysql -e "SET PASSWORD = root"
 filter:
     paths:
         - Src/*
@@ -12,6 +9,11 @@ build:
     environment:
         php:
             version: 5.5
+    dependencies:
+        before:
+            - mysql -uroot -e "create database IF NOT EXISTS uwazaj.dev_test;"
+            - mysql -uroot -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
+            - mysql -uroot -e "GRANT ALL ON uwazaj.dev_test TO 'root'@'localhost';"
     tests:
         override:
             - ./bin/run-unit-tests.sh
