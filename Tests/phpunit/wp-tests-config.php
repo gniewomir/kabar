@@ -11,9 +11,9 @@ define( 'WP_DEBUG', false );
 /** The name of the database for WordPress */
 define('DB_NAME', 'kabar_tests');
 /** MySQL database username */
-define('DB_USER', 'root');
+define('DB_USER', 'kabar');
 /** MySQL database password */
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', 'kabar');
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
 /** Database Charset to use in creating database tables. */
