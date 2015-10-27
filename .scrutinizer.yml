@@ -16,4 +16,4 @@ build:
             - mysql -uroot -e "GRANT ALL ON kabar_tests.* TO 'kabar'@'localhost';"
     tests:
         override:
-            - ./bin/run-unit-tests.sh
+            - sh ./bin/run-unit-tests.sh
