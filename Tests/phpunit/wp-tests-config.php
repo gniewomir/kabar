@@ -9,7 +9,7 @@ define( 'WP_DEBUG', false );
 // tests DROPS ALL TABLES in the database. DO NOT use a production database
 
 /** The name of the database for WordPress */
-define('DB_NAME', 'uwazaj.dev_test');
+define('DB_NAME', 'kabar_tests');
 /** MySQL database username */
 define('DB_USER', 'root');
 /** MySQL database password */
