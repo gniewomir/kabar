@@ -133,7 +133,7 @@ abstract class Module
             $module = implode('-', $module);
             $class  = $this->getModuleSlug();
 
-            $this->moduleCssClass = $module.' '.$class;
+            $this->moduleCssClass = $module . ' ' . $class;
         }
         return $this->moduleCssClass;
     }
@@ -166,13 +166,13 @@ abstract class Module
             // check if module is in plugin or in theme directory
             // and return appropriate url
             if (strpos($this->getTemplatesDirectory(), get_stylesheet_directory()) !== false) {
-                $assetsDirectory                = $this->getModuleDirectory().'assets';
+                $assetsDirectory                = $this->getModuleDirectory() . 'assets';
                 $assetsDirectoryRelativeToTheme = str_replace(
                     get_stylesheet_directory(),
                     '',
                     $assetsDirectory
                 );
-                $this->moduleAssetsUri = get_stylesheet_directory_uri().$assetsDirectoryRelativeToTheme;
+                $this->moduleAssetsUri = get_stylesheet_directory_uri() . $assetsDirectoryRelativeToTheme;
             } else {
                 $this->moduleAssetsUri = plugins_url('/assets/', $this->getModuleDirectory());
             }
@@ -187,7 +187,7 @@ abstract class Module
     protected function getTemplatesDirectory()
     {
         if (empty($this->moduleTemplatesDirectory)) {
-            $this->moduleTemplatesDirectory = $this->getModuleDirectory().'Templates'.DIRECTORY_SEPARATOR;
+            $this->moduleTemplatesDirectory = $this->getModuleDirectory() . 'Templates' . DIRECTORY_SEPARATOR;
         }
         return $this->moduleTemplatesDirectory;
     }
@@ -202,10 +202,10 @@ abstract class Module
     {
         if (!$this->moduleDirectory) {
             if (strpos($this->getModuleClass(), KABAR_NAMESPACE) === 0) {
-                $this->moduleDirectory = dirname(__FILE__).DIRECTORY_SEPARATOR.$this->getModuleType().DIRECTORY_SEPARATOR.$this->getModuleName().DIRECTORY_SEPARATOR;
+                $this->moduleDirectory = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->getModuleType() . DIRECTORY_SEPARATOR . $this->getModuleName() . DIRECTORY_SEPARATOR;
             } else {
                 $reflection            = new \ReflectionClass($this->getModuleClass());
-                $this->moduleDirectory = dirname($reflection->getFileName()).DIRECTORY_SEPARATOR;
+                $this->moduleDirectory = dirname($reflection->getFileName()) . DIRECTORY_SEPARATOR;
             }
         }
         return $this->moduleDirectory;
@@ -219,7 +219,7 @@ abstract class Module
     protected function requireNotEmpty($what, $value)
     {
         if (empty($value)) {
-            throw new \Exception('Class "'.$this->getModuleClass().'" requires to '.$what.' to not be empty at this point.', 1);
+            throw new \Exception('Class "' . $this->getModuleClass() . '" requires to ' . $what . ' to not be empty at this point.', 1);
         }
     }
 
@@ -234,7 +234,7 @@ abstract class Module
             return;
         }
         if (did_action($action)) {
-            throw new \Exception('Class "'.$this->getModuleClass().'" requires to be instantiated before "'.$action.'" action.', 1);
+            throw new \Exception('Class "' . $this->getModuleClass() . '" requires to be instantiated before "' . $action . '" action.', 1);
         }
     }
 
@@ -249,7 +249,7 @@ abstract class Module
             return;
         }
         if (!did_action($action)) {
-            throw new \Exception('Class "'.$this->getModuleClass().'" requires to be instantiated after "'.$action.'" action.', 1);
+            throw new \Exception('Class "' . $this->getModuleClass() . '" requires to be instantiated after "' . $action . '" action.', 1);
         }
     }
 }

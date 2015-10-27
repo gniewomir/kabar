@@ -57,7 +57,7 @@ final class Widget extends \kabar\Module
      */
     public function getWidgetKey($widget)
     {
-        return $widget->getModuleName().'WordPressWidget';
+        return $widget->getModuleName() . 'WordPressWidget';
     }
 
     private function getWordPressWidgetFactory()

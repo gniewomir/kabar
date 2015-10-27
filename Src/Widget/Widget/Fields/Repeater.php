@@ -92,7 +92,7 @@ class Repeater extends AbstractField
                 unset($fields[$i]);
                 continue;
             }
-            $field->setSuffix('['.$i.']');
+            $field->setSuffix('[' . $i . ']');
         }
         $this->fields = $fields;
 
@@ -106,7 +106,7 @@ class Repeater extends AbstractField
     {
         wp_enqueue_script(
             'widget-repeater',
-            $this->getAssetsUri().'js/Repeater.js',
+            $this->getAssetsUri() . 'js/Repeater.js',
             array(),
             ServiceLocator::VERSION,
             self::IN_FOOTER
@@ -156,7 +156,7 @@ class Repeater extends AbstractField
     public function form($instance)
     {
         $template = ServiceLocator::get('Factory', 'Template')->create();
-        $template($this->getTemplatesDirectory().$this->getFieldType().self::TEMPLATE_EXTENSION);
+        $template($this->getTemplatesDirectory() . $this->getFieldType() . self::TEMPLATE_EXTENSION);
         $template->fieldId   = $this->getWordPressFieldId();
         $template->fieldName = $this->getWordPressFieldName();
         $template->cssClass  = $this->getCssClass();
@@ -174,7 +174,7 @@ class Repeater extends AbstractField
         for ($i = 1; $i <= $count; $i++) {
             $fieldsets[$i] = array();
             foreach ($this->fields as $index => $field) {
-                $field->setSuffix('['.$i.']');
+                $field->setSuffix('[' . $i . ']');
                 $fieldId = $field->getId();
                 $fieldInstance = array();
                 $fieldInstance[$fieldId] = isset($instance[$fieldId][$i]) ? $instance[$fieldId][$i] : null;

@@ -86,13 +86,13 @@ final class ServiceLocator
         $namespaces = self::$container->getRegistered();
         $namespaces = array_reverse($namespaces);
         foreach ($namespaces as $space => $path) {
-            $relativeClass = $type.'\\'.$name.'\\'.$name;
-            $file          = $path.str_replace('\\', '/', $relativeClass).'.php';
+            $relativeClass = $type . '\\' . $name . '\\' . $name;
+            $file          = $path . str_replace('\\', '/', $relativeClass) . '.php';
             if (file_exists($file)) {
-                return self::$container->parseName($space.'\\'.$relativeClass);
+                return self::$container->parseName($space . '\\' . $relativeClass);
             }
         }
-        trigger_error('Cannot determine class name for type:'.$type.' and name:'.$name, E_USER_ERROR);
+        trigger_error('Cannot determine class name for type:' . $type . ' and name:' . $name, E_USER_ERROR);
     }
 
     /**
@@ -106,12 +106,12 @@ final class ServiceLocator
         $namespaces = self::$container->getRegistered();
         $namespaces = array_reverse($namespaces);
         foreach ($namespaces as $space => $path) {
-            $directory = $path.$type.DIRECTORY_SEPARATOR.$name;
+            $directory = $path . $type . DIRECTORY_SEPARATOR . $name;
             if (is_dir($directory)) {
                 return $directory;
             }
         }
-        trigger_error('Cannot determine class name for type:'.$type.' and name:'.$name, E_USER_ERROR);
+        trigger_error('Cannot determine class name for type:' . $type . ' and name:' . $name, E_USER_ERROR);
     }
 
     /**

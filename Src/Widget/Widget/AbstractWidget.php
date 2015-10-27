@@ -73,7 +73,7 @@ abstract class AbstractWidget extends \kabar\Module
     private function getWidgetClass()
     {
         // determine new widget class name
-        $className = $this->getModuleName().'WordPressWidget';
+        $className = $this->getModuleName() . 'WordPressWidget';
 
         // base widget that we extending
         $baseClass = '\kabar\Widget\Widget\WordPressWidget';
@@ -81,7 +81,7 @@ abstract class AbstractWidget extends \kabar\Module
         // do not try to autoload
         if (!class_exists($className, false)) {
             // create WordPress widget class for this widget module
-            eval('class '.$className.' extends '.$baseClass.' { private $kabarModule = '.$this->getModuleClass().'; };');
+            eval('class ' . $className . ' extends ' . $baseClass . ' { private $kabarModule = ' . $this->getModuleClass() . '; };');
         }
 
         // return created class name

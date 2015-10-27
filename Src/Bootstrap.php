@@ -16,11 +16,11 @@ define('KABAR_VERSION', '0.50.0');
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 // setup kabar autoloading/DIC
-require __DIR__.'/Kabar.php';
+require __DIR__ . '/Kabar.php';
 $kabar = new kabar\Kabar();
 
 // setup library locator
-require __DIR__.'/Global.php';
+require __DIR__ . '/Global.php';
 Kabar::setup($kabar);
 
 /**
@@ -28,5 +28,5 @@ Kabar::setup($kabar);
  *
  * @deprecated since 0.38.0, provided only for backwards compatibility
  */
-require __DIR__.DIRECTORY_SEPARATOR.'ServiceLocator.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'ServiceLocator.php';
 \kabar\ServiceLocator::setup($kabar);

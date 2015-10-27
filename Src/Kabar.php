@@ -38,7 +38,7 @@ final class Kabar extends \Dice\Dice
      */
     public function __construct()
     {
-        $this->register('kabar', __DIR__.DIRECTORY_SEPARATOR);
+        $this->register('kabar', __DIR__ . DIRECTORY_SEPARATOR);
         spl_autoload_register(
             array($this, 'autoload'),
             true, // throw exception on error
@@ -107,7 +107,7 @@ final class Kabar extends \Dice\Dice
             // replace the namespace prefix with the base directory, replace namespace
             // separators with directory separators in the relative class name, append
             // with .php
-            $file = $baseDir.str_replace('\\', '/', $relativeClass).'.php';
+            $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
 
             // if the file exists, require it
             if (file_exists($file)) {
