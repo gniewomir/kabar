@@ -117,7 +117,7 @@ final class Form extends \kabar\Module
             $this->updateCallbacks[] = $updateCallback;
         }
 
-        $this->nonce = new \kabar\Utility\Fields\Nonce($this->id.self::NONCE_SUFFIX, $this->id.self::ACTION_SUFFIX);
+        $this->nonce = new \kabar\Utility\Fields\Nonce($this->id . self::NONCE_SUFFIX, $this->id . self::ACTION_SUFFIX);
 
         add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'));
     }
@@ -201,7 +201,7 @@ final class Form extends \kabar\Module
             $template = $this->template;
         } else {
             $template = new \kabar\Utility\Template\Template;
-            $template($this->getTemplatesDirectory().'Form.php');
+            $template($this->getTemplatesDirectory() . 'Form.php');
         }
 
         $template->formNonce  = $this->nonce->render();
@@ -270,7 +270,7 @@ final class Form extends \kabar\Module
         }
         $slug = $field->getSlug();
         if (in_array($slug, $this->reservedFieldNames)) {
-            trigger_error('Field name '.$slug.' is reserved by Form component!', E_USER_ERROR);
+            trigger_error('Field name ' . $slug . ' is reserved by Form component!', E_USER_ERROR);
         }
         if ($this->fieldsTemplateDir) {
             $field->setTemplateDirectory($this->fieldsTemplateDir);
@@ -287,8 +287,8 @@ final class Form extends \kabar\Module
     public function enqueueAssets()
     {
         wp_enqueue_style(
-            $this->getModuleSlug().'-style',
-            $this->getAssetsUri().'css/Fields.css',
+            $this->getModuleSlug() . '-style',
+            $this->getAssetsUri() . 'css/Fields.css',
             array(),
             $this->getLibraryVersion(),
             'all'

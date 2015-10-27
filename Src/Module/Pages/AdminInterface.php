@@ -61,7 +61,7 @@ class AdminInterface
         $query = http_build_query(array(
             'url' => get_page_link($post->ID)
         ));
-        $customizationLink .= '?'.$query;
+        $customizationLink .= '?' . $query;
         $customizeAction = array(
             'customize' => sprintf('<a href="%1$s">Buduj</a>', $customizationLink)
         );
@@ -104,7 +104,7 @@ class AdminInterface
             $class = 'class="current"';
         }
         $count = count($this->pages);
-        $views[self::VIEW_QUERY_VAR_VALUE] = '<a href=\'edit.php?post_type=page&'.self::VIEW_QUERY_VAR.'='.self::VIEW_QUERY_VAR_VALUE.'\' '.$class.'>Landing pages <span class="count">('.intval($count).')</span></a>';
+        $views[self::VIEW_QUERY_VAR_VALUE] = '<a href=\'edit.php?post_type=page&' . self::VIEW_QUERY_VAR . '=' . self::VIEW_QUERY_VAR_VALUE . '\' ' . $class . '>Landing pages <span class="count">(' . intval($count) . ')</span></a>';
         return $views;
     }
 }

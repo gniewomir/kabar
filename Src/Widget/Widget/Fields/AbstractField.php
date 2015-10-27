@@ -91,7 +91,7 @@ abstract class AbstractField
          * @deprecated ServiceLocator is deprecated since 0.50.0
          */
         $template = \kabar\ServiceLocator::get('Factory', 'Template')->create();
-        $template($this->getTemplatesDirectory().$this->getFieldType().self::TEMPLATE_EXTENSION);
+        $template($this->getTemplatesDirectory() . $this->getFieldType() . self::TEMPLATE_EXTENSION);
         $template->fieldId   = $this->getWordPressFieldId();
         $template->fieldName = $this->getWordPressFieldName();
         $template->cssClass  = $this->getCssClass();
@@ -131,7 +131,7 @@ abstract class AbstractField
         } else {
             $suffix = $this->suffix;
         }
-        return $this->widgetInstance->get_field_id($this->id).$suffix;
+        return $this->widgetInstance->get_field_id($this->id) . $suffix;
     }
 
     /**
@@ -140,7 +140,7 @@ abstract class AbstractField
      */
     protected function getWordPressFieldName()
     {
-        return $this->widgetInstance->get_field_name($this->id).$this->suffix;
+        return $this->widgetInstance->get_field_name($this->id) . $this->suffix;
     }
 
     /**
@@ -180,7 +180,7 @@ abstract class AbstractField
     protected function getAssetsUri()
     {
         if (empty($this->assetsUri)) {
-            $this->assetsUri = plugins_url('', __FILE__).'/'.self::ASSETS_DIRECTORY.'/';
+            $this->assetsUri = plugins_url('', __FILE__) . '/' . self::ASSETS_DIRECTORY . '/';
         }
         return $this->assetsUri;
     }
@@ -192,7 +192,7 @@ abstract class AbstractField
     protected function getTemplatesDirectory()
     {
         if (empty($this->templatesDirectory)) {
-            $this->templatesDirectory = __DIR__.DIRECTORY_SEPARATOR.self::TEMPLATES_DIRECTORY.DIRECTORY_SEPARATOR;
+            $this->templatesDirectory = __DIR__ . DIRECTORY_SEPARATOR . self::TEMPLATES_DIRECTORY . DIRECTORY_SEPARATOR;
         }
         return $this->templatesDirectory;
     }
@@ -207,7 +207,7 @@ abstract class AbstractField
         $fieldTypeCssClass     = implode('-', $class);
         array_pop($class);
         $fieldsCssClass        = implode('-', $class);
-        return $fieldsCssClass.' '.$fieldTypeCssClass;
+        return $fieldsCssClass . ' ' . $fieldTypeCssClass;
     }
 
     /**

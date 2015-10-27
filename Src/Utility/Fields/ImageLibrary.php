@@ -55,8 +55,8 @@ class ImageLibrary extends Image
     {
         wp_enqueue_media();
         wp_enqueue_script(
-            $this->getLibrarySlug().'-image-library-field-script',
-            $this->getAssetsUri().'js/ImageLibrary.js',
+            $this->getLibrarySlug() . '-image-library-field-script',
+            $this->getAssetsUri() . 'js/ImageLibrary.js',
             array('media-upload', 'thickbox'),
             $this->getLibraryVersion(),
             self::IN_FOOTER

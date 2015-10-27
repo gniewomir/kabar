@@ -293,6 +293,6 @@ class FieldsCollection
             return $this->fields[$id]->get($this->args, $this->instance);
         }
 
-        trigger_error('No field with id: '.$id, E_USER_WARNING);
+        trigger_error('No field with id: ' . $id, E_USER_WARNING);
     }
 }

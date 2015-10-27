@@ -85,8 +85,8 @@ class Slider extends AbstractField
         wp_enqueue_script('jquery-ui-slider');
 
         wp_enqueue_script(
-            $this->getLibrarySlug().'-widget-field-slider-script',
-            $this->getAssetsUri().'js/Slider.js',
+            $this->getLibrarySlug() . '-widget-field-slider-script',
+            $this->getAssetsUri() . 'js/Slider.js',
             array('jquery-ui-core', 'jquery-ui-slider'),
             $this->getLibraryVersion(),
             self::IN_FOOTER
@@ -100,7 +100,7 @@ class Slider extends AbstractField
     {
         wp_enqueue_style(
             'kabar-field-slider-styles',
-            $this->getAssetsUri().'css/Slider.css',
+            $this->getAssetsUri() . 'css/Slider.css',
             array(),
             ServiceLocator::VERSION
         );

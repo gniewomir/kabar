@@ -48,10 +48,10 @@ final class Taxonomy extends \kabar\Module
 
         // form
         $storage = new \kabar\Utility\Storage\TermMeta();
-        $storage->setPrefix($this->id.'-');
+        $storage->setPrefix($this->id . '-');
 
         $template = new \kabar\Utility\Template\Template();
-        $template($this->getTemplatesDirectory().'Form.php');
+        $template($this->getTemplatesDirectory() . 'Form.php');
 
         $this->form = new \kabar\Utility\Form\Form(
             $id,
@@ -63,14 +63,14 @@ final class Taxonomy extends \kabar\Module
         );
 
         // existing term edition
-        $this->requireBeforeAction($this->taxonomy.'_edit_form_fields');
-        add_action($this->taxonomy.'_edit_form_fields', array($this, 'form'), 10, 2);
-        add_action('edited_'.$this->taxonomy, array($this, 'update'), 10, 2);
+        $this->requireBeforeAction($this->taxonomy . '_edit_form_fields');
+        add_action($this->taxonomy . '_edit_form_fields', array($this, 'form'), 10, 2);
+        add_action('edited_' . $this->taxonomy, array($this, 'update'), 10, 2);
 
         // creating new term
-        $this->requireBeforeAction($this->taxonomy.'_add_form_fields');
-        add_action($this->taxonomy.'_add_form_fields', array($this, 'addForm'), 10, 2);
-        add_action('create_'.$this->taxonomy, array($this, 'update'), 10, 2);
+        $this->requireBeforeAction($this->taxonomy . '_add_form_fields');
+        add_action($this->taxonomy . '_add_form_fields', array($this, 'addForm'), 10, 2);
+        add_action('create_' . $this->taxonomy, array($this, 'update'), 10, 2);
     }
 
     /**

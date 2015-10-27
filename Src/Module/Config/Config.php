@@ -93,7 +93,7 @@ class Config extends \kabar\Module
     public function registerSection($sectionName, $sectionSettings)
     {
         if (isset($this->parsedConfig->$sectionName) || isset($this->modules->$sectionName)) {
-            throw new \Exception('Config section '.$sectionName.' already registered!', 1);
+            throw new \Exception('Config section ' . $sectionName . ' already registered!', 1);
         }
         $this->modules[$sectionName] = $sectionSettings;
     }
@@ -114,7 +114,7 @@ class Config extends \kabar\Module
             return $this->parsedConfig->$name;
         }
 
-        trigger_error('Config section '.$name.' not found.', E_USER_ERROR);
+        trigger_error('Config section ' . $name . ' not found.', E_USER_ERROR);
     }
 
     /**
@@ -243,7 +243,7 @@ class Config extends \kabar\Module
      */
     private function getSettingName($sectionName, $settingName)
     {
-        return $this->getLibrarySlug().$sectionName.'_'.$settingName;
+        return $this->getLibrarySlug() . $sectionName . '_' . $settingName;
     }
 
     /**
@@ -284,7 +284,7 @@ class Config extends \kabar\Module
             );
             $arguments = $this->getChoices($fieldSettings, $arguments);
             $wpCustomize->add_control(
-                $settingName.'_control',
+                $settingName . '_control',
                 $arguments
             );
         } else if (isset($fieldSettings['control'])) {
@@ -298,7 +298,7 @@ class Config extends \kabar\Module
             $arguments = $this->getChoices($fieldSettings, $arguments);
             $control = new $class(
                 $wpCustomize,
-                $settingName.'_control',
+                $settingName . '_control',
                 $arguments
             );
             $wpCustomize->add_control($control);
@@ -355,7 +355,7 @@ class Config extends \kabar\Module
      */
     private function isModuleCallback(array $array)
     {
-        trigger_error(__METHOD__.' is deprecated since 0.50.0', E_USER_WARNING);
+        trigger_error(__METHOD__ . ' is deprecated since 0.50.0', E_USER_WARNING);
         return !is_callable($array) &&
                 count($array) == 2 &&
                !(bool) count(array_filter(array_keys($array), 'is_string'));
@@ -381,7 +381,7 @@ class Config extends \kabar\Module
      */
     private function runModuleCallback($callback)
     {
-        trigger_error(__METHOD__.' is deprecated since 0.50.0', E_USER_WARNING);
+        trigger_error(__METHOD__ . ' is deprecated since 0.50.0', E_USER_WARNING);
         $module = array_shift($callback);
         $method = array_shift($callback);
         return \kabar\ServiceLocator::get('Module', $module)->$method();

@@ -57,10 +57,10 @@ final class User extends \kabar\Module
         $this->position = $postion;
 
         $storage                     = new \kabar\Utility\Storage\UserMeta();
-        $storage->setPrefix($this->id.'-');
+        $storage->setPrefix($this->id . '-');
 
         $template                    = new \kabar\Utility\Template\Template();
-        $template($this->getTemplatesDirectory().'Section.php');
+        $template($this->getTemplatesDirectory() . 'Section.php');
         $template->title             = $this->title;
         $template->containerCssClass = $this->position == 'bottom' ? 'section-postion-bottom' : 'section-position-top';
 
@@ -126,7 +126,7 @@ final class User extends \kabar\Module
         if ($this->position != 'bottom') {
             wp_enqueue_script(
                 $this->getModuleSlug(),
-                $this->getAssetsUri().'js/UserProfile.js',
+                $this->getAssetsUri() . 'js/UserProfile.js',
                 array(),
                 $this->getLibraryVersion(),
                 self::IN_FOOTER

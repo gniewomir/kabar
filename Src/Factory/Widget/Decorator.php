@@ -87,7 +87,7 @@ final class Decorator extends \WP_Widget
             $template
         );
         $template = $this->widget->render($template);
-        echo $args['before_widget'].$template.$args['after_widget'];
+        echo $args['before_widget'] . $template . $args['after_widget'];
     }
 
     /**

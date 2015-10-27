@@ -75,7 +75,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
         array_pop($class);
         $fieldsCssClass = implode('-', $class);
 
-        return $fieldsCssClass.' '.$fieldCssClass;
+        return $fieldsCssClass . ' ' . $fieldCssClass;
     }
 
     /**
@@ -109,10 +109,10 @@ abstract class AbstractFormPart implements InterfaceFormPart
                     get_stylesheet_directory_uri(),
                     __DIR__
                 );
-                $this->assetsUri = $assets.'/assets/';
-                $this->assetsUri = strpos($this->assetsUri, 'http') !== 0 ? get_home_url().$this->assetsUri : $this->assetsUri;
+                $this->assetsUri = $assets . '/assets/';
+                $this->assetsUri = strpos($this->assetsUri, 'http') !== 0 ? get_home_url() . $this->assetsUri : $this->assetsUri;
             } else {
-                $this->assetsUri = plugins_url('', __FILE__).'/assets/';
+                $this->assetsUri = plugins_url('', __FILE__) . '/assets/';
             }
         }
         return $this->assetsUri;
@@ -126,7 +126,7 @@ abstract class AbstractFormPart implements InterfaceFormPart
     protected function getLibraryAssetsUri()
     {
         if (empty($this->libraryAssetsUri)) {
-            $this->libraryAssetsUri = plugins_url('', dirname(dirname(dirname(__FILE__)))).'/assets/';
+            $this->libraryAssetsUri = plugins_url('', dirname(dirname(dirname(__FILE__)))) . '/assets/';
         }
 
         return $this->libraryAssetsUri;
@@ -150,8 +150,8 @@ abstract class AbstractFormPart implements InterfaceFormPart
      */
     protected function getTemplate()
     {
-        $templateDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'Templates'.DIRECTORY_SEPARATOR.$this->templateDirectory.DIRECTORY_SEPARATOR;
-        $templatePath          = $templateDirectoryPath.$this->getFieldType().'.php';
+        $templateDirectoryPath = __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $this->templateDirectory . DIRECTORY_SEPARATOR;
+        $templatePath          = $templateDirectoryPath . $this->getFieldType() . '.php';
         $template              = new \kabar\Utility\Template\Template();
         $template($templatePath);
 
