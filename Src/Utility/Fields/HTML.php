@@ -79,7 +79,7 @@ class HTML extends TextArea
     {
         $template = parent::render();
 
-        $template->wysiwyg  = $this->wysiwyg;
+        $template->wysiwyg = $this->wysiwyg;
 
         return $template;
     }

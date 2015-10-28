@@ -72,8 +72,6 @@ class Pages extends \kabar\Module
      * @param \kabar\Module\Styles\Styles     $styles       Required, to make sure that will be set up for widgets
      * @param \kabar\Module\Cache\Cache       $cache
      * @param \kabar\Module\Sidebars\Sidebars $sidebars
-     * @param array                           $widgets      Array of module callbacks
-     * @param string                          $pageTemplate
      */
     public function __construct(
         \kabar\Module\Styles\Styles     $styles,
