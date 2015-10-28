@@ -26,6 +26,7 @@ interface InterfaceStorage
      * Set ID just in case storage object cannot determine it automaticaly
      * @since 0.27.7
      * @param integer $id
+     * @return void
      */
     public function setId($id);
 
@@ -56,7 +57,7 @@ interface InterfaceStorage
      * Saves value in storage
      * @param  string $key
      * @param  mixed  $value
-     * @return mixed
+     * @return void
      */
     public function store($key, $value);
 

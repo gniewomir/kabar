@@ -31,7 +31,7 @@ class Internal extends AbstractField
      */
     public function __construct($slug)
     {
-        $this->slug     = $slug;
+        $this->slug = $slug;
     }
 
     /**
@@ -45,7 +45,7 @@ class Internal extends AbstractField
 
     /**
      * Render field
-     * @return \kabar\Utility\Template\Template
+     * @return string
      */
     public function render()
     {
