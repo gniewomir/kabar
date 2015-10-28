@@ -26,9 +26,9 @@ class WidgetTests extends WP_UnitTestCase {
         $this->template->prop = 'test';
     }
 
-    public function testFields_ShouldTakeAndReturnTheSameFormObject() {
+    public function testForm_ShouldTakeAndReturnTheSameFormObject() {
         $this->assertTrue(
-            ($this->form === $this->widget->fields($this->form))
+            ($this->form === $this->widget->form($this->form))
         );
     }
 
