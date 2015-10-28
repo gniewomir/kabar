@@ -214,6 +214,7 @@ abstract class Module
     /**
      * Check if required value is already set and not empty
      * @since  0.19.0
+     * @param string $what
      * @return void
      */
     protected function requireNotEmpty($what, $value)
@@ -226,6 +227,7 @@ abstract class Module
     /**
      * Check if we are before action required by module
      * @since  0.19.0
+     * @param string $action
      * @return void
      */
     protected function requireBeforeAction($action)
@@ -241,6 +243,7 @@ abstract class Module
     /**
      * Check if we are after action, that needs to be executed before module
      * @since  0.19.0
+     * @param string $action
      * @return void
      */
     protected function requireAfterAction($action)
