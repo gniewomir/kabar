@@ -95,21 +95,21 @@ abstract class Widget extends \kabar\Module
     }
 
     /**
-     * Widget configuration fields, shared between all WordPress widget instances ( which aren't objects, just arrays of data )
+     * Widget form
      *
-     * IMPORTANT: Fields ID's have to be valid php variable names, as later they are extracted in template
+     * ID's assigned to fields have to be valid php variable names, as later they are extracted in template,
+     * using camelCase or PascalCase should be considered good practice
      *
      * @param  \kabar\Utility\Form\Form $form
      * @return \kabar\Utility\Form\Form
      */
-    public function fields(\kabar\Utility\Form\Form $form)
+    public function form(\kabar\Utility\Form\Form $form)
     {
         return $form;
     }
 
     /**
-     * Render widget using prepopulated (with widget fields and objects) template for current WordPress widget instance
-     *
+     * Render widget using template populated with fields values
      * @param  \kabar\Utility\Template\Template $template Prepopulated template object
      * @return \kabar\Utility\Template\Template
      */

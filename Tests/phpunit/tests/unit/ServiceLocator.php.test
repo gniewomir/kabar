@@ -2,12 +2,15 @@
 
 class ServiceLocatorTests extends WP_UnitTestCase {
 
+    public function setUp() {
+        $this->kabar = new \kabar\Kabar();
+        \kabar\ServiceLocator::setup($this->kabar);
+    }
+
     /**
      * @dataProvider sharedClasses
      */
     public function testGetClass_ShouldReturnFullClassName($type, $name, $class) {
-        $kabar = new \kabar\Kabar();
-        \kabar\ServiceLocator::setup($kabar);
         $this->assertEquals(
             $class,
             \kabar\ServiceLocator::getClass($type, $name)
@@ -18,19 +21,10 @@ class ServiceLocatorTests extends WP_UnitTestCase {
      * @dataProvider sharedClasses
      */
     public function testGet_ShouldReturnSameInstanceAsDIC($type, $name, $class) {
-        $kabar = new \kabar\Kabar();
-        \kabar\ServiceLocator::setup($kabar);
-
-        $kabar->maybeShare($class);
-
-        $expected = $kabar->create($class);
-        $expected->prop = 'test';
+        $this->kabar->maybeShare($class);
+        $expected = $this->kabar->create($class);
+        $expected->prop = 'expected';
         $tested   = \kabar\ServiceLocator::get($type, $name);
-
-        $this->assertTrue(
-            ($kabar === \kabar\ServiceLocator::library())
-        );
-
         $this->assertTrue(
             ($expected === $tested)
         );
@@ -40,30 +34,22 @@ class ServiceLocatorTests extends WP_UnitTestCase {
      * @dataProvider newableClasses
      */
     public function testGetNew_ShouldReturnNewInstance($type, $name, $class) {
-        $kabar = new \kabar\Kabar();
-        \kabar\ServiceLocator::setup($kabar);
-
         $expected = \kabar\ServiceLocator::getNew($type, $name);
-        $expected->prop = 'expected';
-
         $tested  = \kabar\ServiceLocator::getNew($type, $name);
-        $tested->prop = 'tested';
-
-        $this->assertInstanceOf(
-            $class,
-            $expected
+        $this->assertFalse(
+            ($expected === $tested)
         );
+    }
 
+    /**
+     * @dataProvider newableClasses
+     */
+    public function testGetNew_ShouldReturnCorrectClassInstance($type, $name, $class) {
+        $tested  = \kabar\ServiceLocator::getNew($type, $name);
         $this->assertInstanceOf(
             $class,
             $tested
         );
-
-        $this->assertNotEquals(
-            $expected->prop,
-            $tested->prop
-        );
-
     }
 
     public function sharedClasses()

@@ -1,6 +1,6 @@
 <?php
 
-class ModuleWidgetsWidgetsTests extends WP_UnitTestCase {
+class ModuleWidgetsDecoratorTests extends WP_UnitTestCase {
 
     public function setUp() {
         $this->kabar          = new \kabar\Kabar();

@@ -1,32 +1,38 @@
-# Kabar library
+# Kabar framework
 
-Set of modules and components for speeding up WordPress development contained in a plugin / composer package.
+Framework speeding up WordPress development
+
+Framework goals:
+* Provide object oriented, modular, SOLID, DI based framework for WordPress development
+* Allowing for easy testing of buisness logic
+* Speed up development by providing ready to use solutions for common problems
+    - creating forms
+    - common controls not implemented in WordPress (color picker, slider, multi-select etc.)
+    - extending UI of posts, taxonomies, user profiles
+    - global configuration object allowing for hassle free usage of customizer
+    - cache & partial cache invalidation
+    - collecting and outputing - otherwise - inline styles
+    - creating reusable UI components, allowing for easy composing pages from widgets
+    - shitload of other stuff that I am implementing right now
 
 This project uses semantic versioning (http://semver.org/spec/v2.0.0.html).
 
-Until version 1.0 is out breaking changes will be introduced and API changed - a lot. You have been warned.
-
-Documentation and examples are work in progress, so I advice against trying to use it right now. If you are more experienced than me (very probable), you probably have your own solution, and if not, spare youtself frustration and wait for proper guide explaining how and why things are done in that particular way.
+Until version 1.0 is out breaking changes will be introduced and API will change a lot. You have been warned. Also proper documentation and examples are work in progress, so I advice against trying to use it right now. Spare youtself frustration and wait for proper guide explaining how and why things are done in that particular way.
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gniewomir/kabar/?branch=master)
 
 [![Build Status](https://scrutinizer-ci.com/g/gniewomir/kabar/badges/build.png?b=master)](https://scrutinizer-ci.com/g/gniewomir/kabar/build-status/master)
 
-# Roadmap
+# Todo
 
-### Features
-* Inline styles served as file
-* Events service
-* Image sizes handling, srcset handling
-* Full translation support
-* Panel support for Config/Customization module
-* Multisite support
-* WPML support
-* Twig in place of bare-bones templating?
+### Testing
+* Integration tests
+* Performance benchmarks
+* Greater unit tests coverage
 
 ### Code quality
 * Clear Scrutinizer backlog
-* Grater unit tests coverage
+* Rely more on abstractions instead specific classes
 
 ### Deployment & documentation
 * Publish as Composer package
@@ -35,29 +41,40 @@ Documentation and examples are work in progress, so I advice against trying to u
 
 # Changelog
 
-### 0.50.0
+### Current iteration
 
 #### Done
 * Change versioning form 2.xx to 0.xx, to allow sticking to semantic versioning spec
-* AdminUI components (Taxonomy, User, Metabox etc.)
 * Form, Fields and Storage classes moved to utility namespace
+* UI components (Taxonomy, User, Metabox etc.)
 * getForId(), saveForId(), searchStorage() methods added to form fields classes
 * Storage objects updated() method now allows setting updated value
-* Adjust AdminUI components to have more consistent API
-* Dice Dependancy Injection container
+* Introduce Dice Dependancy Injection container in place of service locator
 * Extend Dice to automaticaly share objects in selected namespaces
 * Rewrite ServiceLocator to act as facade for Dice to keep library mostly backward compatibile
-* Widgets module/factory object
-* Replace 'module callbacks' with callbacks or - better yet - injecting objects/interfaces
-* Find a way around eval in widgets module
+* Replaced 'module callbacks' with callbacks
+* Configured Unit Testing for Scrutinizer.ci
+* Found a way around eval in WP_Widget decorator
+* Widgets factory, taking care of setting up widgets
 
 #### In progress
-* Widget cache class
-* Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes?
 * Add tests for basic components (fields, storage, form?)
-* Exceptions throwing/handling instead trigger error?
+* Finish kabar widgets feature complete refactoring
+* Exceptions throwing/handling instead trigger error
+
+#### Backlog
+* Widget forms as Form component, widget fields based on \kabar\Utitlity\Fields classes
+* Introduce switchable cache strategies for cache module
+* Refactor cache class to reduce cyclomatic complexity
+* Refactor config class to reduce cyclomatic complexity and make it more efficient
+* Widget cache class
 * Form factory
 * Fields factory
+* Customize control decorator, allowing use of our field objects
+* Post type object, taking taxonomy and UI objects as optional dependancies
+* Loop module, returning populated templates for query
+* CreateOn/CreateIf methods for container, to allow donditional module creation?
+* Router module (https://carlalexander.ca/designing-system-wordpress-routing/#more-1209)
 * Use Storage object for Config module
 * Rewrite fieldset field/add fieldset handling to form component
 * Add "Table" templates for all fields
@@ -65,6 +82,15 @@ Documentation and examples are work in progress, so I advice against trying to u
 * Form fields validator objects
 * AJAX forms
 * Select for page template for widgetized pages
+* Panel support for Config/Customization module
+* Inline styles served as file
+* Events service
+* Image sizes handling, srcset handling
+* Full Multisite support
+* Full translation support
+* Full WPML support
+* Twig in place of bare-bones templating?
+* Allow easier overriding library objects from application root
 
 ### 0.38.0
 

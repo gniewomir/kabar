@@ -1,13 +1,18 @@
 <?php
-
+/**
+ * Tests assume that parent class for \kabar\Kabar (parent \Dice\Dice) is tested
+ */
 class KabarTests extends WP_UnitTestCase {
+
+    public function setUp() {
+        $this->kabar = new \kabar\Kabar();
+    }
 
     /**
      * @dataProvider classNameProvider
      */
-    public function testParseName_ShouldNormalizeClassName($class, $expected) {
-        $kabar = new \kabar\Kabar();
-        $class = $kabar->parseName($class);
+    public function testParseName_ShouldNormalizeClassName($class, $expected, $rule) {
+        $class = $this->kabar->parseName($class);
         $this->assertEquals(
             $expected,
             $class
@@ -18,11 +23,12 @@ class KabarTests extends WP_UnitTestCase {
      * @dataProvider classNameProvider
      */
     public function testCreate_ShouldInstantiateClass($class, $expected, $rule) {
-        $kabar = new \kabar\Kabar();
-        if (!empty($rule)) $kabar->addRule($class, $rule);
+        if (!empty($rule)) {
+            $this->kabar->addRule($class, $rule);
+        }
         $this->assertInstanceOf(
             $expected,
-            $kabar->create($class)
+            $this->kabar->create($class)
         );
     }
 
@@ -31,11 +37,10 @@ class KabarTests extends WP_UnitTestCase {
      */
     public function testCreate_ShouldReturnSharedInstance($class)
     {
-        $kabar    = new \kabar\Kabar();
-        $kabar->addRule($class, array('shared'=>true));
-        $expected = $kabar->create($class);
+        $this->kabar->addRule($class, array('shared'=>true));
+        $expected = $this->kabar->create($class);
         $expected->prop = 'test';
-        $tested   = $kabar->create($class);
+        $tested   = $this->kabar->create($class);
         $this->assertTrue(
             ($expected === $tested)
         );
@@ -46,8 +51,7 @@ class KabarTests extends WP_UnitTestCase {
      */
     public function testMaybeShare_ShouldAddSharedRuleToClassesInSpecifedNamespaces($class)
     {
-        $kabar = new \kabar\Kabar();
-        $this->assertTrue($kabar->maybeShare($class));
+        $this->assertTrue($this->kabar->maybeShare($class));
     }
 
     /**
@@ -55,8 +59,7 @@ class KabarTests extends WP_UnitTestCase {
      */
     public function testMaybeShare_ShouldNotAddSharedRuleToClassesInSpecifedNamespaces($class)
     {
-        $kabar = new \kabar\Kabar();
-        $this->assertFalse($kabar->maybeShare($class));
+        $this->assertFalse($this->kabar->maybeShare($class));
     }
 
     public function classNameProvider()
@@ -80,8 +83,8 @@ class KabarTests extends WP_UnitTestCase {
     {
         return array(
             array('kabar\\Module\\Scripts\\Scripts'),
-            array('kabar\\Factory\\Template\\Template'),
             array('kabar\\Module\\Sidebars\\Sidebars'),
+            array('kabar\\Factory\\Template\\Template'),
             array('kabar\\Module\\Pages\\Pages'),
             array('kabar\\Module\\Pages\\Pages'),
             array('kabar\\Module\\Pages\\Pages')

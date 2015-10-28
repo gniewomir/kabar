@@ -23,12 +23,6 @@ final class Decorator extends \WP_Widget
     private $config = array();
 
     /**
-     * Fields collection
-     * @var \kabar\Widget\Widget\FieldsCollection
-     */
-    private $fieldsCollection;
-
-    /**
      * Widget template
      * @var \kabar\Utility\Template\Template
      */
@@ -40,6 +34,11 @@ final class Decorator extends \WP_Widget
      */
     private $widget;
 
+    /**
+     * Form
+     * @var \kabar\Utility\Form\Form
+     */
+    private $form;
 
     /**
      * Register widget with WordPress.
@@ -56,7 +55,6 @@ final class Decorator extends \WP_Widget
                 'classname'   => $this->config['css_classes'],
             )
         );
-        // $this->fieldsCollection = $this->widget->fields(new FieldsCollection($this));
     }
 
     /**
@@ -69,7 +67,20 @@ final class Decorator extends \WP_Widget
     }
 
     /**
-     * Front-end display of widget.
+     * Return widget form
+     * @return \kabar\Utility\Form\Form
+     */
+    public function getForm()
+    {
+        if (!$this->form) {
+            $this->form = new \kabar\Utility\Form\Form($this->config['id']);
+            $this->form = $this->widget->form($this->form);
+        }
+        return $this->form;
+    }
+
+    /**
+     * Display widget
      *
      * @see WP_Widget::widget()
      *
