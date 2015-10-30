@@ -179,7 +179,7 @@ class Pages extends \kabar\Module
                 return $this->pageId;
             } else if (!empty($page['path']) &&
                        strpos($currUrl, $page['path']) === 0 &&
-                       strpos($currUrl, $page['path'] . '/') !== 0) { // make sure that we dont confuse category slug with page name
+                       strpos($currUrl, $page['path'].'/') !== 0) { // make sure that we dont confuse category slug with page name
                 // yes, other widgetized page
                 $this->pageId = $page['id'];
                 return $this->pageId;
@@ -203,7 +203,7 @@ class Pages extends \kabar\Module
         if ($pageId === false) {
             trigger_error('You have to provide page id outside widgetized pages.', E_USER_ERROR);
         }
-        return lcfirst($this->getLibrarySlug() . '-sidebar-' . $pageId);
+        return lcfirst($this->getLibrarySlug().'-sidebar-'.$pageId);
     }
 
     /**
@@ -217,7 +217,7 @@ class Pages extends \kabar\Module
             foreach ($pages as $page) {
                 $this->sidebars->register(
                     array(
-                        'name'          => 'Page "' . get_the_title($page['id']) . '" sections',
+                        'name'          => 'Page "'.get_the_title($page['id']).'" sections',
                         'id'            => $this->getSidebarId($page['id']),
                         'description'   => __('Assembly this page from widgets.', $this->getLibrarySlug()),
                         'before_widget' => self::DEFAULT_WRAPER_BEFORE,
@@ -238,7 +238,7 @@ class Pages extends \kabar\Module
         // register current page sidebar
         $this->sidebars->register(
             array(
-                'name'          => 'Page "' . get_the_title($this->getWidgetizedPageId()) . '" sections',
+                'name'          => 'Page "'.get_the_title($this->getWidgetizedPageId()).'" sections',
                 'id'            => $this->getSidebarId($this->getWidgetizedPageId()),
                 'description'   => __('Assembly this page from widgets.', $this->getLibrarySlug()),
                 'before_widget' => self::DEFAULT_WRAPER_BEFORE,

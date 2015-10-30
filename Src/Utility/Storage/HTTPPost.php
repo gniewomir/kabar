@@ -74,7 +74,7 @@ class HTTPPost implements InterfaceStorage
      */
     public function getPrefixedKey($key)
     {
-        return $this->prefix . $key;
+        return $this->prefix.$key;
     }
 
     /**

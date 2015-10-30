@@ -81,8 +81,8 @@ class Image extends AbstractField
     {
         wp_enqueue_media();
         wp_enqueue_script(
-            $this->getLibrarySlug() . '-image-field-script',
-            $this->getAssetsUri() . 'js/Image.js',
+            $this->getLibrarySlug().'-image-field-script',
+            $this->getAssetsUri().'js/Image.js',
             array('media-upload', 'thickbox'),
             $this->getLibraryVersion(),
             self::IN_FOOTER
@@ -101,7 +101,7 @@ class Image extends AbstractField
 
         $fieldClass               = explode(' ', $template->cssClass);
         $fieldClass               = end($fieldClass);
-        $template->buttonCssClass = $fieldClass . '-button';
+        $template->buttonCssClass = $fieldClass.'-button';
 
         $template->title          = $this->title;
         $template->help           = $this->help;

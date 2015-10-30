@@ -94,7 +94,7 @@ class Cache extends \kabar\Module
     {
         global $wpdb;
 
-        $value = self::WP_TRANSIENT_PREFIX . self::TRANSIENT_PREFIX . $type;
+        $value = self::WP_TRANSIENT_PREFIX.self::TRANSIENT_PREFIX.$type;
 
         $wpdb->query(
             $wpdb->prepare(
@@ -103,7 +103,7 @@ class Cache extends \kabar\Module
                     WHERE `option_name` LIKE %s
                 ",
                 array(
-                    '%' . $value . '%'
+                    '%'.$value.'%'
                 )
             )
         );
@@ -155,13 +155,13 @@ class Cache extends \kabar\Module
     {
         // return cached
         if ($this->isCacheable() && $this->isCached($id, $type)) {
-            return $this->get($id, $type) . '<!-- kabar - cached -->';
+            return $this->get($id, $type).'<!-- kabar - cached -->';
         }
         // fetch and cache
         $payload = call_user_func_array($callback, $params);
         if ($payload !== false) {
             $this->set($id, $type, $payload);
-            return $payload . '<!-- kabar - just cached -->';
+            return $payload.'<!-- kabar - just cached -->';
         }
         // callback returned false, which indicates error
         trigger_error('cacheHtml: callback returned false.', E_USER_WARNING);
@@ -225,7 +225,7 @@ class Cache extends \kabar\Module
     {
         $hash = $this->hash($id, $type);
         if (strlen($hash) > 45) {
-            trigger_error('To long type "' . $type . '" for cache entry', E_USER_ERROR);
+            trigger_error('To long type "'.$type.'" for cache entry', E_USER_ERROR);
         }
         $this->transients[$hash] = $payload;
         set_transient($hash, $payload, self::EXPIRATION);
@@ -253,7 +253,7 @@ class Cache extends \kabar\Module
         if ($this->currentUrl && $this->useForwardedHost === $useForwardedHost) {
             return $this->currentUrl;
         }
-        $this->currentUrl       = $this->getUrlOrigin($_SERVER, $useForwardedHost) . $_SERVER['REQUEST_URI'];
+        $this->currentUrl       = $this->getUrlOrigin($_SERVER, $useForwardedHost).$_SERVER['REQUEST_URI'];
         $this->useForwardedHost = $useForwardedHost;
         return $this->currentUrl;
     }
@@ -267,7 +267,7 @@ class Cache extends \kabar\Module
      */
     private function hash($id, $type)
     {
-        return self::TRANSIENT_PREFIX . $type . md5(KABAR_VERSION . $id);
+        return self::TRANSIENT_PREFIX.$type.md5(KABAR_VERSION.$id);
     }
 
     /**
@@ -280,11 +280,11 @@ class Cache extends \kabar\Module
     {
         $ssl      = (!empty($server['HTTPS']) && $server['HTTPS'] == 'on') ? true : false;
         $protocol = strtolower($server['SERVER_PROTOCOL']);
-        $protocol = substr($protocol, 0, strpos($protocol, '/')) . (($ssl) ? 's' : '');
+        $protocol = substr($protocol, 0, strpos($protocol, '/')).(($ssl) ? 's' : '');
         $port     = $server['SERVER_PORT'];
-        $port     = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
+        $port     = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':'.$port;
         $host     = ($useForwardedHost && isset($server['HTTP_X_FORWARDED_HOST'])) ? $server['HTTP_X_FORWARDED_HOST'] : (isset($server['HTTP_HOST']) ? $server['HTTP_HOST'] : null);
-        $host     = isset($host) ? $host : $server['SERVER_NAME'] . $port;
-        return $protocol . '://' . $host;
+        $host     = isset($host) ? $host : $server['SERVER_NAME'].$port;
+        return $protocol.'://'.$host;
     }
 }

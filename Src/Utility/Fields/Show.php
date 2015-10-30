@@ -43,8 +43,8 @@ class Show extends Checkbox
     {
         wp_enqueue_media();
         wp_enqueue_script(
-            $this->getLibrarySlug() . '-show-field-script',
-            $this->getAssetsUri() . 'js/Show.js',
+            $this->getLibrarySlug().'-show-field-script',
+            $this->getAssetsUri().'js/Show.js',
             array(),
             $this->getLibraryVersion(),
             self::IN_FOOTER

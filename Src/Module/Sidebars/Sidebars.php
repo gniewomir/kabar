@@ -151,7 +151,7 @@ class Sidebars extends \kabar\Module
         ob_start();
         if (!dynamic_sidebar($id)) {
             $template = $this->templateFactory->create();
-            $template($this->getTemplatesDirectory() . '/NoWidgets.php');
+            $template($this->getTemplatesDirectory().'/NoWidgets.php');
             $template->librarySlug = $this->getLibrarySlug();
             echo $template;
         }

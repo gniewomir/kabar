@@ -33,6 +33,7 @@ Until version 1.0 is out breaking changes will be introduced and API will change
 ### Code quality
 * Clear Scrutinizer backlog
 * Rely more on abstractions instead specific classes
+* Break interfaces into a smaller ones
 
 ### Deployment & documentation
 * Publish as Composer package

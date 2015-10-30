@@ -58,7 +58,7 @@ class Image extends AbstractField
         wp_enqueue_media();
         wp_enqueue_script(
             'widget-image-script',
-            $this->getAssetsUri() . 'js/Image.js',
+            $this->getAssetsUri().'js/Image.js',
             array('media-upload', 'thickbox'),
             ServiceLocator::VERSION,
             self::IN_FOOTER

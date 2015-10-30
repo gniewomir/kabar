@@ -98,7 +98,7 @@ final class Decorator extends \WP_Widget
             $template
         );
         $template = $this->widget->render($template);
-        echo $args['before_widget'] . $template . $args['after_widget'];
+        echo $args['before_widget'].$template.$args['after_widget'];
     }
 
     /**
@@ -110,7 +110,7 @@ final class Decorator extends \WP_Widget
      */
     public function form($instance)
     {
-        $this->fieldsCollection->render($instance);
+        $this->form->render($instance);
     }
 
     /**

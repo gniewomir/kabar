@@ -82,15 +82,15 @@ final class Styles extends \kabar\Module
         foreach ($this->styles as $selector => $properties) {
             $parsedProperties = '';
             foreach ($properties as $property => $value) {
-                $parsedProperties .= $property . ':' . $value . ';';
+                $parsedProperties .= $property.':'.$value.';';
             }
             if ($parsedProperties) {
-                $styles .= $selector . ' {' . $parsedProperties . '} ';
+                $styles .= $selector.' {'.$parsedProperties.'} ';
             }
         }
         if ($styles) {
             $template = $this->templateFactory->create();
-            $template($this->getTemplatesDirectory() . 'Styles.php');
+            $template($this->getTemplatesDirectory().'Styles.php');
             $template->slug   = $this->getLibrarySlug();
             $template->styles = $styles;
             return $template;

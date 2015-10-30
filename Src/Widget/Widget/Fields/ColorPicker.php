@@ -61,14 +61,14 @@ class ColorPicker extends AbstractField
          */
         wp_enqueue_script(
             'jquery-color-picker',
-            $this->getAssetsUri() . 'js/vendor/jqColorPicker.min.js',
+            $this->getAssetsUri().'js/vendor/jqColorPicker.min.js',
             array(),
             ServiceLocator::VERSION,
             self::IN_FOOTER
         );
         wp_enqueue_script(
             'widget-color-picker',
-            $this->getAssetsUri() . 'js/ColorPicker.js',
+            $this->getAssetsUri().'js/ColorPicker.js',
             array('jquery-color-picker'),
             ServiceLocator::VERSION,
             self::IN_FOOTER

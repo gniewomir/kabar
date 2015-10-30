@@ -105,7 +105,7 @@ class Notice extends \kabar\Module
     {
         $this->requireAfterAction('set_current_user');
         $this->requireNotEmpty('User ID', get_current_user_id());
-        return $this->getLibrarySlug() . '_admin_notices_user_' . $this->userId;
+        return $this->getLibrarySlug().'_admin_notices_user_'.$this->userId;
     }
 
     /**
@@ -125,7 +125,7 @@ class Notice extends \kabar\Module
             return;
         }
         foreach ($this->notices as $notice) {
-            echo '<div class="' . $notice['class'] . '"><p>' . $notice['message'] . '</p></div>';
+            echo '<div class="'.$notice['class'].'"><p>'.$notice['message'].'</p></div>';
         }
     }
 }

@@ -74,9 +74,6 @@ checks:
         align_assignments: true
         symfony_request_injection: false
         avoid_entity_manager_injection: false
-#        custom_coding_standard:
-#            git_repository: 'https://github.com/escapestudios/Symfony2-coding-standard'
-#            ruleset_path: Symfony2/ruleset.xml
 filter: {  }
 coding_style:
     php:

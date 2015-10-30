@@ -25,4 +25,12 @@ class ModuleWidgetsDecoratorTests extends WP_UnitTestCase {
             'Instance registered with WordPress is not a '.$this->decoratorClass.' instace'
         );
     }
+
+    public function testUpdate_ShouldReturnForm() {
+
+    }
+
+    public function testForm_ShouldReturnForm() {
+
+    }
 }

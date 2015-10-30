@@ -79,8 +79,8 @@ class Scripts extends \kabar\Module
         }
 
         $scriptsData = array();
-        $scriptsData[] = 'var ' . $this->getLibrarySlug() . ' = ' . $this->getLibrarySlug() . ' || {};';
-        $scriptsData[] = $this->getLibrarySlug() . '.' . $this->getModuleName() . ' = {};';
+        $scriptsData[] = 'var '.$this->getLibrarySlug().' = '.$this->getLibrarySlug().' || {};';
+        $scriptsData[] = $this->getLibrarySlug().'.'.$this->getModuleName().' = {};';
         foreach ($this->data as $name => $data) {
             foreach ($data as $key => $value) {
                 if (!is_scalar($value)) {
@@ -88,11 +88,11 @@ class Scripts extends \kabar\Module
                 }
                 $data->$key = html_entity_decode((string) $value, ENT_QUOTES, 'UTF-8');
             }
-            $scriptsData[] = $this->getLibrarySlug() . '.' . $this->getModuleName() . '.' . $name . ' = ' . wp_json_encode($data) . ';';
+            $scriptsData[] = $this->getLibrarySlug().'.'.$this->getModuleName().'.'.$name.' = '.wp_json_encode($data).';';
         }
 
         $template = $this->templateFactory->create();
-        $template($this->getTemplatesDirectory() . 'Scripts.php');
+        $template($this->getTemplatesDirectory().'Scripts.php');
         $template->data = $scriptsData;
         $template->slug = $this->getLibrarySlug();
         return $template;

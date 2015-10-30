@@ -93,8 +93,8 @@ class Slider extends AbstractField
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-slider');
         wp_enqueue_script(
-            $this->getLibrarySlug() . '-metabox-slider-script',
-            $this->getAssetsUri() . 'js/Slider.js',
+            $this->getLibrarySlug().'-metabox-slider-script',
+            $this->getAssetsUri().'js/Slider.js',
             array('jquery-ui-core', 'jquery-ui-slider'),
             $this->getLibraryVersion(),
             self::IN_FOOTER
@@ -121,7 +121,7 @@ class Slider extends AbstractField
             'val'     => $value,
         );
         wp_localize_script(
-            $this->getLibrarySlug() . '-metabox-slider-script',
+            $this->getLibrarySlug().'-metabox-slider-script',
             str_replace('-', '_', $this->storage->getPrefixedKey($this->getSlug())),
             $data
         );

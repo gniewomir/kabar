@@ -57,7 +57,7 @@ final class PostMeta extends HTTPPost implements InterfaceStorage
      */
     public function getStorageKey($key)
     {
-        return self::HIDE_CUSTOM_FIELD . $this->getPrefixedKey($key);
+        return self::HIDE_CUSTOM_FIELD.$this->getPrefixedKey($key);
     }
 
     /**

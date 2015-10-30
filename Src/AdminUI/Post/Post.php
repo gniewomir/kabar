@@ -84,7 +84,7 @@ final class Post extends \kabar\Module
 
         // form
         $storage = new \kabar\Utility\Storage\PostMeta();
-        $storage->setPrefix($this->id . '-');
+        $storage->setPrefix($this->id.'-');
 
         $this->form = new \kabar\Utility\Form\Form(
             $this->id,

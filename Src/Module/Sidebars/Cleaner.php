@@ -122,14 +122,14 @@ final class Cleaner extends \kabar\Module
     {
         $sidebar = array();
         foreach ($object->unsanitized_post_values() as $key => $value) {
-            if (strpos($key, 'widget_' . $this->getLibrarySlug()) === 0) {
+            if (strpos($key, 'widget_'.$this->getLibrarySlug()) === 0) {
                 // look for changed settings for our widgets
                 // change post var name to widget id
                 $widgetId = substr($key, strlen('widget_'));
                 $widgetId = trim(str_replace(array('[', ']'), '-', $widgetId), '-');
                 // find where updated widget acctualy is
                 $sidebar[] = $this->widgetSidebar($widgetId);
-            } else if (strpos($key, 'sidebars_widgets[' . $this->getLibrarySlug()) === 0) {
+            } else if (strpos($key, 'sidebars_widgets['.$this->getLibrarySlug()) === 0) {
                 // look for changed settings for our sidebars
                 // change post var name to sidebar id
                 $key = substr($key, strlen('sidebars_widgets['));

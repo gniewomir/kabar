@@ -68,13 +68,13 @@ abstract class Widget extends \kabar\Module
      */
     public function __construct($id, $title, $description, $cssClasses = '', $defaultTemplate = 'Widget.php')
     {
-        $this->id         = (strpos($id, $this->getLibrarySlug()) === 0) ? $id : $this->getLibrarySlug() . '_' . $id;
+        $this->id         = (strpos($id, $this->getLibrarySlug()) === 0) ? $id : $this->getLibrarySlug().'_'.$id;
         $this->title      = $title;
         $this->desciption = $description;
         $this->cssClasses = !empty($cssClasses) && is_array($cssClasses) ? implode(' ', $cssClasses) : (string) $cssClasses;
-        $this->cssClasses = $this->getCssClass() . ' ' . $this->cssClasses;
+        $this->cssClasses = $this->getCssClass().' '.$this->cssClasses;
 
-        $this->defaultTemplate = strpos($defaultTemplate, DIRECTORY_SEPARATOR) === false ? $this->getTemplatesDirectory() . $defaultTemplate : $defaultTemplate;
+        $this->defaultTemplate = strpos($defaultTemplate, DS) === false ? $this->getTemplatesDirectory().$defaultTemplate : $defaultTemplate;
 
         $this->config = array(
             'id'          => $this->id,
