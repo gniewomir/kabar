@@ -14,8 +14,9 @@ namespace kabar\Utility\Form;
 /**
  * Provides easy way of assembling forms from field objects
  */
-final class Form extends \kabar\Module
+final class Form extends \kabar\Module implements \SplSubject
 {
+    use \kabar\Traits\SplSubject;
 
     const NONCE_SUFFIX  = '_nonce';
     const ACTION_SUFFIX = '_save';
@@ -101,7 +102,7 @@ final class Form extends \kabar\Module
         $id,
         $method = '',
         $action = '',
-        \kabar\Utility\Storage\InterfaceStorage $storage = null,
+        $storage = null, // old \kabar\Utility\Storage\InterfaceStorage, new -> ?
         \kabar\Utility\Template\Template $template = null,
         $fieldsTemplateDir = '',
         callable $updateCallback = null

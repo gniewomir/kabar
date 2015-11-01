@@ -1,0 +1,93 @@
+<?php
+/**
+ * @coversDefaultClass \kabar\Factory\Widget\Storage
+ */
+class ModuleWidgetsStorageTests extends WP_UnitTestCase {
+
+    public function setUp()
+    {
+        $this->decoratorMock = $this->getMockBuilder('\\kabar\\Factory\\Widget\\Decorator')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->decoratorMock->method('get_field_id')
+             ->willReturn('foo');
+        $this->decoratorMock->method('get_field_name')
+             ->willReturn('foo');
+        $this->storage       = new \kabar\Factory\Widget\Storage($this->decoratorMock);
+    }
+
+    /**
+     * @covers ::widget
+     * @covers ::retrieve
+     */
+    public function testWidget_ShouldSetWidgetData()
+    {
+        $this->storage->widget(array(), array('test' => 'testOK'));
+        $this->assertEquals(
+            'testOK',
+            $this->storage->retrieve('test')
+        );
+    }
+
+    /**
+     * @covers ::form
+     * @covers ::retrieve
+     */
+    public function testForm_ShouldSetWidgetData()
+    {
+        $this->storage->form(array('test' => 'testOK'));
+        $this->assertEquals(
+            'testOK',
+            $this->storage->retrieve('test')
+        );
+    }
+
+    /**
+     * @covers ::store
+     * @covers ::retrieve
+     */
+    public function testStore_ShouldRetrieveStoredValue()
+    {
+        $this->storage->store('test', 'testOK');
+        $this->assertEquals(
+            'testOK',
+            $this->storage->retrieve('test')
+        );
+    }
+
+    /**
+     * @covers ::update
+     */
+    public function testUpdate_ShouldReturnUpdatedArrayOfWidgetSettings()
+    {
+        $this->assertEquals(
+            array('test' => 'updated', 'test1' => 'same'),
+            $this->storage->update(
+                array('test' => 'updated'),
+                array('test' => 'test', 'test1' => 'same')
+            )
+        );
+    }
+
+    /**
+     * @covers ::getFieldId
+     */
+    public function testGetFieldId_ShouldGetItFromDecorator()
+    {
+        $this->assertEquals(
+            'foo',
+            $this->storage->getFieldId('fieldName')
+        );
+    }
+
+    /**
+     * @covers ::getFieldName
+     */
+    public function testGetFieldName_ShouldGetItFromDecorator()
+    {
+        $this->assertEquals(
+            'foo',
+            $this->storage->getFieldId('fieldName')
+        );
+    }
+}

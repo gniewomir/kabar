@@ -39,7 +39,7 @@ final class Kabar extends \Dice\Dice
     public function __construct()
     {
         $this->register('kabar', __DIR__.DS);
-        $this->register('examples', dirname(__DIR__)..DS);
+        $this->register('examples', dirname(__DIR__).'Doc'.DS.'Examples'.DS);
         spl_autoload_register(
             array($this, 'autoload'),
             true, // throw exception on error

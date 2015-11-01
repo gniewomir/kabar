@@ -59,12 +59,12 @@ final class Template
      */
     public function __set($name, $value)
     {
-        // often template will be populated automaticaly by Form component,
+        // often template will be populated automaticaly
         // and template property will be named after form field slug,
         // we still don't want to run expensive regex to validate property name,
         // but we should check at least for hyphens - it will be common mistake
         if (strpos($name, '-') !== false) {
-            trigger_error('Template property "'.$name.'" should be valid PHP variable name!', E_USER_ERROR);
+            throw new \InvalidArgumentException('Template property "'.$name.'" should be valid PHP variable name!', 1);
         }
         $this->vars[$name] = $value;
     }

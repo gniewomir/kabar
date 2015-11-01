@@ -3,7 +3,6 @@
 class WidgetTests extends WP_UnitTestCase {
 
     public function setUp() {
-        $this->kabar  = new \kabar\Kabar();
         $this->expectedConfig = array(
             'id'          => KABAR_NAMESPACE.'_Widget',
             'title'       => 'Widget Title',
@@ -18,7 +17,13 @@ class WidgetTests extends WP_UnitTestCase {
             'test-widget-css-class',
             'Test.php'
         );
-        $this->form     = new \kabar\Utility\Form\Form('WidgetForm');
+        $this->form     = new \kabar\Utility\Form\Form(
+            'WidgetForm',
+            '',
+            '',
+            new \kabar\Utility\Storage\HTTPPost(),
+            new \kabar\Utility\Template\Template
+        );
         $this->form->addFields(
             new \kabar\Utility\Fields\Text('testField', 'Test field title')
         );

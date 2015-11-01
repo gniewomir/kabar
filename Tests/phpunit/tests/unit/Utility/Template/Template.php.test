@@ -1,0 +1,68 @@
+<?php
+/**
+ * @coversDefaultClass \Foo\CoveredClass
+ */
+class TemplateTests extends WP_UnitTestCase
+{
+
+    public function setUp() {
+        $this->template = new \kabar\Utility\Template\Template();
+        $this->template->testGet = 'testOK';
+        $this->template->testSet = 'testFailed';
+        $template = $this->template;
+        $template(KABAR_FIXTURES_DIR.'Template/Template.php');
+    }
+
+    /**
+     * @covers ::__invoke
+     */
+    public function test__invoke_shuldSetTemplateFile()
+    {
+        // if template file was not set __toString method test will fail
+    }
+
+    /**
+     * @covers ::__get
+     */
+    public function test__get_shouldReturnValueThatWeSetWith__set()
+    {
+        $this->assertEquals(
+            'testOK',
+            $this->template->testGet
+        );
+    }
+
+    /**
+     * @covers ::__get
+     * @expectedException \InvalidArgumentException
+     */
+    public function test__get_shouldThrowExceptionWhen()
+    {
+        $name = 'var-iable';
+        $this->template->$name = 'test';
+    }
+
+    /**
+     * @covers ::__set
+     */
+    public function test__set_shouldSetValueFor__get()
+    {
+        $this->template->testSet = 'testOK';
+        $this->assertEquals(
+            'testOK',
+            $this->template->testGet
+        );
+    }
+
+    /**
+     * @covers ::__toString
+     */
+    public function test__toString_shouldReturnRenderedTemplateAsString()
+    {
+        $this->assertEquals(
+            'testOK|testFailed',
+            (string) $this->template
+        );
+    }
+
+}

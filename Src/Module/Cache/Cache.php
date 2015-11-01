@@ -11,10 +11,12 @@
 
 namespace kabar\Module\Cache;
 
+use \kabar\Interfaces;
+
 /**
  * Site cache class
  */
-class Cache extends \kabar\Module
+class Cache extends \kabar\Module implements \SplObserver
 {
     /**
      * WordPress transient prefix
@@ -74,6 +76,19 @@ class Cache extends \kabar\Module
             $this->forcePurge();
         }
     }
+
+    /**
+     * Implementation of observer
+     * @param  \SplSubject $observed
+     * @return void
+     */
+    public function update(\SplSubject $observed)
+    {
+        if ($observed instanceof Cacheable) {
+            $this->purge($observed->getCacheId());
+        }
+    }
+
 
     /**
      * Start purging cache

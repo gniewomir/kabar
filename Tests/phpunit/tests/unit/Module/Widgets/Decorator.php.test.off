@@ -1,0 +1,86 @@
+<?php
+/**
+ * @coversDefaultClass \kabar\Factory\Widget\Decorator
+ */
+class ModuleWidgetsDecoratorTests extends WP_UnitTestCase {
+
+    public function setUp() {
+
+        // very simple, and already covered by tests
+        $this->template = new \kabar\Utility\Template\Template();
+        $template = $this->template;
+        $template(KABAR_FIXTURES_DIR.'Template/Decorator.php');
+
+        // very simple, and already covered by tests
+        $this->widget = new \fixtures\Widget\Widget\Widget(
+            'Widget',
+            'Widget Title',
+            'Widget Description',
+            'test-widget-css-class',
+            'Test.php'
+        );
+
+        // complicated, not covered, subject for changes
+        $this->form     = new \kabar\Utility\Form\Form(
+            'WidgetForm',
+            '',
+            '',
+            new \kabar\Utility\Storage\HTTPPost(),
+            $this->template
+        );
+        $this->form->addFields(
+            new \kabar\Utility\Fields\Text('testField', 'Test field title')
+        );
+
+        // set form
+        $reflection = new \ReflectionClass($this->decorator);
+        $property = $reflection->getProperty('form');
+        $property->setAccessible(true);
+        $property->setValue($this->decorator, $this->form);
+
+
+        // very simple, and already covered by tests
+        $this->template  = new \kabar\Utility\Template\Template();
+        $this->decorator = new \kabar\Factory\Widget\Decorator(
+            $this->widget,
+            $this->template,
+            $this->getMockBuilder('\\kabar\\Module\\Cache\\Cache')
+                ->getMock()
+        );
+        $this->expectedKey    = 'WidgetWordPressWidget';
+        $this->decoratorClass = 'kabar\\Factory\\Widget\\Decorator';
+    }
+
+
+    /**
+     * @covers ::widget
+     * @covers ::render
+     */
+    public function testWidget_ShouldOutputTemplate() {
+
+    }
+
+    public function testGetWidgetKey_ShouldReturnModuleNameAndStringWordPressWidget() {
+        $this->assertEquals(
+            $this->expectedKey,
+            $this->widgets->getWidgetKey($this->widget)
+        );
+    }
+
+    public function testRegister_ShouldRegisterWidgetDecoratorWithWordpress() {
+        $this->widgets->register($this->widget);
+        $this->assertInstanceOf(
+            $this->decoratorClass,
+            $GLOBALS['wp_widget_factory']->widgets[$this->expectedKey],
+            'Instance registered with WordPress is not a '.$this->decoratorClass.' instace'
+        );
+    }
+
+    public function testUpdate_ShouldReturnForm() {
+
+    }
+
+    public function testForm_ShouldReturnForm() {
+
+    }
+}
