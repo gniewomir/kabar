@@ -84,7 +84,7 @@ class Cache extends \kabar\Module implements \SplObserver
      */
     public function update(\SplSubject $observed)
     {
-        if ($observed instanceof Cacheable) {
+        if ($observed instanceof \kabar\Interfaces\Cacheable) {
             $this->purge($observed->getCacheId());
         }
     }

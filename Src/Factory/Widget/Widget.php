@@ -23,7 +23,7 @@ final class Widget extends \kabar\Module
 
     /**
      * Cache module
-     * @var \kabar\Modue\Cache\Cache
+     * @var \kabar\Module\Cache\Cache
      */
     private $cache;
 

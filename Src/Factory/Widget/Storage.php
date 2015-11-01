@@ -15,6 +15,12 @@ class Storage implements Storable, Retrievable, WPWidget
     private $instance;
 
     /**
+     * WordPress widget decorator
+     * @var \kabar\Factory\Widget\Decorator
+     */
+    private $decorator;
+
+    /**
      * Bind storage object with widget decorator
      * @param Decorator $decorator
      */
@@ -82,7 +88,7 @@ class Storage implements Storable, Retrievable, WPWidget
 
     /**
      * Retrieve widget setting
-     * @param  string $field
+     * @param  string $key
      * @return mixed
      */
     public function retrieve($key)
@@ -94,7 +100,7 @@ class Storage implements Storable, Retrievable, WPWidget
 
     /**
      * Store widget setting
-     * @param  string $field
+     * @param  string $key
      * @param  mixed  $value
      * @return void
      */

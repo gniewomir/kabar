@@ -15,7 +15,7 @@ trait SplSubject
 {
     /**
      * Object observers
-     * @var array<\kabar\Interfaces\Obeserver>
+     * @var array<\SplObserver>
      */
     private $observers;
 

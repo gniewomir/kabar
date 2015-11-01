@@ -26,7 +26,7 @@ class Decorator extends \WP_Widget implements Cacheable, WPWidget
 
     /**
      * Cache module
-     * @var \kabar\Modue\Cache\Cache
+     * @var \kabar\Module\Cache\Cache
      */
     private $cache;
 
@@ -172,7 +172,7 @@ class Decorator extends \WP_Widget implements Cacheable, WPWidget
     {
         if (!$this->form) {
             $form = new \kabar\Utility\Form\Form(
-                $key,
+                $this->id,
                 'POST', // method
                 '', // default = self
                 $this->storage,
