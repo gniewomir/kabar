@@ -63,7 +63,11 @@ class Text extends AbstractField
      */
     public function get()
     {
-        return $this->storage->retrieve($this->getSlug());
+        $value = $this->storage->retrieve($this->getSlug());
+        if (empty($value)) {
+            return $this->default;
+        }
+        return $value;
     }
 
     /**
@@ -77,10 +81,7 @@ class Text extends AbstractField
         $template->cssClass = $this->getCssClass();
         $template->title    = $this->title;
         $template->help     = $this->help;
-
-        $value              = $this->get();
-        $template->value    = empty($value) ? $this->default : $value;
-
+        $template->value    = $this->get();
         return $template;
     }
 

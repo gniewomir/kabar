@@ -244,13 +244,12 @@ final class Form extends \kabar\Module\Module\Module
     public function getPopulatedTemplate($id = 0)
     {
         $template = new \kabar\Utility\Template\Template();
-
         foreach ($this->fields as $field) {
             if (!$field instanceof \kabar\Utility\Fields\InterfaceField) {
                 continue;
             }
             $name            = $field->getSlug();
-            $template->$name = $id ? $field->getForId($id) : $field->get();
+            $template->$name = $id !== 0 ? $field->getForId($id) : $field->get();
         }
         return $template;
     }
